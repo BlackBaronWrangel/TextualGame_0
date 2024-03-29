@@ -6,8 +6,10 @@ namespace GlobalServices.Entities
 {
     public class Character : CharacterBase
     {
+        private Guid _id = Guid.NewGuid();
+
         //"Static" properties
-        public Guid Id { get; protected set; } = Guid.NewGuid();
+        public string Id { get => _id.ToString();}
         public string Name { get; protected set; } = String.Empty;
         public CharacterType Type { get; protected set; } = CharacterType.Other;
         public CharacterPersistence Persistence { get; protected set; } = CharacterPersistence.Temporary;
@@ -23,6 +25,7 @@ namespace GlobalServices.Entities
         public int Mental { get; set; } = 100;
         public int HpLimit { get; set; } = 100;
         public int MentalLimit { get; set; } = 100;
+        public List<Item> Items { get; set; } = new();
         public Character() : base(){}
         public Character(string name, CharacterType type, CharacterPersistence persistence, CharacterBodyType bodyType, CharacterSpecies species, CharacterGender gender) : base()
         {

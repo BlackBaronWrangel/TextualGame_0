@@ -14,14 +14,16 @@ namespace GlobalServices
         ILogger _logger;
         ITagService _tagService;
         ILocationService _locationService;
+        IItemService _itemService;
         public List<Character> Characters { get => _characterFactory.Characters; }
 
-        public CharacterService(ICharacterFactory characterFactory, ILogger logger, ITagService tagService, ILocationService locationService)
+        public CharacterService(ICharacterFactory characterFactory,IItemService itemService ,ILogger logger, ITagService tagService, ILocationService locationService)
         {
             _characterFactory = characterFactory;
             _logger = logger;
             _tagService = tagService;
             _locationService = locationService;
+            _itemService = itemService;
         }
         public void AddTag(string characterId, ITag tag)
         {
@@ -144,6 +146,44 @@ namespace GlobalServices
         {
             character.Location = _locationService.GetLocation(locationId);
             _logger.LogInfo($"Character {character} moved to location {locationId}");
+        }
+        public void AssignItem(string itemId, string characterId)
+        {
+            var character = GetCharacter(characterId);
+            var item = _itemService.GetItem(itemId);
+            if ((item is not null) && (character is not null))
+            {
+                var previousOwner = Characters.FirstOrDefault(c => c.Items.Contains(item));
+                if (previousOwner is not null) UnAssignItem(itemId, previousOwner.Id);
+                character.Items.Add(item);
+                _logger.LogInfo($"Item {item} assigned to character {character}");
+            }
+            else
+            {
+                _logger.LogError($"Can't assign item {item} to character {character}");
+            }
+        }
+        public void UnAssignItem(string itemid, string characterId)
+        {
+            var character = GetCharacter(characterId);
+            var item = _itemService.GetItem(itemid);
+
+            if ((item is null) || (character is null))
+            {
+                _logger.LogError($"Can't remove item {item} from character {character}");
+            }
+            else
+            {
+                if (character.Items.Contains(item))
+                {
+                    character.Items.Remove(item); 
+                    _logger.LogInfo($"Item {item} unassigned from character {character}");
+                }
+                else
+                {
+                    _logger.LogWarning($"Character {character} doesn't have item {item} to remove.");
+                }                    
+            }
         }
     }
 }

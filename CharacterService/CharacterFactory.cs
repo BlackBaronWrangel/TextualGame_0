@@ -58,7 +58,7 @@ namespace GlobalServices
 
         public Character? GetCharacterById(string id)
         {
-            return Characters.Where(c => c.Id.ToString() == id).FirstOrDefault();
+            return Characters.Where(c => c.Id == id).FirstOrDefault();
         }
 
         public void RemoveCharacter(Character character)

@@ -1,5 +1,6 @@
 ﻿using GlobalServices.Enums;
 using GlobalServices.Interfaces;
+using GlobalServices.Resources;
 using GlobalServices.Tags;
 using System.Reflection;
 using System.Resources;
@@ -25,6 +26,7 @@ namespace GlobalServices
             InitLocationsTags();
             InitCharactersTags();
             InitEventsTags();
+            InitItemsTags();
             //init other tags
         }
         public ITag? GetLocationTag(TagId.Location tagId)
@@ -36,6 +38,10 @@ namespace GlobalServices
             return CharacterTags.FirstOrDefault(tag => tag.Id == tagId.ToString());
         }
         public ITag? GetEventTag(TagId.Event tagId)
+        {
+            return EventTags.FirstOrDefault(tag => tag.Id == tagId.ToString());
+        }
+        public ITag? GetItemTag(TagId.Item tagId)
         {
             return EventTags.FirstOrDefault(tag => tag.Id == tagId.ToString());
         }
@@ -93,6 +99,11 @@ namespace GlobalServices
         {
             ResourceManager rm = new ResourceManager("TagService.Resources.EventTagsDescription", Assembly.GetExecutingAssembly());
             InitTags<TagId.Event, EventTag>(rm);
+        }
+        private void InitItemsTags()
+        {
+            ResourceManager rm = new ResourceManager("TagService.Resources.ItemsTagsDescription", Assembly.GetExecutingAssembly());
+            InitTags<TagId.Item, ItemTag>(rm);
         }
 
         private void InitTags<T1, T2>(ResourceManager rm)

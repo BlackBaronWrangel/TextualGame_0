@@ -18,6 +18,8 @@ namespace GlobalServices.Interfaces
         Character CreateRandomTemporalCivilian();
         void RemoveCharacter(string CharacterId);
         void MoveCharacter(Character character, LocationId locationId);
+        void AssignItem(string itemid, string characterId);
+        void UnAssignItem(string itemid, string characterId);
         void AddTag(string CharacterId, ITag tag);
         void AddTag(string CharacterId, TagId.Character tag);
         void RemoveTag(string CharacterId, ITag tag);

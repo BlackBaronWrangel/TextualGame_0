@@ -30,6 +30,13 @@ namespace GlobalServices.Enums
             tag2,
             tag3,
         }
+        public enum Item
+        {
+            tag0,
+            tag1,
+            tag2,
+            tag3,
+        }
 
     }
 }

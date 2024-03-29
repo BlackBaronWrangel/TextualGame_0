@@ -17,6 +17,7 @@ namespace GlobalServices.Interfaces
         ITag? GetLocationTag(TagId.Location tagId);
         ITag? GetCharacterTag(TagId.Character tagId);
         ITag? GetEventTag(TagId.Event tagId);
+        ITag? GetItemTag(TagId.Item tagId);
         ITag? GetTagById(string tagName);
 
         void RegisterITaggable(ITaggable obj);
