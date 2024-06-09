@@ -17,6 +17,7 @@ namespace GlobalServices
         public List<Item> Items { get => _itemfactory.Items; }
         public ItemService(IItemFactory itemFactory, ILogger logger, ITagService tagService)
         {
+
             _logger = logger;
             _tagService = tagService;
             _itemfactory = itemFactory;
