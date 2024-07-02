@@ -34,7 +34,7 @@ internal class Program
         _locationService.AddConnection(loc.Castle, loc.Village);
         _locationService.RemoveConnection(loc.Village, loc.Swamp);
 
-        _characterService.CreateRandomCharacter(CharacterType.Monster, CharacterPersistence.Temporary).AddTag(_tagService.GetCharacterTag(TagId.Character.Neutral)) ;
+        _characterService.CreateRandomCharacter(CharacterType.Monster, CharacterPersistence.Temporary).AddTag(_tagService.GetCharacterTag(TagId.Character.Neutral)) ; //rewrite tags to be assigned automatically on creation
         _characterService.CreateRandomCharacter(CharacterType.Other, CharacterPersistence.Permanent);
         _characterService.CreateDefaultCharacter();
         _characterService.CreateDefaultCharacter();
