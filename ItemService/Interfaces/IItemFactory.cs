@@ -5,7 +5,7 @@ namespace GlobalServices.Interfaces
 {
     public interface IItemFactory
     {
-        List<Item> Items { get; }
+        HashSet<Item> Items { get; }
         Item? GetItemById(string id);
         void AddItem(Item Item);
         Item GenerateItem(string name, ItemType type);

@@ -5,20 +5,20 @@ namespace GlobalServices.Tags
 {
     public class ItemTag : ITag
     {
-        public string Id { get; }
+        public string Name { get; }
         public TagType TagType { get => TagType.ItemTag; }
 
         public string Description { get; }
 
-        public ItemTag(string tagId ,string description)
+        public ItemTag(string name ,string description)
         {
-            Id = tagId;
+            Name = name;
             Description = description;
         }
 
         public override string ToString()
         {
-            return Id;
+            return Name;
         }
     }
 }

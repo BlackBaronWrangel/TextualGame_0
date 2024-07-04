@@ -10,19 +10,19 @@ namespace GlobalServices
     public class TagService : ITagService
     {
 
-        private List<ITaggable> _taggableEntities;
         private ILogger _logger;
-        public List<ITag> Tags { get; }
-        public List<ITag> LocationTags { get => Tags.Where(tag => tag.TagType == TagType.LocationTag).ToList(); }
-        public List<ITag> CharacterTags { get => Tags.Where(tag => tag.TagType == TagType.CharacterTag).ToList(); }
-        public List<ITag> EventTags { get => Tags.Where(tag => tag.TagType == TagType.EventTag).ToList(); }
+        public HashSet<ITag> Tags { get; }
+        public HashSet<ITag> LocationTags { get => Tags.Where(tag => tag.TagType == TagType.LocationTag).ToHashSet(); }
+        public HashSet<ITag> CharacterTags { get => Tags.Where(tag => tag.TagType == TagType.CharacterTag).ToHashSet(); }
+        public HashSet<ITag> EventTags { get => Tags.Where(tag => tag.TagType == TagType.EventTag).ToHashSet(); }
+        public HashSet<ITaggable> TaggableEntities { get; protected set; }
 
         public TagService(ILogger logger)
         {
-            _taggableEntities = new List<ITaggable>();
+            TaggableEntities = new HashSet<ITaggable>();
             _logger = logger;
 
-            Tags = new List<ITag>();
+            Tags = new HashSet<ITag>();
             InitLocationsTags();
             InitCharactersTags();
             InitEventsTags();
@@ -31,29 +31,29 @@ namespace GlobalServices
         }
         public ITag? GetLocationTag(TagId.Location tagId)
         {
-            return LocationTags.FirstOrDefault(tag => tag.Id == tagId.ToString());
+            return LocationTags.FirstOrDefault(tag => tag.Name == tagId.ToString());
         }
         public ITag? GetCharacterTag(TagId.Character tagId)
         {
-            return CharacterTags.FirstOrDefault(tag => tag.Id == tagId.ToString());
+            return CharacterTags.FirstOrDefault(tag => tag.Name == tagId.ToString());
         }
         public ITag? GetEventTag(TagId.Event tagId)
         {
-            return EventTags.FirstOrDefault(tag => tag.Id == tagId.ToString());
+            return EventTags.FirstOrDefault(tag => tag.Name == tagId.ToString());
         }
         public ITag? GetItemTag(TagId.Item tagId)
         {
-            return EventTags.FirstOrDefault(tag => tag.Id == tagId.ToString());
+            return EventTags.FirstOrDefault(tag => tag.Name == tagId.ToString());
         }
         public ITag? GetTagById(string id)
         {
-            return Tags.FirstOrDefault(tag => tag.Id == id);
+            return Tags.FirstOrDefault(tag => tag.Name == id);
         }
         public void RegisterITaggable(ITaggable obj)
         {
-            if (!_taggableEntities.Contains(obj))
+            if (!TaggableEntities.Contains(obj))
             {
-                _taggableEntities.Add(obj);
+                TaggableEntities.Add(obj);
             }
             else
             {
@@ -62,9 +62,9 @@ namespace GlobalServices
         }
         public void UnregisterITaggable(ITaggable obj)
         {
-            if (_taggableEntities.Contains(obj))
+            if (TaggableEntities.Contains(obj))
             {
-                _taggableEntities.Remove(obj);
+                TaggableEntities.Remove(obj);
             }
             else
             {
@@ -74,12 +74,12 @@ namespace GlobalServices
         public bool ValidateITaggables()
         {
             bool result = true;
-            foreach (ITaggable obj in _taggableEntities)
+            foreach (ITaggable obj in TaggableEntities)
             {
                 if (obj.Tags.Count() == 0)
                 {
                     _logger.LogWarning($"ITaggable {obj} has no tags.");
-                    result = false;
+                    return result;
                 }
             }
             return result;

@@ -6,7 +6,7 @@ namespace GlobalServices.Interfaces
 {
     public interface ICharacterService
     {
-        List<Character> Characters { get; }
+        HashSet<Character> Characters { get; }
         Character? GetCharacter(string CharacterId);
         Character? GetPlayer();
         Character? GetCharacterByName(string CharacterName);

@@ -5,20 +5,20 @@ namespace GlobalServices.Tags
 {
     public class LocationTag : ITag
     {
-        public string Id { get; }
+        public string Name { get; }
         public TagType TagType { get => TagType.LocationTag; }
 
         public string Description { get; }
 
-        public LocationTag(string tagId ,string description)
+        public LocationTag(string name, string description)
         {
-            Id = tagId;
+            Name = name;
             Description = description;
         }
 
         public override string ToString()
         {
-            return Id;
+            return Name;
         }
     }
 }

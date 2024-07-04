@@ -6,17 +6,17 @@ namespace GlobalServices.Entities
     public class Location : LocationBase
     {
         public LocationId Id { get; protected set; }
-        public List<Location> ConnectedLocations { get; protected set; }
+        public HashSet<Location> ConnectedLocations { get; protected set; }
 
-        public Location(LocationId id, List<ITag> tags) : base(tags)
+        public Location(LocationId id, HashSet<ITag> tags) : base(tags)
         {
             Id = id;
-            ConnectedLocations = new List<Location>();
+            ConnectedLocations = new HashSet<Location>();
         }
         public Location(LocationId id) : base()
         {
             Id = id;
-            ConnectedLocations = new List<Location>();
+            ConnectedLocations = new HashSet<Location>();
         }
         public override string ToString()
         {

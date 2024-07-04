@@ -11,7 +11,7 @@ namespace GlobalServices
         private ILogger _logger;
         private ILocationFactory _locationFactory;
         private ITagService _tagService;
-        public List<Location> Locations { get => _locationFactory.Locations; }
+        public HashSet<Location> Locations { get => _locationFactory.Locations; }
 
         public LocationService(ILocationFactory locationFactory, ITagService tagService, ILogger logger)
         {
@@ -27,7 +27,7 @@ namespace GlobalServices
         {
             return _locationFactory.GetLocation(locationId);
         }
-        public List<Location> GetConnectedLocations(LocationId locationId)
+        public HashSet<Location> GetConnectedLocations(LocationId locationId)
         {
             var loc = GetLocation(locationId);
             if (loc == null)
@@ -68,7 +68,6 @@ namespace GlobalServices
             var location = _locationFactory.GetLocation(locationId);
             location.RemoveTag(tag);
         }
-
         public void RemoveTag(LocationId locationId, TagId.Location tagId)
         {
             var tag = _tagService.GetLocationTag(tagId);

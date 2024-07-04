@@ -8,7 +8,7 @@ namespace GlobalServices
     {
         private ILogger _logger;
         private ITagService _tagService;
-        public List<Item> Items { get; protected set; } = new();
+        public HashSet<Item> Items { get; protected set; } = new();
 
         public ItemFactory(ITagService tagService, ILogger loggerService)
         {
@@ -42,6 +42,8 @@ namespace GlobalServices
         public void RemoveItem(Item item)
         {
             Items.Remove(item);
+            _tagService.UnregisterITaggable(item);
+            _logger.LogInfo($"Removed item {item}");
         }
 
         public void RemoveItem(string itemId)

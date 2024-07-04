@@ -10,7 +10,7 @@ namespace GlobalServices
     {
         private ILogger _logger;
         private ITagService _tagService;
-        public List<Character> Characters { get; protected set; } = new();
+        public HashSet<Character> Characters { get; protected set; } = new();
 
         public CharacterFactory(ITagService tagService, ILogger logger)
         {
@@ -65,6 +65,7 @@ namespace GlobalServices
         {
             Characters.Remove(character);
             _tagService.UnregisterITaggable(character);
+            _logger.LogInfo($"Removed character {character}");
         }
 
         public void RemoveCharacter(string characterId)
@@ -99,7 +100,7 @@ namespace GlobalServices
             catch (Exception ex)
             {
                 _logger.LogError(ex.ToString());
-                return default(T);
+                return default;
             }
         }
 

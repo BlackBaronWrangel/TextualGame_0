@@ -5,7 +5,7 @@ namespace GlobalServices.Entities
 {
     public class Item : ItemBase
     {
-        private Guid _id = Guid.NewGuid();
+        private readonly Guid _id = Guid.NewGuid();
         public string Id { get => _id.ToString(); }
         public string Name { get; protected set; } = String.Empty;
         public ItemType Type { get; protected set; } = ItemType.Other;
@@ -16,7 +16,7 @@ namespace GlobalServices.Entities
             Name = name;
             Type= itemType;
         }
-        public Item(string name, string description, ItemType itemType, List<ITag> tags) : base(tags) 
+        public Item(string name, string description, ItemType itemType, HashSet<ITag> tags) : base(tags) 
         {
             Name = name;
             Description = description;

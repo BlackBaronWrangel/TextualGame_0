@@ -14,7 +14,7 @@ namespace GlobalServices
             _logger = logger;
             _tagService = tagService;
         }
-        public List<Location> Locations { get => _locations.Values.ToList(); }
+        public HashSet<Location> Locations { get => _locations.Values.ToHashSet(); }
 
         private readonly Dictionary<LocationId, Location> _locations = new();
         public Location GetLocation(LocationId id)

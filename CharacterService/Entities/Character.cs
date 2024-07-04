@@ -6,7 +6,7 @@ namespace GlobalServices.Entities
 {
     public class Character : CharacterBase
     {
-        private Guid _id = Guid.NewGuid();
+        private readonly Guid _id = Guid.NewGuid();
 
         //"Static" properties
         public string Id { get => _id.ToString();}
@@ -25,7 +25,7 @@ namespace GlobalServices.Entities
         public int Mental { get; set; } = 100;
         public int HpLimit { get; set; } = 100;
         public int MentalLimit { get; set; } = 100;
-        public List<Item> Items { get; set; } = new();
+        public HashSet<Item> Items { get; set; } = new();
         public Character() : base(){}
         public Character(string name, CharacterType type, CharacterPersistence persistence, CharacterBodyType bodyType, CharacterSpecies species, CharacterGender gender) : base()
         {
@@ -36,7 +36,7 @@ namespace GlobalServices.Entities
             Species = species;
             Gender = gender;
         }
-        public Character(string name, CharacterType type, CharacterPersistence persistence, CharacterBodyType bodyType, CharacterSpecies species, CharacterGender gender, List<ITag> tags) : base(tags)
+        public Character(string name, CharacterType type, CharacterPersistence persistence, CharacterBodyType bodyType, CharacterSpecies species, CharacterGender gender, HashSet<ITag> tags) : base(tags)
         {
             Name = name;
             Type = type;
