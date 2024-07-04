@@ -65,6 +65,7 @@ namespace GlobalServices
         {
             Characters.Remove(character);
             _tagService.UnregisterITaggable(character);
+            _logger.LogInfo($"Removed character {character}");
         }
 
         public void RemoveCharacter(string characterId)

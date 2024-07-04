@@ -42,6 +42,8 @@ namespace GlobalServices
         public void RemoveItem(Item item)
         {
             Items.Remove(item);
+            _tagService.UnregisterITaggable(item);
+            _logger.LogInfo($"Removed item {item}");
         }
 
         public void RemoveItem(string itemId)

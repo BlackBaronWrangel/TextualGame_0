@@ -68,7 +68,6 @@ namespace GlobalServices
             var location = _locationFactory.GetLocation(locationId);
             location.RemoveTag(tag);
         }
-
         public void RemoveTag(LocationId locationId, TagId.Location tagId)
         {
             var tag = _tagService.GetLocationTag(tagId);
