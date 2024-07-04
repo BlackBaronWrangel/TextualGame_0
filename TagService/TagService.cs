@@ -10,16 +10,16 @@ namespace GlobalServices
     public class TagService : ITagService
     {
 
-        private List<ITaggable> _taggableEntities;
         private ILogger _logger;
         public List<ITag> Tags { get; }
         public List<ITag> LocationTags { get => Tags.Where(tag => tag.TagType == TagType.LocationTag).ToList(); }
         public List<ITag> CharacterTags { get => Tags.Where(tag => tag.TagType == TagType.CharacterTag).ToList(); }
         public List<ITag> EventTags { get => Tags.Where(tag => tag.TagType == TagType.EventTag).ToList(); }
+        public List<ITaggable> TaggableEntities { get; protected set; }
 
         public TagService(ILogger logger)
         {
-            _taggableEntities = new List<ITaggable>();
+            TaggableEntities = new List<ITaggable>();
             _logger = logger;
 
             Tags = new List<ITag>();
@@ -51,9 +51,9 @@ namespace GlobalServices
         }
         public void RegisterITaggable(ITaggable obj)
         {
-            if (!_taggableEntities.Contains(obj))
+            if (!TaggableEntities.Contains(obj))
             {
-                _taggableEntities.Add(obj);
+                TaggableEntities.Add(obj);
             }
             else
             {
@@ -62,9 +62,9 @@ namespace GlobalServices
         }
         public void UnregisterITaggable(ITaggable obj)
         {
-            if (_taggableEntities.Contains(obj))
+            if (TaggableEntities.Contains(obj))
             {
-                _taggableEntities.Remove(obj);
+                TaggableEntities.Remove(obj);
             }
             else
             {
@@ -74,12 +74,12 @@ namespace GlobalServices
         public bool ValidateITaggables()
         {
             bool result = true;
-            foreach (ITaggable obj in _taggableEntities)
+            foreach (ITaggable obj in TaggableEntities)
             {
                 if (obj.Tags.Count() == 0)
                 {
                     _logger.LogWarning($"ITaggable {obj} has no tags.");
-                    result = false;
+                    return result;
                 }
             }
             return result;

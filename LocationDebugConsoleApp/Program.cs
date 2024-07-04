@@ -5,6 +5,7 @@ using GlobalServices.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using tags = GlobalServices.Enums.TagId;
 using loc = GlobalServices.Entities.DefaultMap.LocationId;
+using GlobalServices.Entities;
 
 internal class Program
 {
@@ -43,7 +44,6 @@ internal class Program
         _characterService.CreateRandomPermanentCivilian();
         _characterService.CreateMainCharacter("Biba", CharacterBodyType.Medium, CharacterGender.Female, CharacterSpecies.Horse);
 
-        _tagService.ValidateITaggables();
         var chars = _characterService.Characters;
         var locs = _locationService.Locations;
         var player = _characterService.GetPlayer();
@@ -57,6 +57,14 @@ internal class Program
         _characterService.AssignItem(apple.Id, player.Id);
         _characterService.AssignItem(apple.Id, chars[0].Id);
         _characterService.UnAssignItem(apple.Id, player.Id);
+        apple = null;
+
+        _tagService.ValidateITaggables();
+
+        //Examples of how to get any ITaggable entity in the game from the tagService:
+        var characterEntities = _tagService.TaggableEntities.Where(i => i is Character).Cast<Character>().ToList();
+        _itemService.RemoveItem(_itemService.Items[0].Id);
+        var itemEntities = _tagService.TaggableEntities.Where(i => i is Item).Cast<Item>().ToList(); 
     }
     private static void ConfigureServices()
     {

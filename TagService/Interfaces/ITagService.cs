@@ -14,6 +14,8 @@ namespace GlobalServices.Interfaces
         List<ITag> CharacterTags { get; }
         List<ITag> EventTags { get; }
 
+        List<ITaggable> TaggableEntities { get;}
+
         ITag? GetLocationTag(TagId.Location tagId);
         ITag? GetCharacterTag(TagId.Character tagId);
         ITag? GetEventTag(TagId.Event tagId);
