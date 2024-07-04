@@ -4,14 +4,14 @@ namespace GlobalServices.Entities
 {
     public class CharacterBase : ITaggable
     {
-        public List<ITag> Tags { get; protected set; }
-        protected CharacterBase(List<ITag> tags)
+        public HashSet<ITag> Tags { get; protected set; }
+        protected CharacterBase(HashSet<ITag> tags)
         {
             Tags = tags;
         }
         protected CharacterBase()
         {
-            Tags = new List<ITag>();
+            Tags = new HashSet<ITag>();
         }
         public void AddTag(ITag tag)
         {

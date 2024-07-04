@@ -5,7 +5,7 @@ namespace GlobalServices.Interfaces
 {
     public interface IItemService
     {
-        List<Item> Items { get; }
+        HashSet<Item> Items { get; }
         Item? GetItem(string itemId);
         Item? GetItemByName(string itemName);
         Item CreateDefaultItem();

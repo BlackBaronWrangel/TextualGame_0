@@ -11,18 +11,18 @@ namespace GlobalServices
     {
 
         private ILogger _logger;
-        public List<ITag> Tags { get; }
-        public List<ITag> LocationTags { get => Tags.Where(tag => tag.TagType == TagType.LocationTag).ToList(); }
-        public List<ITag> CharacterTags { get => Tags.Where(tag => tag.TagType == TagType.CharacterTag).ToList(); }
-        public List<ITag> EventTags { get => Tags.Where(tag => tag.TagType == TagType.EventTag).ToList(); }
-        public List<ITaggable> TaggableEntities { get; protected set; }
+        public HashSet<ITag> Tags { get; }
+        public HashSet<ITag> LocationTags { get => Tags.Where(tag => tag.TagType == TagType.LocationTag).ToHashSet(); }
+        public HashSet<ITag> CharacterTags { get => Tags.Where(tag => tag.TagType == TagType.CharacterTag).ToHashSet(); }
+        public HashSet<ITag> EventTags { get => Tags.Where(tag => tag.TagType == TagType.EventTag).ToHashSet(); }
+        public HashSet<ITaggable> TaggableEntities { get; protected set; }
 
         public TagService(ILogger logger)
         {
-            TaggableEntities = new List<ITaggable>();
+            TaggableEntities = new HashSet<ITaggable>();
             _logger = logger;
 
-            Tags = new List<ITag>();
+            Tags = new HashSet<ITag>();
             InitLocationsTags();
             InitCharactersTags();
             InitEventsTags();

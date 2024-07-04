@@ -4,14 +4,14 @@ namespace GlobalServices.Entities
 {
     public class LocationBase : ITaggable
     {
-        public List<ITag> Tags { get; protected set; }
-        protected LocationBase(List<ITag> tags)
+        public HashSet<ITag> Tags { get; protected set; }
+        protected LocationBase(HashSet<ITag> tags)
         {
             Tags = tags;
         }
         protected LocationBase()
         {
-            Tags = new List<ITag>();
+            Tags = new HashSet<ITag>();
         }
         public void AddTag(ITag tag)
         {

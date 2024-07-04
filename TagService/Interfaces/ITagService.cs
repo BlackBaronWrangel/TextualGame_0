@@ -9,12 +9,12 @@ namespace GlobalServices.Interfaces
 {
     public interface ITagService
     {
-        List<ITag> Tags { get; }
-        List<ITag> LocationTags { get; }
-        List<ITag> CharacterTags { get; }
-        List<ITag> EventTags { get; }
+        HashSet<ITag> Tags { get; }
+        HashSet<ITag> LocationTags { get; }
+        HashSet<ITag> CharacterTags { get; }
+        HashSet<ITag> EventTags { get; }
 
-        List<ITaggable> TaggableEntities { get;}
+        HashSet<ITaggable> TaggableEntities { get;}
 
         ITag? GetLocationTag(TagId.Location tagId);
         ITag? GetCharacterTag(TagId.Character tagId);

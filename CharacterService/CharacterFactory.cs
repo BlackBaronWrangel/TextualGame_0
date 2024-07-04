@@ -10,7 +10,7 @@ namespace GlobalServices
     {
         private ILogger _logger;
         private ITagService _tagService;
-        public List<Character> Characters { get; protected set; } = new();
+        public HashSet<Character> Characters { get; protected set; } = new();
 
         public CharacterFactory(ITagService tagService, ILogger logger)
         {
@@ -100,7 +100,7 @@ namespace GlobalServices
             catch (Exception ex)
             {
                 _logger.LogError(ex.ToString());
-                return default(T);
+                return default;
             }
         }
 

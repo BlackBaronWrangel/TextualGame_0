@@ -8,7 +8,7 @@ namespace GlobalServices
     {
         private ILogger _logger;
         private ITagService _tagService;
-        public List<Item> Items { get; protected set; } = new();
+        public HashSet<Item> Items { get; protected set; } = new();
 
         public ItemFactory(ITagService tagService, ILogger loggerService)
         {

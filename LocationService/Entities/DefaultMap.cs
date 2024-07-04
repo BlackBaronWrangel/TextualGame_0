@@ -13,7 +13,7 @@ namespace GlobalServices.Entities
             Swamp,
         };
 
-        public static List<(LocationId, LocationId)> DefaultConnections = new List<(LocationId, LocationId)>(){
+        public static HashSet<(LocationId, LocationId)> DefaultConnections = new HashSet<(LocationId, LocationId)>(){
                 (LocationId.Castle, LocationId.Village),
                 (LocationId.Castle, LocationId.Forest),
                 (LocationId.Village,LocationId.Lake),
@@ -21,7 +21,7 @@ namespace GlobalServices.Entities
                 (LocationId.Forest,LocationId.Swamp),
         };
 
-        public static List<(LocationId, TagId.Location)> DefaultLocationTags = new List<(LocationId, TagId.Location)>(){
+        public static HashSet<(LocationId, TagId.Location)> DefaultLocationTags = new HashSet<(LocationId, TagId.Location)>(){
                 (LocationId.Castle, TagId.Location.Indoor),
                 (LocationId.Castle, TagId.Location.Neutral),
 

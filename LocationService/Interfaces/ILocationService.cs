@@ -6,9 +6,9 @@ namespace GlobalServices.Interfaces
 {
     public interface ILocationService
     {
-        List<Location> Locations { get; }
+        HashSet<Location> Locations { get; }
         Location? GetLocation(LocationId locationId);
-        List<Location> GetConnectedLocations(LocationId locationId);
+        HashSet<Location> GetConnectedLocations(LocationId locationId);
         void AddConnection(LocationId location1, LocationId location2);
         void RemoveConnection(LocationId location1, LocationId location2);
         void AddTag(LocationId locationId, ITag tag);

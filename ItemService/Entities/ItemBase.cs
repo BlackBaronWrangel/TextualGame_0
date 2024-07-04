@@ -9,14 +9,14 @@ namespace GlobalServices.Entities
 {
     public class ItemBase : ITaggable
     {
-        public List<ITag> Tags { get; protected set; }
-        protected ItemBase(List<ITag> tags)
+        public HashSet<ITag> Tags { get; protected set; }
+        protected ItemBase(HashSet<ITag> tags)
         {
             Tags = tags;
         }
         protected ItemBase()
         {
-            Tags = new List<ITag>();
+            Tags = new HashSet<ITag>();
         }
         public void AddTag(ITag tag)
         {

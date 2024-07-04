@@ -16,7 +16,7 @@ namespace GlobalServices.Entities
             Name = name;
             Type= itemType;
         }
-        public Item(string name, string description, ItemType itemType, List<ITag> tags) : base(tags) 
+        public Item(string name, string description, ItemType itemType, HashSet<ITag> tags) : base(tags) 
         {
             Name = name;
             Description = description;

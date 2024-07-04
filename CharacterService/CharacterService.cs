@@ -15,7 +15,7 @@ namespace GlobalServices
         ITagService _tagService;
         ILocationService _locationService;
         IItemService _itemService;
-        public List<Character> Characters { get => _characterFactory.Characters; }
+        public HashSet<Character> Characters { get => _characterFactory.Characters; }
 
         public CharacterService(ICharacterFactory characterFactory,IItemService itemService ,ILogger logger, ITagService tagService, ILocationService locationService)
         {
