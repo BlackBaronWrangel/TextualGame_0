@@ -5,20 +5,20 @@ namespace GlobalServices.Tags
 {
     public class EventTag : ITag
     {
-        public string Id { get; }
+        public string Name { get; }
         public TagType TagType { get => TagType.EventTag; }
 
         public string Description { get; }
 
-        public EventTag(string tagId ,string description)
+        public EventTag(string name ,string description)
         {
-            Id = tagId;
+            Name = name;
             Description = description;
         }
 
         public override string ToString()
         {
-            return Id;
+            return Name;
         }
     }
 }

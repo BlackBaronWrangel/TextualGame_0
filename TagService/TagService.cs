@@ -31,23 +31,23 @@ namespace GlobalServices
         }
         public ITag? GetLocationTag(TagId.Location tagId)
         {
-            return LocationTags.FirstOrDefault(tag => tag.Id == tagId.ToString());
+            return LocationTags.FirstOrDefault(tag => tag.Name == tagId.ToString());
         }
         public ITag? GetCharacterTag(TagId.Character tagId)
         {
-            return CharacterTags.FirstOrDefault(tag => tag.Id == tagId.ToString());
+            return CharacterTags.FirstOrDefault(tag => tag.Name == tagId.ToString());
         }
         public ITag? GetEventTag(TagId.Event tagId)
         {
-            return EventTags.FirstOrDefault(tag => tag.Id == tagId.ToString());
+            return EventTags.FirstOrDefault(tag => tag.Name == tagId.ToString());
         }
         public ITag? GetItemTag(TagId.Item tagId)
         {
-            return EventTags.FirstOrDefault(tag => tag.Id == tagId.ToString());
+            return EventTags.FirstOrDefault(tag => tag.Name == tagId.ToString());
         }
         public ITag? GetTagById(string id)
         {
-            return Tags.FirstOrDefault(tag => tag.Id == id);
+            return Tags.FirstOrDefault(tag => tag.Name == id);
         }
         public void RegisterITaggable(ITaggable obj)
         {

@@ -6,7 +6,7 @@ namespace GlobalServices.Entities
 {
     public class Character : CharacterBase
     {
-        private Guid _id = Guid.NewGuid();
+        private readonly Guid _id = Guid.NewGuid();
 
         //"Static" properties
         public string Id { get => _id.ToString();}
