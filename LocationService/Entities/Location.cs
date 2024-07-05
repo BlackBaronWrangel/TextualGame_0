@@ -1,26 +1,44 @@
 ﻿using GlobalServices.Interfaces;
-using LocationId = GlobalServices.Entities.DefaultMap.LocationId;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace GlobalServices.Entities
 {
     public class Location : LocationBase
     {
-        public LocationId Id { get; protected set; }
-        public HashSet<Location> ConnectedLocations { get; protected set; }
+        [JsonProperty]
+        public string Id { get; protected set; } = string.Empty;
+        [JsonProperty]
+        public string Name { get; protected set; } = string.Empty;
+        [JsonProperty]
+        public string Description { get; protected set; } = string.Empty;
+        [JsonProperty]
+        public HashSet<Connection> ConnectedLocations { get; protected set; } = new ();
+        public Location(string id, string name, string description, HashSet<Connection> connections, HashSet<ITag> tags) : base(tags)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+            ConnectedLocations = connections;
+        }
+        public Location(string id, string name, string description, HashSet<ITag> tags) : base(tags)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+        }
 
-        public Location(LocationId id, HashSet<ITag> tags) : base(tags)
+        public Location(string id, string name, string description) : base()
         {
             Id = id;
-            ConnectedLocations = new HashSet<Location>();
+            Name = name;
+            Description = description;
         }
-        public Location(LocationId id) : base()
-        {
-            Id = id;
-            ConnectedLocations = new HashSet<Location>();
-        }
+        [Newtonsoft.Json.JsonConstructor]
+        public Location() : base() { }
         public override string ToString()
         {
-            return Id.ToString();
+            return Id;
         }
     }
 }

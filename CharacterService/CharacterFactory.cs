@@ -1,8 +1,6 @@
 ﻿using GlobalServices.Entities;
 using GlobalServices.Enums;
 using GlobalServices.Interfaces;
-using System;
-using static GlobalServices.Entities.DefaultMap;
 
 namespace GlobalServices
 {

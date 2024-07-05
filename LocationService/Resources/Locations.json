@@ -1,0 +1,28 @@
+[
+  {
+    "Id": "L001",
+    "Name": "Central Park",
+    "Description": "A large public park in New York City, famous for its lush greenery and outdoor activities.",
+    "ConnectedLocations": [
+      {"LocationId": "L002","Distance": 0.75},
+      {"LocationId": "L003","Distance": 3}
+    ]
+  },
+  {
+    "Id": "L002",
+    "Name": "Golden Gate Park",
+    "Description": "A great place for recreation and cultural events in San Francisco, known for its beautiful landscapes and diverse attractions.",
+    "ConnectedLocations": [
+      {"LocationId": "L001","Distance": 0.75},
+      {"LocationId": "L003","Distance": 2}
+    ]
+  },
+  {
+    "Id": "L003",
+    "Name": "Hyde Park",
+    "Description": "One of London's largest parks, famous for its Speaker's Corner and the Serpentine, a large recreational lake.",
+    "ConnectedLocations": [
+      {"LocationId": "L001","Distance": 3}
+    ]
+  }
+]

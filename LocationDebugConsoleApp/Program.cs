@@ -3,8 +3,6 @@ using GlobalServices;
 using GlobalServices.Enums;
 using GlobalServices.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
-using tags = GlobalServices.Enums.TagId;
-using loc = GlobalServices.Entities.DefaultMap.LocationId;
 using GlobalServices.Entities;
 
 internal class Program
@@ -12,7 +10,6 @@ internal class Program
     private static ServiceCollection _serviceCollection;
     private static ServiceProvider _serviceProvider;
     private static ITagService _tagService ;
-    private static ILocationFactory _locationFactory ;
     private static ILocationService _locationService; 
     private static ICharacterService _characterService;
     private static ICharacterFactory _characterFactory;
@@ -23,7 +20,6 @@ internal class Program
     {
         ConfigureServices();
         _tagService = _serviceProvider.GetService<ITagService>();
-        _locationFactory = _serviceProvider.GetService<ILocationFactory>();
         _locationService = _serviceProvider.GetService<ILocationService>();
         _logger = _serviceProvider.GetService<ILogger>();
         _characterFactory = _serviceProvider.GetService<ICharacterFactory>();
@@ -32,8 +28,8 @@ internal class Program
         _itemService = _serviceProvider.GetService<IItemService>();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        _locationService.AddConnection(loc.Castle, loc.Village);
-        _locationService.RemoveConnection(loc.Village, loc.Swamp);
+        _locationService.AddConnection("L001", "L003", 0.5);
+        _locationService.RemoveConnection("L003", "L002");
 
         _characterService.CreateRandomCharacter(CharacterType.Monster, CharacterPersistence.Temporary).AddTag(_tagService.GetCharacterTag(TagId.Character.Neutral)) ;
         _characterService.CreateRandomCharacter(CharacterType.Other, CharacterPersistence.Permanent);
@@ -48,7 +44,10 @@ internal class Program
         var locs = _locationService.Locations;
         var player = _characterService.GetPlayer();
 
-        _characterService.MoveCharacter(player, loc.Village);
+        _characterService.MoveCharacter(player, "L002");
+        _characterService.MoveCharacter(player, "L003");
+        _characterService.MoveCharacter(player, "L001");
+        _characterService.MoveCharacter(player, "L002");
 
         var apple = _itemService.CreateItem("Apple", ItemType.Food);
         _itemService.CreateItem("Diamond", ItemType.Trinket);
@@ -71,7 +70,6 @@ internal class Program
         _serviceCollection = new ServiceCollection();
         _serviceCollection.AddSingleton<ITagService, TagService>();
         _serviceCollection.AddSingleton<ILocationService, LocationService>();
-        _serviceCollection.AddSingleton<ILocationFactory, LocationFactory>();
         _serviceCollection.AddSingleton<ICharacterService, CharacterService>();
         _serviceCollection.AddSingleton<ICharacterFactory, CharacterFactory>();
         _serviceCollection.AddSingleton<ILogger, Logger>();

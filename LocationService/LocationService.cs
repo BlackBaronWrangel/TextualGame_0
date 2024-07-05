@@ -1,36 +1,29 @@
 ﻿using GlobalServices.Entities;
 using GlobalServices.Enums;
 using GlobalServices.Interfaces;
-using static GlobalServices.Entities.DefaultMap;
-using LocationId = GlobalServices.Entities.DefaultMap.LocationId;
 
 namespace GlobalServices
 {
     public class LocationService : ILocationService
     {
         private ILogger _logger;
-        private ILocationFactory _locationFactory;
+        //private ILocationFactory _locationFactory;
         private ITagService _tagService;
-        public HashSet<Location> Locations { get => _locationFactory.Locations; }
+        public HashSet<Location> Locations { get; protected set; } = new();
 
-        public LocationService(ILocationFactory locationFactory, ITagService tagService, ILogger logger)
+        public LocationService( ITagService tagService, ILogger logger)
         {
-            _locationFactory = locationFactory;
             _tagService = tagService;
             _logger = logger;
 
             InitLocations();
-            InitLocationsDefaultConnections();
-            InitLocationsDefaultTags();
         }
-        public Location? GetLocation(LocationId locationId)
-        {
-            return _locationFactory.GetLocation(locationId);
-        }
-        public HashSet<Location> GetConnectedLocations(LocationId locationId)
+        public Location? GetLocation(string locationId) => 
+            Locations.FirstOrDefault(l => l.Id == locationId);
+        public HashSet<Connection>? GetConnections(string locationId)
         {
             var loc = GetLocation(locationId);
-            if (loc == null)
+            if (loc is null)
             {
                 var message = $"Location {locationId} can't be loaded.";
                 _logger.LogError(message);
@@ -38,76 +31,91 @@ namespace GlobalServices
             }
             return loc.ConnectedLocations;
         }
-        public void AddConnection(LocationId location1, LocationId location2)
+        public void AddConnection(string id1, string id2, double distance)
         {
-            _locationFactory.AddConnection(location1, location2);
+            var location1 = GetLocation(id1);
+            var location2 = GetLocation(id2);
+
+            if (location1 is null || location2 is null)
+            {
+                _logger.LogWarning($"Can't add connection between {id1} and {id2} because one or both locations can't be found.");
+                return;
+            }
+
+            if (!location1.ConnectedLocations.Any(c => c.LocationId == id2))
+                location1.ConnectedLocations.Add(new(location2.Id, distance));
+            else
+                _logger.LogWarning($"Attempt to add an existing connection between {id1} and {id2}");
         }
-        public void RemoveConnection(LocationId location1, LocationId location2)
+        public void RemoveConnection(string id1, string id2)
         {
-            _locationFactory.RemoveConnection(location1, location2);
+            var location1 = GetLocation(id1);
+
+            if (location1 is null)
+            {
+                _logger.LogWarning($"Can't remove connection between {id1} and {id2} because location can't be found.");
+                return;
+            }
+
+            var connection1 = location1.ConnectedLocations.FirstOrDefault(c => c.LocationId == id2);
+
+            if (connection1 is not null)
+                location1.ConnectedLocations.Remove(connection1);
+            else
+                _logger.LogWarning($"Attempt to remove an unexisting connection between {id1} and {id2}");
         }
-        public void AddTag(LocationId locationId, ITag tag)
+        public void AddTag(string locationId, ITag tag)
         {
-            var location = _locationFactory.GetLocation(locationId);
+            var location = GetLocation(locationId);
+            if (location is null)
+            {
+                _logger.LogWarning($"Attempt to add a tag to unexisting location {locationId}");
+                return;
+            }
             location.AddTag(tag);
         }
-        public void AddTag(LocationId locationId, TagId.Location tagId)
+        public void AddTag(string locationId, TagId.Location tagId)
         {
             var tag = _tagService.GetLocationTag(tagId);
             if (tag != null)
-            {
                 AddTag(locationId, tag);
-            }
             else
-            {
                 _logger.LogError($"Can't add tag {tag} to the location {locationId}");
-            }
         }
-        public void RemoveTag(LocationId locationId, ITag tag)
+        public void RemoveTag(string locationId, ITag tag)
         {
-            var location = _locationFactory.GetLocation(locationId);
-            location.RemoveTag(tag);
+            var location = GetLocation(locationId);
+            if (location is not null)
+                location.RemoveTag(tag);
+            else
+                _logger.LogWarning($"Can't get location {locationId} to remove tag {tag}");
         }
-        public void RemoveTag(LocationId locationId, TagId.Location tagId)
+        public void RemoveTag(string locationId, TagId.Location tagId)
         {
             var tag = _tagService.GetLocationTag(tagId);
             if (tag != null)
-            {
                 RemoveTag(locationId, tag);
-            }
             else
-            {
                 _logger.LogError($"Can't remove tag {tag} from the location {locationId}");
-            }
         }
         private void InitLocations()
         {
-            foreach (LocationId item in Enum.GetValues(typeof(LocationId)))
+            try
             {
-                _locationFactory.GetLocation(item);
+                var locations = LocationJsonReader.ReadLocationsFromJson();
+                if (locations is null)
+                {
+                    throw new("Locations are empty.");
+                }
+                Locations = locations;
+            }
+            catch (Exception ex) 
+            {
+                _logger.LogError($"Can't read locations from Json. Error: {ex.Message}");
             }
         }
-        private void InitLocationsDefaultConnections()
+        private void ReadLocationsDefaultTags()
         {
-            foreach (var connection in DefaultMap.DefaultConnections)
-            {
-                _locationFactory.AddConnection(connection.Item1, connection.Item2);
-            }
-        }
-        private void InitLocationsDefaultTags()
-        {
-            foreach (var locationTagPair in DefaultMap.DefaultLocationTags)
-            {
-                var tag = _tagService.GetLocationTag(locationTagPair.Item2);
-                if (tag is not null)
-                {
-                    AddTag(locationTagPair.Item1, tag);
-                }
-                else
-                {
-                    _logger.LogError($"Can't obtain and add tag {locationTagPair.Item2} to the location {locationTagPair.Item1} ");
-                }
-            }
         }
     }
 }
