@@ -2,9 +2,6 @@
 using GlobalServices.Entities;
 using GlobalServices.Enums;
 using GlobalServices.Interfaces;
-using System.Xml.Linq;
-using static GlobalServices.Entities.DefaultMap;
-using LocationId = GlobalServices.Entities.DefaultMap.LocationId;
 
 namespace GlobalServices
 {
@@ -142,9 +139,15 @@ namespace GlobalServices
             return character;
         }
 
-        public void MoveCharacter(Character character, LocationId locationId)
+        public void MoveCharacter(Character character, string locationId)
         {
-            character.Location = _locationService.GetLocation(locationId);
+            var loc = _locationService.GetLocation(locationId);
+            if (loc is null)
+            {
+                _logger.LogWarning($"Attempt to move character {character} to unexisting location {locationId}");
+                return;
+            }
+            character.Location = loc;
             _logger.LogInfo($"Character {character} moved to location {locationId}");
         }
         public void AssignItem(string itemId, string characterId)
