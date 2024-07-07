@@ -4,7 +4,7 @@ namespace GlobalServices.Enums
 {
     public static class TagId
     {
-        public enum Location
+        public enum LocationTagId
         {
             // Location type
             Indoor,
@@ -14,8 +14,7 @@ namespace GlobalServices.Enums
             Neutral,
             Peaceful,
         }
-
-        public enum Character
+        public enum CharacterTagId
         {
             // Character mood against player.
             Friendly,
@@ -23,20 +22,13 @@ namespace GlobalServices.Enums
             Unfriendly,
             Hostile,
         }
-        public enum Event
+        public enum EventTagId
         {
-            tag0,
-            tag1,
-            tag2,
-            tag3,
+            Ending,
         }
-        public enum Item
+        public enum ItemTagId
         {
-            tag0,
-            tag1,
-            tag2,
-            tag3,
+            HealthRegeneration,
         }
-
     }
 }

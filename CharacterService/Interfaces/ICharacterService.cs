@@ -20,8 +20,8 @@ namespace GlobalServices.Interfaces
         void AssignItem(string itemid, string characterId);
         void UnAssignItem(string itemid, string characterId);
         void AddTag(string CharacterId, ITag tag);
-        void AddTag(string CharacterId, TagId.Character tag);
+        void AddTag(string CharacterId, TagId.CharacterTagId tag);
         void RemoveTag(string CharacterId, ITag tag);
-        void RemoveTag(string CharacterId, TagId.Character tag);
+        void RemoveTag(string CharacterId, TagId.CharacterTagId tag);
     }
 }

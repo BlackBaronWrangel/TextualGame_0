@@ -34,7 +34,7 @@ namespace GlobalServices
             }
         }
 
-        public void AddTag(string itemId, TagId.Item tagId)
+        public void AddTag(string itemId, TagId.ItemTagId tagId)
         {
             var tag = _tagService.GetItemTag(tagId);
             if (tag is not null)
@@ -77,7 +77,7 @@ namespace GlobalServices
             item?.RemoveTag(tag);
         }
 
-        public void RemoveTag(string ItemId, TagId.Item tagId)
+        public void RemoveTag(string ItemId, TagId.ItemTagId tagId)
         {
             var tag = _tagService.GetItemTag(tagId);
             if (tag is not null) RemoveTag(ItemId, tag);

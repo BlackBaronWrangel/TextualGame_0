@@ -12,8 +12,8 @@ namespace GlobalServices.Interfaces
         Item CreateItem(string name, ItemType itemType);
         void RemoveItem(string itemId);
         void AddTag(string itemId, ITag tag);
-        void AddTag(string itemId, TagId.Item tag);
+        void AddTag(string itemId, TagId.ItemTagId tag);
         void RemoveTag(string itemId, ITag tag);
-        void RemoveTag(string itemId, TagId.Item tag);
+        void RemoveTag(string itemId, TagId.ItemTagId tag);
     }
 }

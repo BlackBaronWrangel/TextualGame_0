@@ -76,7 +76,7 @@ namespace GlobalServices
             }
             location.AddTag(tag);
         }
-        public void AddTag(string locationId, TagId.Location tagId)
+        public void AddTag(string locationId, TagId.LocationTagId tagId)
         {
             var tag = _tagService.GetLocationTag(tagId);
             if (tag != null)
@@ -92,7 +92,7 @@ namespace GlobalServices
             else
                 _logger.LogWarning($"Can't get location {locationId} to remove tag {tag}");
         }
-        public void RemoveTag(string locationId, TagId.Location tagId)
+        public void RemoveTag(string locationId, TagId.LocationTagId tagId)
         {
             var tag = _tagService.GetLocationTag(tagId);
             if (tag != null)

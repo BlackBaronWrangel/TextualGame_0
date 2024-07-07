@@ -38,7 +38,7 @@ namespace GlobalServices
             }
             gameEvent.AddTag(tag);
         }
-        public void AddTag(string eventId, TagId.Event tagId)
+        public void AddTag(string eventId, TagId.EventTagId tagId)
         {
             var tag = _tagService.GetEventTag(tagId);
             if (tag != null)
@@ -54,7 +54,7 @@ namespace GlobalServices
             else
                 _logger.LogWarning($"Can't get {eventId} to remove tag {tag}");
         }
-        public void RemoveTag(string eventId, TagId.Event tagId)
+        public void RemoveTag(string eventId, TagId.EventTagId tagId)
         {
             var tag = _tagService.GetEventTag(tagId);
             if (tag != null)

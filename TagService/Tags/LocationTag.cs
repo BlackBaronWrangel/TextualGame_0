@@ -1,21 +1,18 @@
 ﻿using GlobalServices.Enums;
 using GlobalServices.Interfaces;
+using Newtonsoft.Json;
 
 namespace GlobalServices.Tags
 {
-    public class LocationTag : ITag
+    public class LocationTag : TagBase
     {
-        public string Name { get; }
-        public TagType TagType { get => TagType.LocationTag; }
+        public override TagType TagType { get => TagType.LocationTag; }
 
-        public string Description { get; }
-
-        public LocationTag(string name, string description)
+        public LocationTag(string id, string name, string description) : base()
         {
+            Id = id;
             Name = name;
             Description = description;
         }
-
-        public override string ToString() => Name;
     }
 }

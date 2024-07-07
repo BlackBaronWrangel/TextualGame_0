@@ -7,31 +7,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LoggerService\LoggerService.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Resources\CharacterTagsDescription.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>CharacterTagsDescription.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\LocationTagsDescription.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LocationTagsDescription.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\CharacterTagsDescription.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>CharacterTagsDescription.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\LocationTagsDescription.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>LocationTagsDescription.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <None Update="Resources\ItemTags.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\EventTags.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\CharacterTags.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\LocationTags.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
