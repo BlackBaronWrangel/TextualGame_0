@@ -78,8 +78,7 @@ namespace GlobalServices
             {
                 if (obj.Tags.Count() == 0)
                 {
-                    _logger.LogWarning($"ITaggable {obj} has no tags.");
-                    return result;
+                    _logger.LogWarning($"{obj} has no tags.");
                 }
             }
             return result;

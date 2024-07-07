@@ -144,11 +144,11 @@ namespace GlobalServices
             var loc = _locationService.GetLocation(locationId);
             if (loc is null)
             {
-                _logger.LogWarning($"Attempt to move character {character} to unexisting location {locationId}");
+                _logger.LogWarning($"Attempt to move {character} to unexisting {locationId}");
                 return;
             }
             character.Location = loc;
-            _logger.LogInfo($"Character {character} moved to location {locationId}");
+            _logger.LogInfo($"{character} moved to location {locationId}");
         }
         public void AssignItem(string itemId, string characterId)
         {
@@ -159,11 +159,11 @@ namespace GlobalServices
                 var previousOwner = Characters.FirstOrDefault(c => c.Items.Contains(item));
                 if (previousOwner is not null) UnAssignItem(itemId, previousOwner.Id);
                 character.Items.Add(item);
-                _logger.LogInfo($"Item {item} assigned to character {character}");
+                _logger.LogInfo($"{item} assigned to character {character}");
             }
             else
             {
-                _logger.LogError($"Can't assign item {item} to character {character}");
+                _logger.LogError($"Can't assign {item} to character {character}");
             }
         }
         public void UnAssignItem(string itemid, string characterId)
@@ -173,18 +173,18 @@ namespace GlobalServices
 
             if ((item is null) || (character is null))
             {
-                _logger.LogError($"Can't remove item {item} from character {character}");
+                _logger.LogError($"Can't remove {item} from {character}");
             }
             else
             {
                 if (character.Items.Contains(item))
                 {
                     character.Items.Remove(item); 
-                    _logger.LogInfo($"Item {item} unassigned from character {character}");
+                    _logger.LogInfo($"{item} unassigned from {character}");
                 }
                 else
                 {
-                    _logger.LogWarning($"Character {character} doesn't have item {item} to remove.");
+                    _logger.LogWarning($"{character} doesn't have {item} to remove.");
                 }                    
             }
         }

@@ -7,7 +7,6 @@ namespace GlobalServices
     public class LocationService : ILocationService
     {
         private ILogger _logger;
-        //private ILocationFactory _locationFactory;
         private ITagService _tagService;
         public HashSet<Location> Locations { get; protected set; } = new();
 
@@ -17,6 +16,9 @@ namespace GlobalServices
             _logger = logger;
 
             InitLocations();
+
+            foreach (var location in Locations)
+                _tagService.RegisterITaggable(location);
         }
         public Location? GetLocation(string locationId) => 
             Locations.FirstOrDefault(l => l.Id == locationId);

@@ -45,11 +45,7 @@ namespace GlobalServices.Entities
             Species = species;
             Gender = gender;
         }
-        public override string ToString()
-        {
-            string description = $"{Id} [{Persistence},{Type},{ControlType}]";
-            return description;
-        }
+        public override string ToString() => $"{GetType().Name} [{Id}, {Persistence}, {Type}, {ControlType}]";
 
     }
 }

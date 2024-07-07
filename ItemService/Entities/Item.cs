@@ -23,11 +23,7 @@ namespace GlobalServices.Entities
             Type = itemType;
             Tags = tags;
         }
-        public override string ToString()
-        {
-            string description = $"{Id} [{Name},{Type}]";
-            return description;
-        }
+        public override string ToString() => $"{GetType().Name} [{Id}, {Name},{Type}]";
 
     }
 }

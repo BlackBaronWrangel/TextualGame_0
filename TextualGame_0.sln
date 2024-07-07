@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerService", "LoggerServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CharacterService", "CharacterService\CharacterService.csproj", "{8A15E3C6-55B8-456D-91D7-385B869B1972}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemService", "ItemService\ItemService.csproj", "{F3DBE2FB-4EA4-4D44-A207-989FA7A5FCEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ItemService", "ItemService\ItemService.csproj", "{F3DBE2FB-4EA4-4D44-A207-989FA7A5FCEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventService", "EventService\EventService.csproj", "{FC36B54B-FEA5-4C0F-8C06-04371FF951C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{F3DBE2FB-4EA4-4D44-A207-989FA7A5FCEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3DBE2FB-4EA4-4D44-A207-989FA7A5FCEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3DBE2FB-4EA4-4D44-A207-989FA7A5FCEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC36B54B-FEA5-4C0F-8C06-04371FF951C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC36B54B-FEA5-4C0F-8C06-04371FF951C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC36B54B-FEA5-4C0F-8C06-04371FF951C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC36B54B-FEA5-4C0F-8C06-04371FF951C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
