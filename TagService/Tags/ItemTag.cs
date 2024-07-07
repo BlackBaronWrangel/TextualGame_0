@@ -15,10 +15,6 @@ namespace GlobalServices.Tags
             Name = name;
             Description = description;
         }
-
-        public override string ToString()
-        {
-            return Name;
-        }
+        public override string ToString() => Name;
     }
 }

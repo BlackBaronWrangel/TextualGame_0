@@ -35,9 +35,6 @@ namespace GlobalServices.Entities
         }
         [Newtonsoft.Json.JsonConstructor]
         public Location() : base() { }
-        public override string ToString()
-        {
-            return Id;
-        }
+        public override string ToString() => $"{GetType().Name} [{Id}, {Name}]";
     }
 }
