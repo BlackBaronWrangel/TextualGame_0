@@ -1,6 +1,5 @@
 ﻿using GlobalServices.Enums;
 using GlobalServices.Interfaces;
-using GlobalServices.Tags;
 
 namespace GlobalServices.Entities
 {

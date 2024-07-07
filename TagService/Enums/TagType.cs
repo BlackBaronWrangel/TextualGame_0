@@ -1,5 +1,4 @@
 ﻿
-
 namespace GlobalServices.Enums
 {
     public enum TagType

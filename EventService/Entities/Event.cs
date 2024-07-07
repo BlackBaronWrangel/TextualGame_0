@@ -1,7 +1,5 @@
 ﻿using GlobalServices.Enums;
 using GlobalServices.Interfaces;
-using GlobalServices.Tags;
-using System.Xml.Linq;
 
 namespace GlobalServices.Entities
 {

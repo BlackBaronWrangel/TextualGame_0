@@ -1,9 +1,9 @@
 ﻿//Place code for testing and debugging here.
 using GlobalServices;
+using GlobalServices.Entities;
 using GlobalServices.Enums;
 using GlobalServices.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
-using GlobalServices.Entities;
 
 internal class Program
 {
