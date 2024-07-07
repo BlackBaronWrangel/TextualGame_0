@@ -1,11 +1,6 @@
 ﻿using GlobalServices.Entities;
 using GlobalServices.Enums;
 using GlobalServices.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GlobalServices
 {

@@ -1,6 +1,4 @@
 ﻿using GlobalServices.Enums;
-using GlobalServices.Interfaces;
-using Newtonsoft.Json;
 
 namespace GlobalServices.Tags
 {

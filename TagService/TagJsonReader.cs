@@ -1,5 +1,4 @@
-﻿using GlobalServices.Interfaces;
-using GlobalServices.Tags;
+﻿using GlobalServices.Tags;
 using Newtonsoft.Json;
 
 namespace GlobalServices

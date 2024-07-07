@@ -1,8 +1,6 @@
 ﻿using GlobalServices.Enums;
 using GlobalServices.Interfaces;
 using GlobalServices.Tags;
-using System.Reflection;
-using System.Resources;
 
 namespace GlobalServices
 {
