@@ -1,6 +1,5 @@
 ﻿using GlobalServices.Interfaces;
 using Newtonsoft.Json;
-using System.Text.Json.Serialization;
 
 namespace GlobalServices.Entities
 {
