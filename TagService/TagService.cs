@@ -1,6 +1,5 @@
 ﻿using GlobalServices.Enums;
 using GlobalServices.Interfaces;
-using GlobalServices.Resources;
 using GlobalServices.Tags;
 using System.Reflection;
 using System.Resources;
@@ -15,6 +14,7 @@ namespace GlobalServices
         public HashSet<ITag> LocationTags { get => Tags.Where(tag => tag.TagType == TagType.LocationTag).ToHashSet(); }
         public HashSet<ITag> CharacterTags { get => Tags.Where(tag => tag.TagType == TagType.CharacterTag).ToHashSet(); }
         public HashSet<ITag> EventTags { get => Tags.Where(tag => tag.TagType == TagType.EventTag).ToHashSet(); }
+        public HashSet<ITag> ItemTags { get => Tags.Where(tag => tag.TagType == TagType.ItemTag).ToHashSet(); }
         public HashSet<ITaggable> TaggableEntities { get; protected set; }
 
         public TagService(ILogger logger)
@@ -29,26 +29,12 @@ namespace GlobalServices
             InitItemsTags();
             //init other tags
         }
-        public ITag? GetLocationTag(TagId.Location tagId)
-        {
-            return LocationTags.FirstOrDefault(tag => tag.Name == tagId.ToString());
-        }
-        public ITag? GetCharacterTag(TagId.Character tagId)
-        {
-            return CharacterTags.FirstOrDefault(tag => tag.Name == tagId.ToString());
-        }
-        public ITag? GetEventTag(TagId.Event tagId)
-        {
-            return EventTags.FirstOrDefault(tag => tag.Name == tagId.ToString());
-        }
-        public ITag? GetItemTag(TagId.Item tagId)
-        {
-            return EventTags.FirstOrDefault(tag => tag.Name == tagId.ToString());
-        }
-        public ITag? GetTagById(string id)
-        {
-            return Tags.FirstOrDefault(tag => tag.Name == id);
-        }
+        public ITag? GetLocationTag(TagId.LocationTagId tagId) => LocationTags.FirstOrDefault(tag => tag.Id == tagId.ToString());
+        public ITag? GetCharacterTag(TagId.CharacterTagId tagId) =>  CharacterTags.FirstOrDefault(tag => tag.Id == tagId.ToString());        
+        public ITag? GetEventTag(TagId.EventTagId tagId) => EventTags.FirstOrDefault(tag => tag.Id == tagId.ToString());        
+        public ITag? GetItemTag(TagId.ItemTagId tagId) => EventTags.FirstOrDefault(tag => tag.Id == tagId.ToString());        
+        public ITag? GetTagById(string id) => Tags.FirstOrDefault(tag => tag.Id == id);
+        
         public void RegisterITaggable(ITaggable obj)
         {
             if (!TaggableEntities.Contains(obj))
@@ -86,49 +72,61 @@ namespace GlobalServices
 
         private void InitLocationsTags()
         {
-            ResourceManager rm = new ResourceManager("TagService.Resources.LocationTagsDescription", Assembly.GetExecutingAssembly());
-            InitTags<TagId.Location, LocationTag>(rm);
+            var tags = TagJsonReader.ReadLocationTagsFromJson();
+            InitTags<TagId.LocationTagId, LocationTag>(tags);
         }
         private void InitCharactersTags()
         {
-            ResourceManager rm = new ResourceManager("TagService.Resources.CharacterTagsDescription", Assembly.GetExecutingAssembly());
-            InitTags<TagId.Character, CharacterTag>(rm);
+            var tags = TagJsonReader.ReadCharacterTagsFromJson();
+            InitTags<TagId.CharacterTagId, CharacterTag>(tags);
         }
         private void InitEventsTags()
         {
-            ResourceManager rm = new ResourceManager("TagService.Resources.EventTagsDescription", Assembly.GetExecutingAssembly());
-            InitTags<TagId.Event, EventTag>(rm);
+            var tags = TagJsonReader.ReadEventTagsFromJson();
+            InitTags<TagId.EventTagId, EventTag>(tags);
         }
         private void InitItemsTags()
         {
-            ResourceManager rm = new ResourceManager("TagService.Resources.ItemsTagsDescription", Assembly.GetExecutingAssembly());
-            InitTags<TagId.Item, ItemTag>(rm);
+            var tags = TagJsonReader.ReadItemTagsFromJson();
+            InitTags<TagId.ItemTagId, ItemTag>(tags);
         }
 
-        private void InitTags<T1, T2>(ResourceManager rm)
+        /// <summary>
+        /// Inits tags
+        /// </summary>
+        /// <typeparam name="T1">Tag name from enum</typeparam>
+        /// <typeparam name="T2">Tag Type to cast</typeparam>
+        /// <param name="tags">List of ITag</param>
+        private void InitTags<T1, T2>(HashSet<TagBase>? tags)
         {
+            if (tags is null || !tags.Any())
+            {
+                _logger.LogError($"Can't get tags: {typeof(T2).Name} from resources.");
+                return;
+            }
+
             foreach (var item in Enum.GetValues(typeof(T1)))
             {
-                var tagId = item.ToString();
-                if (string.IsNullOrEmpty(tagId))
+                var tagid = item.ToString();
+                if (string.IsNullOrEmpty(tagid))
                 {
-                    _logger.LogError($"Can't get Tag {item}.");
+                    _logger.LogError($"Can't convert tag from Enum to string. Tags set: {typeof(T2).Name}");
                     continue;
                 }
 
-                var resDescription = String.Empty;
-                var tagDescription = String.Empty;
-                try
-                {
-                    resDescription = rm.GetString(tagId);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex.ToString());
-                }
+                var resName = tags.FirstOrDefault(t => t.Id == tagid)?.Name;
+                var resDescription = tags.FirstOrDefault(t => t.Id == tagid)?.Description;
 
-                if (string.IsNullOrEmpty(resDescription)) _logger.LogError("Can't get description from resources.");
-                else tagDescription = resDescription;
+                var tagName = String.Empty;
+                var tagDescription = String.Empty;
+
+                if (string.IsNullOrEmpty(resDescription) || string.IsNullOrEmpty(resName))
+                    _logger.LogError($"Can't get tags from resources. Tags set: {typeof(T2).Name}");
+                else
+                {
+                    tagName = resName;
+                    tagDescription = resDescription;
+                }
 
                 if (!typeof(ITag).IsAssignableFrom(typeof(T2)))
                 {
@@ -136,10 +134,10 @@ namespace GlobalServices
                     continue;
                 }
 
-                var ctor = typeof(T2).GetConstructor(new[] { typeof(string), typeof(string) });
+                var ctor = typeof(T2).GetConstructor(new[] { typeof(string), typeof(string), typeof(string) });
                 if (ctor is not null)
                 {
-                    ITag tag = (ITag)(T2)ctor.Invoke(new object[] { tagId, tagDescription });
+                    ITag tag = (ITag)(T2)ctor.Invoke(new object[] { tagid, tagName, tagDescription });
                     Tags.Add(tag);
                 }
                 else

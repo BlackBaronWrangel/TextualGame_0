@@ -16,10 +16,10 @@ namespace GlobalServices.Interfaces
 
         HashSet<ITaggable> TaggableEntities { get;}
 
-        ITag? GetLocationTag(TagId.Location tagId);
-        ITag? GetCharacterTag(TagId.Character tagId);
-        ITag? GetEventTag(TagId.Event tagId);
-        ITag? GetItemTag(TagId.Item tagId);
+        ITag? GetLocationTag(TagId.LocationTagId tagId);
+        ITag? GetCharacterTag(TagId.CharacterTagId tagId);
+        ITag? GetEventTag(TagId.EventTagId tagId);
+        ITag? GetItemTag(TagId.ItemTagId tagId);
         ITag? GetTagById(string tagName);
 
         void RegisterITaggable(ITaggable obj);

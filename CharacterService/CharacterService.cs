@@ -35,7 +35,7 @@ namespace GlobalServices
             }
         }
 
-        public void AddTag(string characterId, TagId.Character tagId)
+        public void AddTag(string characterId, TagId.CharacterTagId tagId)
         {
             var tag = _tagService.GetCharacterTag(tagId);
             if (tag is not null)
@@ -77,7 +77,7 @@ namespace GlobalServices
                 _logger.LogError($"Can't remove tag {tag} from the character {characterId}");
             }
         }
-        public void RemoveTag(string characterId, TagId.Character tagId)
+        public void RemoveTag(string characterId, TagId.CharacterTagId tagId)
         {
             var tag = _tagService.GetCharacterTag(tagId);
             if (tag is not null)

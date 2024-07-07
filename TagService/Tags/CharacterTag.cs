@@ -1,21 +1,17 @@
 ﻿using GlobalServices.Enums;
 using GlobalServices.Interfaces;
+using Newtonsoft.Json;
 
 namespace GlobalServices.Tags
 {
-    public class CharacterTag : ITag
+    public class CharacterTag : TagBase
     {
-        public string Name { get; }
-        public TagType TagType { get => TagType.CharacterTag; }
-
-        public string Description { get; }
-
-        public CharacterTag(string name ,string description)
+        public override TagType TagType { get => TagType.CharacterTag; }
+        public CharacterTag(string id, string name ,string description) : base()
         {
+            Id = id;
             Name = name;
             Description = description;
         }
-
-        public override string ToString() => Name;
     }
 }
