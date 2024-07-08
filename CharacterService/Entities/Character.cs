@@ -25,6 +25,9 @@ namespace GlobalServices.Entities
         public int HpLimit { get; set; } = 100;
         public int MentalLimit { get; set; } = 100;
         public HashSet<Item> Items { get; set; } = new();
+
+        public HashSet<string> CustomAttributes { get; set; } = new(); //Custom attributes should contain more technical tags. Like buffs/debuffs, quest completion marks and so on.
+
         public Character() : base(){}
         public Character(string name, CharacterType type, CharacterPersistence persistence, CharacterBodyType bodyType, CharacterSpecies species, CharacterGender gender) : base()
         {
