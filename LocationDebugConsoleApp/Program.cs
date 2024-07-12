@@ -78,7 +78,11 @@ internal class Program
         //var characterEntities = _tagService.TaggableEntities.Where(i => i is Character).Cast<Character>().ToHashSet();
         //var itemEntities = _tagService.TaggableEntities.Where(i => i is Item).Cast<Item>().ToHashSet(); 
 
-        var scenes = _scenesRepo.Scenes;
+        var scenes = _scenesRepo.Scenes.ToList();
+        var event1 = _eventService.GetEvent(scenes[0].StartEventId);
+        var event2 = _eventService.GetEvent(event1.PossibleNextEvents.ToList()[1]);
+        var event3 = _eventService.GetEvent(event2.PossibleNextEvents.ToList()[0]);
+        var eventAfterExit = _eventService.GetEvent(event3.PossibleNextEvents.ToList()[0]);
     }
 
     private static void ConfigureServices()
