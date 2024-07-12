@@ -27,7 +27,7 @@ namespace GlobalServices
         {
             var gameEvent = new Event(eventId, type, locationId, characterIds, itemIds, nextEvents);
             Events.Add(gameEvent);
-            _logger.LogInfo($"Created {gameEvent.Id}");
+            _logger.LogInfo($"Created {gameEvent}");
             _tagService.RegisterITaggable(gameEvent);
             return gameEvent;
         }
@@ -35,7 +35,7 @@ namespace GlobalServices
         {
             var gameEvent = new Event(locationId, EventType.Transition, locationId);
             Events.Add(gameEvent);
-            _logger.LogInfo($"Created {gameEvent.Id}");
+            _logger.LogInfo($"Created {gameEvent}");
             _tagService.RegisterITaggable(gameEvent);
             return gameEvent;
         }

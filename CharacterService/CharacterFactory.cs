@@ -63,7 +63,7 @@ namespace GlobalServices
         {
             Characters.Remove(character);
             _tagService.UnregisterITaggable(character);
-            _logger.LogInfo($"Removed character {character}");
+            _logger.LogInfo($"Removed {character}");
         }
 
         public void RemoveCharacter(string characterId)
@@ -75,7 +75,7 @@ namespace GlobalServices
             }
             else
             {
-                _logger.LogError("Can't get character by Id to remove.");
+                _logger.LogError($"Can't get character by Id {characterId} to remove.");
             }
         }
 
@@ -106,7 +106,7 @@ namespace GlobalServices
         {
             Characters.Add(character);
             _tagService.RegisterITaggable(character);
-            _logger.LogInfo($"Created character {character}");
+            _logger.LogInfo($"Created {character}");
         }
     }
 }
