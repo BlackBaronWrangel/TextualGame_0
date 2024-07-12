@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CharacterService", "Charact
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ItemService", "ItemService\ItemService.csproj", "{F3DBE2FB-4EA4-4D44-A207-989FA7A5FCEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventService", "EventService\EventService.csproj", "{FC36B54B-FEA5-4C0F-8C06-04371FF951C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventService", "EventService\EventService.csproj", "{FC36B54B-FEA5-4C0F-8C06-04371FF951C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -5,28 +5,39 @@ namespace GlobalServices.Entities
 {
     public class Event : EventBase
     {
-        private Guid _id { get; } = Guid.NewGuid();
-        public string Id { get => _id.ToString(); }
+        public string Id { get; set; } = Guid.NewGuid().ToString(); //configurable. guid value by default
         public EventType EventType { get; protected set; } = EventType.Default;
         public string LocationId { get; protected set; } = string.Empty;
-        public HashSet<string> CharacterIds { get; protected set; } = new();
-        public HashSet<string> ItemIds { get; protected set; } = new();
+        public HashSet<string> CharacterIds { get; set; } = new();
+        public HashSet<string> ItemIds { get; set; } = new();
+        public HashSet<string> PossibleNextEvents { get; set; } = new();
 
         public Event() : base() { }
-        public Event(EventType type, string locationId, HashSet<string> characters, HashSet<string> items) : base()
+        public Event(string id, EventType type, string locationId ) : base()
         {
+            Id = id;
+            EventType = type;
+            LocationId = locationId;
+        }
+        public Event(string id, EventType type, string locationId, HashSet<string> characters, HashSet<string> items, HashSet<string> nextEvents) : base()
+        {
+            Id = id;
             EventType = type;
             LocationId = locationId;
             CharacterIds = characters;
             ItemIds = items;
+            PossibleNextEvents = nextEvents;
         }
-        public Event(EventType type, string locationId, HashSet<string> characters, HashSet<string> items, HashSet<ITag> tags) : base(tags)
+        public Event(string id, EventType type, string locationId, HashSet<string> characters, HashSet<string> items, HashSet<string> nextEvents, HashSet<ITag> tags) : base(tags)
         {
+            Id = id;
             EventType = type;
             LocationId = locationId;
             CharacterIds = characters;
             ItemIds = items;
+            PossibleNextEvents = nextEvents;
         }
+
         public override string ToString() => $"{GetType().Name} [{Id}, {EventType}, {LocationId}]";
     }
 }
