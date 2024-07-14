@@ -2,7 +2,8 @@
 {
     public enum EventType
     {
-        Default, //Default is assumed to be a standard state during navigation
+        Default, //Default - like quests choices or exploring.
+        Transition,
         Dialogue,
         Confrontation,
         Custom

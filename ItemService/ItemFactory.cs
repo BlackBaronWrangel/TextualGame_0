@@ -43,7 +43,7 @@ namespace GlobalServices
         {
             Items.Remove(item);
             _tagService.UnregisterITaggable(item);
-            _logger.LogInfo($"Removed item {item}");
+            _logger.LogInfo($"Removed {item}");
         }
 
         public void RemoveItem(string itemId)
@@ -55,7 +55,7 @@ namespace GlobalServices
         {
             Items.Add(item);
             _tagService.RegisterITaggable(item);
-            _logger.LogInfo($"Created item {item}");
+            _logger.LogInfo($"Created {item}");
         }
     }
 }
