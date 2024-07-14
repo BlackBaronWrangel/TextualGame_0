@@ -1,8 +1,7 @@
 ﻿//Place code for testing and debugging here.
-using DebugConsoleApp.StateMachine.Scenes;
+using AutoMapper;
+using DebugConsoleApp.StateMachine;
 using GlobalServices;
-using GlobalServices.Entities;
-using GlobalServices.Enums;
 using GlobalServices.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,7 +17,9 @@ internal class Program
     private static IItemService? _itemService;
     private static IEventService? _eventService;
     private static ILogger? _logger;
-    private static DefinedScenesRepo? _scenesRepo;
+    private static IStateMachine? _stateMachine;
+    private static ICommandHandler? _commandHandler;
+    private static IMapper? _mapper;
     private static void Main(string[] args)
     {
         ConfigureServices();
@@ -30,7 +31,9 @@ internal class Program
         _itemFactory = _serviceProvider!.GetRequiredService<IItemFactory>();
         _itemService = _serviceProvider!.GetRequiredService<IItemService>();
         _eventService = _serviceProvider!.GetRequiredService<IEventService>();
-        _scenesRepo = _serviceProvider!.GetRequiredService<DefinedScenesRepo>();
+        _stateMachine = _serviceProvider!.GetRequiredService<IStateMachine>();
+        _commandHandler = _serviceProvider!.GetRequiredService<ICommandHandler>();
+        _mapper = _serviceProvider!.GetRequiredService<IMapper>();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //_locationService.AddConnection("loc_swamp", "loc_forest", 0.5);
@@ -78,11 +81,13 @@ internal class Program
         //var characterEntities = _tagService.TaggableEntities.Where(i => i is Character).Cast<Character>().ToHashSet();
         //var itemEntities = _tagService.TaggableEntities.Where(i => i is Item).Cast<Item>().ToHashSet(); 
 
-        var scenes = _scenesRepo.Scenes.ToList();
-        var event1 = _eventService.GetEvent(scenes[0].StartEventId);
-        var event2 = _eventService.GetEvent(event1.PossibleNextEvents.ToList()[1]);
-        var event3 = _eventService.GetEvent(event2.PossibleNextEvents.ToList()[0]);
-        var eventAfterExit = _eventService.GetEvent(event3.PossibleNextEvents.ToList()[0]);
+        //var scenes = _scenesRepo.Scenes.ToList();
+        //var event1 = _eventService.GetEvent(scenes[0].StartEventId);
+        //var event2 = _eventService.GetEvent(event1.PossibleNextEvents.ToList()[1]);
+        //var event3 = _eventService.GetEvent(event2.PossibleNextEvents.ToList()[0]);
+        //var eventAfterExit = _eventService.GetEvent(event3.PossibleNextEvents.ToList()[0]);
+
+        _stateMachine.RunScene("TestingScene_0");
     }
 
     private static void ConfigureServices()
@@ -97,7 +102,9 @@ internal class Program
         _serviceCollection.AddSingleton<ILogger, Logger>();
         _serviceCollection.AddSingleton<IItemFactory, ItemFactory>();
         _serviceCollection.AddSingleton<IItemService, ItemService>();
-        _serviceCollection.AddSingleton<DefinedScenesRepo, DefinedScenesRepo>();
+        _serviceCollection.AddSingleton<IStateMachine, StateMachine>();
+        _serviceCollection.AddSingleton<ICommandHandler, CommandHandler>();
+        _serviceCollection.AddAutoMapper(typeof(MappingProfile));
 
         _serviceProvider = _serviceCollection.BuildServiceProvider();
     }

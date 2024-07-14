@@ -1,0 +1,53 @@
+{
+  "Id": "TestingScene_0",
+  "StartEventId": "test_start_1",
+  "Events": [
+    {
+      "Id": "test_start_1",
+      "EventType": "Default",
+      "LocationId": "loc_swamp",
+      "CharacterIds": [],
+      "ItemIds": [],
+      "PossibleNextEvents": [ "test_start_2", "test_start_2_alt", "test_start_3" ],
+      "Commands": [
+        "AddRandomCharacters(6,12)",
+        "AddRandomItems(3,8)"
+      ]
+    },
+    {
+      "Id": "test_start_2",
+      "EventType": "Default",
+      "LocationId": "loc_meadow",
+      "CharacterIds": [],
+      "ItemIds": [],
+      "PossibleNextEvents": [ "test_start_1", "test_start_2_alt" ],
+      "Commands": [
+        "AddRandomMonsters(0,4)",
+        "AddRandomItems(1,2)"
+      ]
+    },
+    {
+      "Id": "test_start_2_alt",
+      "EventType": "Default",
+      "LocationId": "loc_meadow",
+      "CharacterIds": [],
+      "ItemIds": [],
+      "PossibleNextEvents": [ "test_start_1", "test_start_2_alt" ],
+      "Commands": [
+        "AddRandomMonsters(0,4)",
+        "AddRandomItems(1,2)"
+      ]
+    },
+    {
+      "Id": "test_start_3",
+      "EventType": "Default",
+      "LocationId": "loc_forest",
+      "CharacterIds": [],
+      "ItemIds": [],
+      "PossibleNextEvents": [ "loc_swamp" ],
+      "Commands": [
+        "AddRandomItems(0,3)"
+      ]
+    }
+  ]
+}

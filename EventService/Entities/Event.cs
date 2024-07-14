@@ -37,7 +37,6 @@ namespace GlobalServices.Entities
             ItemIds = items;
             PossibleNextEvents = nextEvents;
         }
-
         public override string ToString() => $"{GetType().Name} [{Id}, {EventType}, {LocationId}]";
     }
 }
