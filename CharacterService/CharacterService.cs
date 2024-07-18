@@ -6,6 +6,8 @@ namespace GlobalServices
 {
     public class CharacterService : ICharacterService
     {
+        private const string _charactersJsonPath = "Resources/NamedCharacters.json";
+
         ILogger _logger;
         ITagService _tagService;
         ILocationService _locationService;
@@ -209,12 +211,12 @@ namespace GlobalServices
         {
             try
             {
-                var characters = CharacterJsonReader.ReadCharactersFromJson();
+                var characters = GameEntitiesJsonLoader.ReadJsonAsCollection<Character>(_charactersJsonPath);
                 if (characters is null)
                 {
                     throw new("Json characters are empty.");
                 }
-                Characters = characters;
+                Characters = characters.ToHashSet();
             }
             catch (Exception ex)
             {
