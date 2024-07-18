@@ -1,7 +1,4 @@
-﻿using GlobalServices.Entities;
-using GlobalServices.Enums;
-
-namespace DebugConsoleApp.StateMachine.Entities
+﻿namespace GlobalServices.Entities
 {
     public class Scene
     {

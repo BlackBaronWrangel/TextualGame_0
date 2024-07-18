@@ -17,6 +17,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ItemService", "ItemService\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventService", "EventService\EventService.csproj", "{FC36B54B-FEA5-4C0F-8C06-04371FF951C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileService", "FileService\FileService.csproj", "{06B6B8A8-1D36-4AE9-BBAF-D6ADFC862AFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SateMachineService", "SateMachineService\SateMachineService.csproj", "{2FB81749-C4D4-45C2-B167-6A7BD6DF3D64}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,14 @@ Global
 		{FC36B54B-FEA5-4C0F-8C06-04371FF951C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC36B54B-FEA5-4C0F-8C06-04371FF951C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC36B54B-FEA5-4C0F-8C06-04371FF951C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06B6B8A8-1D36-4AE9-BBAF-D6ADFC862AFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06B6B8A8-1D36-4AE9-BBAF-D6ADFC862AFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06B6B8A8-1D36-4AE9-BBAF-D6ADFC862AFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06B6B8A8-1D36-4AE9-BBAF-D6ADFC862AFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FB81749-C4D4-45C2-B167-6A7BD6DF3D64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FB81749-C4D4-45C2-B167-6A7BD6DF3D64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FB81749-C4D4-45C2-B167-6A7BD6DF3D64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FB81749-C4D4-45C2-B167-6A7BD6DF3D64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

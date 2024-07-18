@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using DebugConsoleApp.StateMachine.Entities;
 using GlobalServices.Entities;
 using GlobalServices.Interfaces;
 
@@ -7,6 +6,7 @@ namespace GlobalServices
 {
     public class StateMachine : IStateMachine
     {
+        private const string _defaultJsonScenesPath = "Resources/Scenes";
         public HashSet<Scene> Scenes { get; set; } = new HashSet<Scene>();
         public Event? CurrentState { get; protected set; } = null;
 
@@ -61,8 +61,13 @@ namespace GlobalServices
         }
         private void InitPreDefinedScenes()
         {
-            var jsonScenes = SceneJsonReader.ReadScenesFromJson();
-            foreach (var jsonScene in jsonScenes)
+            var jsonScenes = GameEntitiesJsonLoader.ReadFolderAsCollection<JsonScene>(_defaultJsonScenesPath);
+            if (jsonScenes is null)
+            {
+                _logger.LogError($"Can't load default scenes from json.");
+                return;
+            }
+            foreach (var jsonScene in jsonScenes.ToList())
             {
                 foreach (var jsonEvent in jsonScene.Events)
                 {

@@ -1,6 +1,4 @@
-﻿using DebugConsoleApp.StateMachine.Entities;
-
-namespace GlobalServices.Interfaces
+﻿namespace GlobalServices.Interfaces
 {
     public interface IStateMachine
     {

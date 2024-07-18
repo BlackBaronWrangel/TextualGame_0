@@ -6,6 +6,8 @@ namespace GlobalServices
 {
     public class LocationService : ILocationService
     {
+        private const string _locationsJsonPath = "Resources/Locations.json";
+
         private ILogger _logger;
         private ITagService _tagService;
         public HashSet<Location> Locations { get; protected set; } = new();
@@ -104,12 +106,12 @@ namespace GlobalServices
         {
             try
             {
-                var locations = LocationJsonReader.ReadLocationsFromJson();
+                var locations = GameEntitiesJsonLoader.ReadJsonAsCollection<Location>(_locationsJsonPath);
                 if (locations is null)
                 {
                     throw new("Locations are empty.");
                 }
-                Locations = locations;
+                Locations = locations.ToHashSet();
             }
             catch (Exception ex) 
             {
