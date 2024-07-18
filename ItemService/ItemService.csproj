@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FileService\FileService.csproj" />
     <ProjectReference Include="..\TagService\TagService.csproj" />
   </ItemGroup>
 

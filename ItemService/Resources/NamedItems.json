@@ -1,0 +1,16 @@
+[
+  {
+    "Id": "item_big_tasty_apple",
+    "Name": "Big tasty apple",
+    "Type": "Food",
+    "Description": "just a big tasty apple",
+    "Tags": []
+  },
+  {
+    "Id": "item_diamond_of_power",
+    "Name": "Diamond of power",
+    "Type": "Artifact",
+    "Description": "Oh god!, it is a diamond of power. Oh no!",
+    "Tags": []
+  }
+]

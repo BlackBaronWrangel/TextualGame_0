@@ -6,6 +6,8 @@ namespace GlobalServices
 {
     public class ItemService : IItemService
     {
+        private const string _itemsJsonPath = "Resources/NamedItems.json";
+
         ILogger _logger;
         ITagService _tagService;
         public HashSet<Item> Items { get; set; } = new();
@@ -13,6 +15,7 @@ namespace GlobalServices
         {
             _logger = logger;
             _tagService = tagService;
+            InitItems();
         }
         public void AddTag(string itemId, ITag tag)
         {
@@ -71,6 +74,24 @@ namespace GlobalServices
             Items.Add(item);
             _tagService.RegisterITaggable(item);
             _logger.LogInfo($"Created {item}");
+        }
+        private void InitItems()
+        {
+            try
+            {
+                var items = GameEntitiesJsonLoader.ReadJsonAsCollection<Item>(_itemsJsonPath);
+                if (items is null)
+                {
+                    throw new("Json items are empty.");
+                }
+                Items = items.ToHashSet();
+                foreach (var item in items)
+                    _logger.LogInfo($"Loaded {item}");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Can't read items from Json. Error: {ex.Message}");
+            }
         }
     }
 }
