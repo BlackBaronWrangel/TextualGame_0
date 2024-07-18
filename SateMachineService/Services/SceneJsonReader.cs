@@ -1,4 +1,4 @@
-﻿using DebugConsoleApp.StateMachine.Entities;
+﻿using GlobalServices.Entities;
 using Newtonsoft.Json;
 
 namespace GlobalServices

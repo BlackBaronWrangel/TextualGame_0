@@ -1,4 +1,4 @@
-﻿namespace DebugConsoleApp.StateMachine.Entities
+﻿namespace GlobalServices.Entities
 {
     public class JsonScene
     {

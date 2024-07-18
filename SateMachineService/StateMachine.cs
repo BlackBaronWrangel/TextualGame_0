@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using DebugConsoleApp.StateMachine.Entities;
 using GlobalServices.Entities;
 using GlobalServices.Interfaces;
 
