@@ -13,7 +13,6 @@ internal class Program
     private static ITagService? _tagService ;
     private static ILocationService? _locationService; 
     private static ICharacterService? _characterService;
-    private static ICharacterFactory? _characterFactory;
     private static IItemFactory? _itemFactory;
     private static IItemService? _itemService;
     private static IEventService? _eventService;
@@ -27,7 +26,6 @@ internal class Program
         _tagService = _serviceProvider!.GetRequiredService<ITagService>();
         _locationService = _serviceProvider!.GetRequiredService<ILocationService>();
         _logger = _serviceProvider!.GetRequiredService<ILogger>();
-        _characterFactory = _serviceProvider!.GetRequiredService<ICharacterFactory>();
         _characterService = _serviceProvider!.GetRequiredService<ICharacterService>();
         _itemFactory = _serviceProvider!.GetRequiredService<IItemFactory>();
         _itemService = _serviceProvider!.GetRequiredService<IItemService>();
@@ -99,7 +97,6 @@ internal class Program
         _serviceCollection.AddSingleton<ILocationService, LocationService>();
         _serviceCollection.AddSingleton<ICharacterService, CharacterService>(); 
         _serviceCollection.AddSingleton<IEventService, EventService>();
-        _serviceCollection.AddSingleton<ICharacterFactory, CharacterFactory>();
         _serviceCollection.AddSingleton<ILogger, Logger>();
         _serviceCollection.AddSingleton<IItemFactory, ItemFactory>();
         _serviceCollection.AddSingleton<IItemService, ItemService>();
