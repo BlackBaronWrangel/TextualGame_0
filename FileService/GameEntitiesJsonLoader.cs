@@ -4,10 +4,6 @@ namespace GlobalServices
 {
     public class GameEntitiesJsonLoader
     {
-        //private const string _defaultResourcesFolder = "Resources";
-        //private const string _locationsJsonPath = $"{_defaultResourcesFolder}/Locations.json";
-        //private const string _charactersJsonPath = $"{_defaultResourcesFolder}/NamedCharacters.json";
-        //private const string _scenesJsonFolderPath = $"{_defaultResourcesFolder}/Scenes";
         public static IEnumerable<T>? ReadJsonAsCollection<T>(string jsonPath)
         {
             string jsonText = File.ReadAllText(jsonPath);
