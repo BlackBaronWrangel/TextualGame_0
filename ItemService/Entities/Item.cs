@@ -22,7 +22,7 @@ namespace GlobalServices.Entities
             Type = itemType;
             Tags = tags;
         }
-        public override string ToString() => $"{GetType().Name} [{Id}, {Name},{Type}]";
+        public override string ToString() => $"{GetType().Name} [{Id}, {Name}, {Type}]";
 
     }
 }

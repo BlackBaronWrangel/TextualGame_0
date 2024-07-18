@@ -63,14 +63,12 @@ namespace GlobalServices
             RegisterCharacter(character);
             return character;
         }
-
         public Character CreateDefaultCharacter()
         {
             Character character = new Character();
             RegisterCharacter(character);
             return character;
         }
-
         public Character CreateMainCharacter(string name, CharacterBodyType bodyType, CharacterGender characterGender, CharacterSpecies characterSpecies)
         {
             Character character = new Character(
@@ -216,7 +214,8 @@ namespace GlobalServices
                 {
                     throw new("Json characters are empty.");
                 }
-                Characters = characters.ToHashSet();
+                foreach (var character in characters)
+                    RegisterCharacter(character);
             }
             catch (Exception ex)
             {
@@ -249,7 +248,7 @@ namespace GlobalServices
         {
             Characters.Add(character);
             _tagService.RegisterITaggable(character);
-            _logger.LogInfo($"Created {character}");
+            _logger.LogInfo($"Registered {character}");
         }
     }
 }
