@@ -4,7 +4,7 @@ namespace GlobalServices.Entities
 {
     public class ItemBase : ITaggable
     {
-        public HashSet<ITag> Tags { get; protected set; }
+        public HashSet<ITag> Tags { get; set; }
         protected ItemBase(HashSet<ITag> tags)
         {
             Tags = tags;
