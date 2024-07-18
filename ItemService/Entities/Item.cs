@@ -5,11 +5,10 @@ namespace GlobalServices.Entities
 {
     public class Item : ItemBase
     {
-        private readonly Guid _id = Guid.NewGuid();
-        public string Id { get => _id.ToString(); }
-        public string Name { get; protected set; } = String.Empty;
-        public ItemType Type { get; protected set; } = ItemType.Other;
-        public string Description { get; protected set; } = String.Empty;
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Name { get; set; } = String.Empty;
+        public ItemType Type { get; set; } = ItemType.Other;
+        public string Description { get; set; } = String.Empty;
         public Item() : base() { }
         public Item(string name, ItemType itemType) : base() 
         {

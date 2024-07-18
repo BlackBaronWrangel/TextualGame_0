@@ -10,4 +10,10 @@
     <ProjectReference Include="..\TagService\TagService.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Resources\NamedItems.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
