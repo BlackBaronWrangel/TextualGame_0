@@ -73,7 +73,7 @@ namespace GlobalServices
         {
             Items.Add(item);
             _tagService.RegisterITaggable(item);
-            _logger.LogInfo($"Created {item}");
+            _logger.LogInfo($"Registered {item}");
         }
         private void InitItems()
         {
@@ -84,9 +84,8 @@ namespace GlobalServices
                 {
                     throw new("Json items are empty.");
                 }
-                Items = items.ToHashSet();
                 foreach (var item in items)
-                    _logger.LogInfo($"Loaded {item}");
+                    RegisterItem(item);
             }
             catch (Exception ex)
             {

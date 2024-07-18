@@ -29,23 +29,10 @@ namespace GlobalServices
             RegisterEvent(gameEvent);
             return gameEvent;
         }
-        public void RegisterEvent(Event gameEvent)
-        {
-            if (Events.Any(e => e.Id == gameEvent.Id))
-            {
-                _logger.LogWarning($"Attempt to register existing event with id {gameEvent.Id}");
-                return;
-            }
-            Events.Add(gameEvent);
-            _logger.LogInfo($"Created {gameEvent}");
-            _tagService.RegisterITaggable(gameEvent);
-        }
         public Event CreateDefaultLocationEvent(string locationId)
         {
             var gameEvent = new Event(locationId, EventType.Transition, locationId);
-            Events.Add(gameEvent);
-            _logger.LogInfo($"Created {gameEvent}");
-            _tagService.RegisterITaggable(gameEvent);
+            RegisterEvent(gameEvent);
             return gameEvent;
         }
 
@@ -56,6 +43,17 @@ namespace GlobalServices
             return gameEvent;
         }
 
+        public void RegisterEvent(Event gameEvent)
+        {
+            if (Events.Any(e => e.Id == gameEvent.Id))
+            {
+                _logger.LogWarning($"Attempt to register existing event with id {gameEvent.Id}");
+                return;
+            }
+            Events.Add(gameEvent);
+            _logger.LogInfo($"Registered {gameEvent}");
+            _tagService.RegisterITaggable(gameEvent);
+        }
         public void AddTag(string eventId, ITag tag)
         {
             var gameEvent = GetEvent(eventId);

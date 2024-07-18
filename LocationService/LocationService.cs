@@ -12,15 +12,12 @@ namespace GlobalServices
         private ITagService _tagService;
         public HashSet<Location> Locations { get; protected set; } = new();
 
-        public LocationService( ITagService tagService, ILogger logger)
+        public LocationService(ITagService tagService, ILogger logger)
         {
             _tagService = tagService;
             _logger = logger;
 
             InitLocations();
-
-            foreach (var location in Locations)
-                _tagService.RegisterITaggable(location);
         }
         public Location? GetLocation(string locationId) => 
             Locations.FirstOrDefault(l => l.Id == locationId);
@@ -111,7 +108,8 @@ namespace GlobalServices
                 {
                     throw new("Locations are empty.");
                 }
-                Locations = locations.ToHashSet();
+                foreach (var location in locations)
+                    RegisterLocation(location);
             }
             catch (Exception ex) 
             {
@@ -120,6 +118,12 @@ namespace GlobalServices
         }
         private void ReadLocationsDefaultTags()
         {
+        }
+        private void RegisterLocation(Location location)
+        {
+            Locations.Add(location);
+            _tagService.RegisterITaggable(location);
+            _logger.LogInfo($"Registered {location}");
         }
     }
 }
