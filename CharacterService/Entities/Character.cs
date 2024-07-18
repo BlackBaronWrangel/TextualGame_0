@@ -1,25 +1,25 @@
 ﻿using GlobalServices.Enums;
 using GlobalServices.Interfaces;
+using System.Security.Cryptography;
 
 namespace GlobalServices.Entities
 {
     public class Character : CharacterBase
     {
-        private readonly Guid _id = Guid.NewGuid();
+        public string Id { get; set; } = Guid.NewGuid().ToString();
 
         //"Static" properties
-        public string Id { get => _id.ToString();}
-        public string Name { get; protected set; } = String.Empty;
-        public CharacterType Type { get; protected set; } = CharacterType.Other;
-        public CharacterPersistence Persistence { get; protected set; } = CharacterPersistence.Temporary;
-        public CharacterBodyType BodyType { get; protected set; } = CharacterBodyType.Other;
-        public CharacterSpecies Species { get; protected set; } = CharacterSpecies.Other;
-        public CharacterGender Gender { get; protected set; } = CharacterGender.Other;
+        public string Name { get; set; } = String.Empty;
+        public CharacterType Type { get; set; } = CharacterType.Other;
+        public CharacterPersistence Persistence { get; set; } = CharacterPersistence.Temporary;
+        public CharacterBodyType BodyType { get; set; } = CharacterBodyType.Other;
+        public CharacterSpecies Species { get; set; } = CharacterSpecies.Other;
+        public CharacterGender Gender { get; set; } = CharacterGender.Other;
 
         //"Dynamic" properties
         public CharacterControlType ControlType { get; set; } = CharacterControlType.PlayableNpc;
         public CharacterStatus Status { get; set; } = CharacterStatus.Alive;
-        public Location? Location { get; set; } = null;
+        public string? Location { get; set; } = string.Empty;
         public int Hp { get; set; } = 100;
         public int Mental { get; set; } = 100;
         public int HpLimit { get; set; } = 100;

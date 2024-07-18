@@ -4,7 +4,7 @@ namespace GlobalServices.Entities
 {
     public class EventBase : ITaggable
     {
-        public HashSet<ITag> Tags { get; protected set; }
+        public HashSet<ITag> Tags { get; set; }
         protected EventBase(HashSet<ITag> tags)
         {
             Tags = tags;

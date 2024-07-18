@@ -2,6 +2,7 @@
 using AutoMapper;
 using DebugConsoleApp.StateMachine;
 using GlobalServices;
+using GlobalServices.Enums;
 using GlobalServices.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,7 +13,6 @@ internal class Program
     private static ITagService? _tagService ;
     private static ILocationService? _locationService; 
     private static ICharacterService? _characterService;
-    private static ICharacterFactory? _characterFactory;
     private static IItemFactory? _itemFactory;
     private static IItemService? _itemService;
     private static IEventService? _eventService;
@@ -26,7 +26,6 @@ internal class Program
         _tagService = _serviceProvider!.GetRequiredService<ITagService>();
         _locationService = _serviceProvider!.GetRequiredService<ILocationService>();
         _logger = _serviceProvider!.GetRequiredService<ILogger>();
-        _characterFactory = _serviceProvider!.GetRequiredService<ICharacterFactory>();
         _characterService = _serviceProvider!.GetRequiredService<ICharacterService>();
         _itemFactory = _serviceProvider!.GetRequiredService<IItemFactory>();
         _itemService = _serviceProvider!.GetRequiredService<IItemService>();
@@ -46,7 +45,7 @@ internal class Program
         //var c5 = _characterService.CreateRandomMonster();
         //var c6 = _characterService.CreateRandomTemporalCivilian();
         //var c7 = _characterService.CreateRandomPermanentCivilian();
-        //var c8 = _characterService.CreateMainCharacter("Biba", CharacterBodyType.Medium, CharacterGender.Female, CharacterSpecies.Horse);
+        //var c8 = _characterService.CreateMainCharacter("Buba", CharacterBodyType.Medium, CharacterGender.Female, CharacterSpecies.Horse);
 
         //_characterService.AddTag(c1.Id, TagId.CharacterTagId.Hostile);
         //_characterService.AddTag(c2.Id, TagId.CharacterTagId.Friendly);
@@ -56,10 +55,10 @@ internal class Program
         //var locs = _locationService.Locations;
         //var player = _characterService.GetPlayer();
 
-        //_characterService.MoveCharacter(player, "loc_swamp");
-        //_characterService.MoveCharacter(player, "loc_forest");
-        //_characterService.MoveCharacter(player, "loc_meadow");
-        //_characterService.MoveCharacter(player, "loc_forest");
+        //_characterService.MoveCharacter(player.Id, "loc_swamp");
+        //_characterService.MoveCharacter(player.Id, "loc_forest");
+        //_characterService.MoveCharacter(player.Id, "loc_meadow");
+        //_characterService.MoveCharacter(player.Id, "loc_forest");
 
         //var apple = _itemService.CreateItem("Apple", ItemType.Food);
         //var banana = _itemService.CreateItem("Banana", ItemType.Food);
@@ -75,7 +74,7 @@ internal class Program
         //_eventService.CreateEvent(locs.ToList()[2].Id, EventType.Default, new() { chars.ToList()[0].Id, chars.ToList()[2].Id, chars.ToList()[3].Id }, new() {banana.Id, diamond.Id, sword.Id}, new());
         //var events = _eventService.Events;
 
-        _tagService.ValidateITaggables();
+        //_tagService.ValidateITaggables();
 
         //Examples of how to get any ITaggable entity in the game from the tagService:
         //var characterEntities = _tagService.TaggableEntities.Where(i => i is Character).Cast<Character>().ToHashSet();
@@ -98,7 +97,6 @@ internal class Program
         _serviceCollection.AddSingleton<ILocationService, LocationService>();
         _serviceCollection.AddSingleton<ICharacterService, CharacterService>(); 
         _serviceCollection.AddSingleton<IEventService, EventService>();
-        _serviceCollection.AddSingleton<ICharacterFactory, CharacterFactory>();
         _serviceCollection.AddSingleton<ILogger, Logger>();
         _serviceCollection.AddSingleton<IItemFactory, ItemFactory>();
         _serviceCollection.AddSingleton<IItemService, ItemService>();

@@ -4,7 +4,7 @@ namespace GlobalServices.Entities
 {
     public class CharacterBase : ITaggable
     {
-        public HashSet<ITag> Tags { get; protected set; }
+        public HashSet<ITag> Tags { get; set; }
         protected CharacterBase(HashSet<ITag> tags)
         {
             Tags = tags;

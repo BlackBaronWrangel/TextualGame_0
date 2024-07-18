@@ -6,50 +6,25 @@ namespace GlobalServices
 {
     public class CharacterService : ICharacterService
     {
-        ICharacterFactory _characterFactory;
         ILogger _logger;
         ITagService _tagService;
         ILocationService _locationService;
         IItemService _itemService;
-        public HashSet<Character> Characters { get => _characterFactory.Characters; }
+        public HashSet<Character> Characters { get; set; } = new HashSet<Character>();
 
-        public CharacterService(ICharacterFactory characterFactory,IItemService itemService ,ILogger logger, ITagService tagService, ILocationService locationService)
+        public CharacterService(IItemService itemService ,ILogger logger, ITagService tagService, ILocationService locationService)
         {
-            _characterFactory = characterFactory;
             _logger = logger;
             _tagService = tagService;
             _locationService = locationService;
             _itemService = itemService;
-        }
-        public void AddTag(string characterId, ITag tag)
-        {
-            var character = _characterFactory.GetCharacterById(characterId);
-            if (character is not null)
-            {
-                character.AddTag(tag);
-            }
-            else
-            {
-                _logger.LogError($"Can't add tag {tag} to the character {characterId}");
-            }
-        }
 
-        public void AddTag(string characterId, TagId.CharacterTagId tagId)
-        {
-            var tag = _tagService.GetCharacterTag(tagId);
-            if (tag is not null)
-            {
-                AddTag(characterId, tag);
-            }
-            else
-            {
-                _logger.LogError($"Can't add tag {tag} to the character {characterId}");
-            }
+            InitCharacters();
         }
 
         public Character? GetCharacter(string characterId)
         {
-            var character = _characterFactory.GetCharacterById(characterId);
+            var character = Characters.FirstOrDefault(c => c.Id == characterId);
             return character;
         }
         public Character? GetPlayer()
@@ -62,11 +37,129 @@ namespace GlobalServices
         }
         public void RemoveCharacter(string characterId)
         {
-            _characterFactory.RemoveCharacter(characterId);
+            var character = GetCharacter(characterId);
+            if (character is null)
+            {
+                _logger.LogWarning($"Can't remove character {characterId}. Character not found.");
+                return;
+            }
+            Characters.Remove(character);
+            _tagService.UnregisterITaggable(character);
+            _logger.LogInfo($"Removed {character}");
+        }
+
+        public Character CreateRandomCharacter(CharacterType characterType, CharacterPersistence characterPersistence)
+        {
+            Character character = new Character(
+                name: String.Empty,
+                type: characterType,
+                persistence: characterPersistence,
+                bodyType: GetRandomEnumValue(CharacterBodyType.Other),
+                species: GetRandomEnumValue<CharacterSpecies>(),
+                gender: GetRandomEnumValue(CharacterGender.Other)
+                );
+            RegisterCharacter(character);
+            return character;
+        }
+
+        public Character CreateDefaultCharacter()
+        {
+            Character character = new Character();
+            RegisterCharacter(character);
+            return character;
+        }
+
+        public Character CreateMainCharacter(string name, CharacterBodyType bodyType, CharacterGender characterGender, CharacterSpecies characterSpecies)
+        {
+            Character character = new Character(
+                name,
+                CharacterType.Civillian,
+                CharacterPersistence.Permanent,
+                bodyType,
+                characterSpecies,
+                characterGender
+                );
+            character.ControlType = CharacterControlType.Player;
+            RegisterCharacter(character);
+            return character;
+        }
+        public Character CreateRandomMonster()
+        {
+            var character = CreateRandomCharacter(
+                CharacterType.Monster,
+                CharacterPersistence.Temporary
+                );
+            return character;
+        }
+        public Character CreateRandomPermanentCivilian()
+        {
+            var character = CreateRandomCharacter(
+                CharacterType.Civillian,
+                CharacterPersistence.Permanent
+                );
+            return character;
+        }
+        public Character CreateRandomTemporalCivilian()
+        {
+            var character = CreateRandomCharacter(
+                CharacterType.Civillian,
+                CharacterPersistence.Temporary
+                );
+            return character;
+        }
+        public void MoveCharacter(string characterId, string locationId)
+        {
+            var character = GetCharacter(characterId);
+            var loc = _locationService.GetLocation(locationId);
+            if (loc is null || character is null)
+            {
+                _logger.LogWarning($"Failed to move {characterId} to location {locationId}");
+                return;
+            }
+            character.Location = loc.Id;
+            _logger.LogInfo($"{character} moved to location {locationId}");
+        }
+        public void AssignItem(string itemId, string characterId)
+        {
+            var character = GetCharacter(characterId);
+            var item = _itemService.GetItem(itemId);
+            if ((item is not null) && (character is not null))
+            {
+                var previousOwner = Characters.FirstOrDefault(c => c.Items.Contains(item));
+                if (previousOwner is not null) UnAssignItem(itemId, previousOwner.Id);
+                character.Items.Add(item);
+                _logger.LogInfo($"{item} assigned to character {character}");
+            }
+            else
+            {
+                _logger.LogError($"Can't assign {item} to character {character}");
+            }
+        }
+        public void UnAssignItem(string itemId, string characterId)
+        {
+            var character = GetCharacter(characterId);
+            var item = _itemService.GetItem(itemId);
+
+            if ((item is null) || (character is null))
+            {
+                _logger.LogError($"Can't remove {item} from {character}");
+            }
+            else
+            {
+                if (character.Items.Contains(item))
+                {
+                    character.Items.Remove(item); 
+                    _logger.LogInfo($"{item} unassigned from {character}");
+                }
+                else
+                {
+                    _logger.LogWarning($"{character} doesn't have {item} to remove.");
+                }                    
+            }
         }
         public void RemoveTag(string characterId, ITag tag)
         {
-            var character = _characterFactory.GetCharacterById(characterId);
+            var character = GetCharacter(characterId);
             if (character is not null)
             {
                 character.RemoveTag(tag);
@@ -88,104 +181,73 @@ namespace GlobalServices
                 _logger.LogError($"Can't remove tag {tag} from the character {characterId}");
             }
         }
-
-        public Character CreateRandomCharacter(CharacterType characterType, CharacterPersistence characterPersistence)
+        public void AddTag(string characterId, ITag tag)
         {
-            return _characterFactory.GenerateRandomCharacter(characterType, characterPersistence);
-        }
-
-        public Character CreateDefaultCharacter()
-        {
-            return _characterFactory.GenerateDefaultCharacter();
-        }
-
-        public Character CreateMainCharacter(string name, CharacterBodyType bodyType, CharacterGender characterGender, CharacterSpecies characterSpecies)
-        {
-            var character = _characterFactory.GenerateCharacter(
-                name,
-                CharacterType.Civillian,
-                CharacterPersistence.Permanent,
-                bodyType,
-                characterSpecies,
-                characterGender
-                );
-            character.ControlType = CharacterControlType.Player;
-            return character;
-        }
-
-        public Character CreateRandomMonster()
-        {
-            var character = _characterFactory.GenerateRandomCharacter(
-                CharacterType.Monster,
-                CharacterPersistence.Temporary
-                );
-            return character;
-        }
-        public Character CreateRandomPermanentCivilian()
-        {
-            var character = _characterFactory.GenerateRandomCharacter(
-                CharacterType.Civillian,
-                CharacterPersistence.Permanent
-                );
-            return character;
-        }
-        public Character CreateRandomTemporalCivilian()
-        {
-            var character = _characterFactory.GenerateRandomCharacter(
-                CharacterType.Civillian,
-                CharacterPersistence.Temporary
-                );
-            return character;
-        }
-
-        public void MoveCharacter(Character character, string locationId)
-        {
-            var loc = _locationService.GetLocation(locationId);
-            if (loc is null)
+            var character = Characters.FirstOrDefault(c => c.Id == characterId);
+            if (character is not null)
             {
-                _logger.LogWarning($"Attempt to move {character} to unexisting {locationId}");
-                return;
-            }
-            character.Location = loc;
-            _logger.LogInfo($"{character} moved to location {locationId}");
-        }
-        public void AssignItem(string itemId, string characterId)
-        {
-            var character = GetCharacter(characterId);
-            var item = _itemService.GetItem(itemId);
-            if ((item is not null) && (character is not null))
-            {
-                var previousOwner = Characters.FirstOrDefault(c => c.Items.Contains(item));
-                if (previousOwner is not null) UnAssignItem(itemId, previousOwner.Id);
-                character.Items.Add(item);
-                _logger.LogInfo($"{item} assigned to character {character}");
+                character.AddTag(tag);
             }
             else
             {
-                _logger.LogError($"Can't assign {item} to character {character}");
+                _logger.LogError($"Can't add tag {tag} to the character {characterId}");
             }
         }
-        public void UnAssignItem(string itemid, string characterId)
+        public void AddTag(string characterId, TagId.CharacterTagId tagId)
         {
-            var character = GetCharacter(characterId);
-            var item = _itemService.GetItem(itemid);
-
-            if ((item is null) || (character is null))
+            var tag = _tagService.GetCharacterTag(tagId);
+            if (tag is not null)
             {
-                _logger.LogError($"Can't remove {item} from {character}");
+                AddTag(characterId, tag);
             }
             else
             {
-                if (character.Items.Contains(item))
+                _logger.LogError($"Can't add tag {tag} to the character {characterId}");
+            }
+        }
+        private void InitCharacters()
+        {
+            try
+            {
+                var characters = CharacterJsonReader.ReadCharactersFromJson();
+                if (characters is null)
                 {
-                    character.Items.Remove(item); 
-                    _logger.LogInfo($"{item} unassigned from {character}");
+                    throw new("Json characters are empty.");
                 }
-                else
-                {
-                    _logger.LogWarning($"{character} doesn't have {item} to remove.");
-                }                    
+                Characters = characters;
             }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Can't read characters from Json. Error: {ex.Message}");
+            }
+        }
+        private T? GetRandomEnumValue<T>(params T[] excludeValues) where T : Enum
+        {
+            try
+            {
+                Random random = new Random();
+                var values = Enum.GetValues(typeof(T)).Cast<T>().ToList();
+                foreach (var value in excludeValues)
+                {
+                    values.Remove(value);
+                }
+                if (!values.Any())
+                {
+                    throw new ArgumentException("No values available for random selection after excluding specified values.");
+                }
+                return values[random.Next(values.Count)];
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return default;
+            }
+        }
+        private void RegisterCharacter(Character character)
+        {
+            Characters.Add(character);
+            _tagService.RegisterITaggable(character);
+            _logger.LogInfo($"Created {character}");
         }
     }
 }

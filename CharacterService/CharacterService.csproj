@@ -13,4 +13,10 @@
     <ProjectReference Include="..\TagService\TagService.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Resources\NamedCharacters.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
