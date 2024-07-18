@@ -12,7 +12,6 @@ internal class Program
     private static ITagService? _tagService ;
     private static ILocationService? _locationService; 
     private static ICharacterService? _characterService;
-    private static IItemFactory? _itemFactory;
     private static IItemService? _itemService;
     private static IEventService? _eventService;
     private static ILogger? _logger;
@@ -26,7 +25,6 @@ internal class Program
         _locationService = _serviceProvider!.GetRequiredService<ILocationService>();
         _logger = _serviceProvider!.GetRequiredService<ILogger>();
         _characterService = _serviceProvider!.GetRequiredService<ICharacterService>();
-        _itemFactory = _serviceProvider!.GetRequiredService<IItemFactory>();
         _itemService = _serviceProvider!.GetRequiredService<IItemService>();
         _eventService = _serviceProvider!.GetRequiredService<IEventService>();
         _stateMachine = _serviceProvider!.GetRequiredService<IStateMachine>();
@@ -97,7 +95,6 @@ internal class Program
         _serviceCollection.AddSingleton<ICharacterService, CharacterService>(); 
         _serviceCollection.AddSingleton<IEventService, EventService>();
         _serviceCollection.AddSingleton<ILogger, Logger>();
-        _serviceCollection.AddSingleton<IItemFactory, ItemFactory>();
         _serviceCollection.AddSingleton<IItemService, ItemService>();
         _serviceCollection.AddSingleton<IStateMachine, StateMachine>();
         _serviceCollection.AddSingleton<ICommandHandler, CommandHandler>();
