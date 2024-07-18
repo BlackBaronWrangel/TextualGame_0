@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="StateMachine\**" />
+    <EmbeddedResource Remove="StateMachine\**" />
+    <None Remove="StateMachine\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
   </ItemGroup>
@@ -15,18 +21,11 @@
   <ItemGroup>
     <ProjectReference Include="..\CharacterService\CharacterService.csproj" />
     <ProjectReference Include="..\EventService\EventService.csproj" />
+    <ProjectReference Include="..\ItemService\ItemService.csproj" />
     <ProjectReference Include="..\LocationService\LocationService.csproj" />
     <ProjectReference Include="..\LoggerService\LoggerService.csproj" />
+    <ProjectReference Include="..\SateMachineService\SateMachineService.csproj" />
     <ProjectReference Include="..\TagService\TagService.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Resources\Scenes\TestScene1.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Scenes\TestScene0.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

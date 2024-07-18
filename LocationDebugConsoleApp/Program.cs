@@ -1,6 +1,5 @@
 ﻿//Place code for testing and debugging here.
 using AutoMapper;
-using DebugConsoleApp.StateMachine;
 using GlobalServices;
 using GlobalServices.Enums;
 using GlobalServices.Interfaces;

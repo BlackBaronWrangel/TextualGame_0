@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using DebugConsoleApp.StateMachine.Entities;
 using GlobalServices.Entities;
 using GlobalServices.Interfaces;
 using System.Text.RegularExpressions;
@@ -68,11 +67,11 @@ namespace GlobalServices
             try
             {
                 min = int.Parse(args[0]);
-                max = int.Parse(args[1])+1; //including upper limit
+                max = int.Parse(args[1]) + 1; //including upper limit
                 var charactersNum = new Random().Next(min, max);
                 for (int i = 0; i < charactersNum; i++)
                 {
-                    var character =_characterService.CreateRandomTemporalCivilian();
+                    var character = _characterService.CreateRandomTemporalCivilian();
                     gameEvent.CharacterIds.Add(character.Id);
                 }
             }
