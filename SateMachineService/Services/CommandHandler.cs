@@ -49,7 +49,7 @@ namespace GlobalServices
                         AddRandomItems(gameEvent, args);
                         break;
                     default:
-                        Console.WriteLine("Unknown command");
+                        _logger.LogError($"Unknown command {command}");
                         break;
                 }
             }

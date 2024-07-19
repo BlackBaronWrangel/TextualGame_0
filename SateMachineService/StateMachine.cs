@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GlobalServices.Entities;
 using GlobalServices.Interfaces;
+using System;
 
 namespace GlobalServices
 {
@@ -11,14 +12,18 @@ namespace GlobalServices
         public Event? CurrentState { get; protected set; } = null;
 
         private IEventService _eventService;
+        private ICharacterService _characterService;
         private ILogger _logger;
         private ITagService _tagService;
+        private IItemService _itemService;
         private ICommandHandler _commandHandler;
         private IMapper _mapper;
         public StateMachine(
             ILogger logger,
             IEventService eventService,
             ITagService tagService,
+            IItemService itemService,
+            ICharacterService characterService,
             ICommandHandler commandHandler,
             IMapper mapper
             )
@@ -26,6 +31,8 @@ namespace GlobalServices
             _logger = logger;
             _eventService = eventService;
             _tagService = tagService;
+            _itemService = itemService;
+            _characterService = characterService;
             _mapper = mapper;
             _commandHandler = commandHandler;
             InitPreDefinedScenes();
@@ -41,10 +48,33 @@ namespace GlobalServices
             CurrentState = _eventService.GetEvent(scene.StartEventId);
             if (CurrentState is null)
             {
-                _logger.LogError($"Can't get event {sceneId} to set it as current state.");
+                _logger.LogError($"Can't get start event for scene {sceneId} to set it as a new state.");
                 return;
             }
 
+            _logger.LogInfo($"Running {CurrentState}");
+        }
+
+        public void NextState(string eventId)
+        {
+            if (CurrentState is null)
+                _logger.LogWarning("Attempt to run the next state from state which is null.");
+            if (CurrentState is not null && !CurrentState.PossibleNextEvents.Contains(eventId))
+                _logger.LogWarning($"Attempt to run the next state {eventId}, which is not defined in the list of PossibleNextEvents.");
+
+            var nextState = _eventService.GetEvent(eventId);
+            if (nextState is null)
+            {
+                _logger.LogError($"Can't get event {eventId} to set it as a new state.");
+                return;
+            }
+
+            if (CurrentState is not null)
+            {
+                CleanEventTemporalItems(CurrentState);
+                CleanEventTemporalCharacters(CurrentState);
+            }
+            CurrentState = nextState;
             _logger.LogInfo($"Running {CurrentState}");
         }
 
@@ -80,8 +110,43 @@ namespace GlobalServices
                 }
                 var scene = _mapper.Map<Scene>(jsonScene);
 
-
                 RegisterScene(scene);
+            }
+        }
+
+
+        private void CleanEventTemporalCharacters(Event gameEvent)
+        {
+            foreach (var charId in gameEvent.CharacterIds)
+            {
+                var character = _characterService.GetCharacter(charId);
+                if (character is null)
+                {
+                    _logger.LogWarning($"Attempt to delete unexisting character {charId} during cleaning event entities.");
+                    continue;
+                }
+                if (character.Persistence == Enums.CharacterPersistence.Temporary)
+                {
+                    _characterService.RemoveCharacter(charId);
+                    gameEvent.CharacterIds.Remove(charId);
+                }
+            }
+        }
+        private void CleanEventTemporalItems(Event gameEvent)
+        {
+            foreach (var itemId in gameEvent.ItemIds)
+            {
+                var item = _itemService.GetItem(itemId);
+                if (item is null)
+                {
+                    _logger.LogWarning($"Attempt to delete unexisting item {itemId} during cleaning event entities.");
+                    continue;
+                }
+                if (item.Persistence == Enums.ItemPersistence.Temporary)
+                {
+                    _itemService.RemoveItem(item.Id);
+                    gameEvent.ItemIds.Remove(itemId);
+                }
             }
         }
     }
