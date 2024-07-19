@@ -8,6 +8,7 @@ namespace GlobalServices.Entities
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; } = String.Empty;
         public ItemType Type { get; set; } = ItemType.Other;
+        public ItemPersistence Persistence { get; set; } = ItemPersistence.Temporary;
         public string Description { get; set; } = String.Empty;
         public Item() : base() { }
         public Item(string name, ItemType itemType) : base() 

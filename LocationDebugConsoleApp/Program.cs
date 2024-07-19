@@ -1,6 +1,7 @@
 ﻿//Place code for testing and debugging here.
 using AutoMapper;
 using GlobalServices;
+using GlobalServices.Entities;
 using GlobalServices.Enums;
 using GlobalServices.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,8 +33,8 @@ internal class Program
         _mapper = _serviceProvider!.GetRequiredService<IMapper>();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        //_locationService.AddConnection("loc_swamp", "loc_forest", 0.5);
-        //_locationService.RemoveConnection("loc_forest", "loc_meadow");
+        _locationService.AddConnection("loc_swamp", "loc_forest", 0.5);
+        _locationService.RemoveConnection("loc_forest", "loc_meadow");
 
         //var c1 = _characterService.CreateRandomCharacter(CharacterType.Monster, CharacterPersistence.Temporary);
         //var c2 = _characterService.CreateRandomCharacter(CharacterType.Other, CharacterPersistence.Permanent);
@@ -68,22 +69,22 @@ internal class Program
         //_characterService.UnAssignItem(apple.Id, player.Id);
         //apple = null;
 
-        //_eventService.CreateEvent(locs.ToList()[2].Id, EventType.Default, new() { chars.ToList()[0].Id, chars.ToList()[2].Id, chars.ToList()[3].Id }, new() {banana.Id, diamond.Id, sword.Id}, new());
+        //_eventService.CreateEvent("someevent1",locs.ToList()[2].Id, EventType.Default, new() { chars.ToList()[0].Id, chars.ToList()[2].Id, chars.ToList()[3].Id }, new() { banana.Id, diamond.Id, sword.Id }, new());
         //var events = _eventService.Events;
 
         //_tagService.ValidateITaggables();
 
-        //Examples of how to get any ITaggable entity in the game from the tagService:
+        ////Examples of how to get any ITaggable entity in the game from the tagService:
         //var characterEntities = _tagService.TaggableEntities.Where(i => i is Character).Cast<Character>().ToHashSet();
-        //var itemEntities = _tagService.TaggableEntities.Where(i => i is Item).Cast<Item>().ToHashSet(); 
-
-        //var scenes = _scenesRepo.Scenes.ToList();
-        //var event1 = _eventService.GetEvent(scenes[0].StartEventId);
-        //var event2 = _eventService.GetEvent(event1.PossibleNextEvents.ToList()[1]);
-        //var event3 = _eventService.GetEvent(event2.PossibleNextEvents.ToList()[0]);
-        //var eventAfterExit = _eventService.GetEvent(event3.PossibleNextEvents.ToList()[0]);
+        //var itemEntities = _tagService.TaggableEntities.Where(i => i is Item).Cast<Item>().ToHashSet();
 
         _stateMachine.RunScene("TestingScene_0");
+        _stateMachine.NextState(_stateMachine.CurrentState.PossibleNextEvents.ToList()[0]);
+        _stateMachine.NextState(_stateMachine.CurrentState.PossibleNextEvents.ToList()[1]);
+        _stateMachine.NextState("test_start_3_0");
+
+        foreach (var entity in _eventService.Events) // parse all events to see game behavior
+            _stateMachine.NextState(entity.Id);
     }
 
     private static void ConfigureServices()

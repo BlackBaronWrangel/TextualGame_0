@@ -215,7 +215,10 @@ namespace GlobalServices
                     throw new("Json characters are empty.");
                 }
                 foreach (var character in characters)
+                {
+                    character.Persistence = CharacterPersistence.Permanent;
                     RegisterCharacter(character);
+                }
             }
             catch (Exception ex)
             {

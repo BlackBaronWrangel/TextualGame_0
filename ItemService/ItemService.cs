@@ -85,7 +85,10 @@ namespace GlobalServices
                     throw new("Json items are empty.");
                 }
                 foreach (var item in items)
+                {
+                    item.Persistence = ItemPersistence.Permanent;
                     RegisterItem(item);
+                }
             }
             catch (Exception ex)
             {
