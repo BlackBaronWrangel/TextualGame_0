@@ -79,12 +79,16 @@ internal class Program
         //var itemEntities = _tagService.TaggableEntities.Where(i => i is Item).Cast<Item>().ToHashSet();
 
         _stateMachine.RunScene("TestingScene_0");
+        
         _stateMachine.NextState(_stateMachine.CurrentState.PossibleNextEvents.ToList()[0]);
         _stateMachine.NextState(_stateMachine.CurrentState.PossibleNextEvents.ToList()[1]);
         _stateMachine.NextState("test_start_3_0");
 
         foreach (var entity in _eventService.Events) // parse all events to see game behavior
             _stateMachine.NextState(entity.Id);
+
+
+        _stateMachine.NextState("test_start_1");
     }
 
     private static void ConfigureServices()

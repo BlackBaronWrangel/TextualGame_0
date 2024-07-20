@@ -2,6 +2,7 @@
 using GlobalServices.Entities;
 using GlobalServices.Interfaces;
 using System;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace GlobalServices
 {
@@ -45,14 +46,7 @@ namespace GlobalServices
                 _logger.LogError($"Can't get scene {sceneId} to run.");
                 return;
             }
-            CurrentState = _eventService.GetEvent(scene.StartEventId);
-            if (CurrentState is null)
-            {
-                _logger.LogError($"Can't get start event for scene {sceneId} to set it as a new state.");
-                return;
-            }
-
-            _logger.LogInfo($"Running {CurrentState}");
+            RunEvent(scene.StartEventId);
         }
 
         public void NextState(string eventId)
@@ -62,23 +56,32 @@ namespace GlobalServices
             if (CurrentState is not null && !CurrentState.PossibleNextEvents.Contains(eventId))
                 _logger.LogWarning($"Attempt to run the next state {eventId}, which is not defined in the list of PossibleNextEvents.");
 
-            var nextState = _eventService.GetEvent(eventId);
-            if (nextState is null)
-            {
-                _logger.LogError($"Can't get event {eventId} to set it as a new state.");
-                return;
-            }
-
             if (CurrentState is not null)
             {
                 CleanEventTemporalItems(CurrentState);
                 CleanEventTemporalCharacters(CurrentState);
             }
-            CurrentState = nextState;
+            RunEvent(eventId);
+        }
+
+
+        private void RunEvent(string eventId)
+        {
+            var gameEvent = _eventService.GetEvent(eventId);
+            if (gameEvent is null)
+            {
+                _logger.LogError($"Can't get event {eventId} to set it as a new state.");
+                return;
+            }
+
+            foreach (var command in gameEvent.Commands)
+                _commandHandler.ExecuteEventCommand(gameEvent, command);
+
+            CurrentState = gameEvent;
             _logger.LogInfo($"Running {CurrentState}");
         }
 
-        private void RegisterScene(Scene scene)
+    private void RegisterScene(Scene scene)
         {
             if (Scenes.Any(s => s.Id == scene.Id))
             {
@@ -102,10 +105,6 @@ namespace GlobalServices
                 foreach (var jsonEvent in jsonScene.Events)
                 {
                     var gameEvent = _mapper.Map<Event>(jsonEvent);
-
-                    foreach (var command in jsonEvent.Commands)
-                        _commandHandler.ExecuteEventCommand(gameEvent, command);
-
                     _eventService.RegisterEvent(gameEvent);
                 }
                 var scene = _mapper.Map<Scene>(jsonScene);

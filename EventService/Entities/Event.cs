@@ -11,6 +11,7 @@ namespace GlobalServices.Entities
         public HashSet<string> CharacterIds { get; set; } = new();
         public HashSet<string> ItemIds { get; set; } = new();
         public HashSet<string> PossibleNextEvents { get; set; } = new();
+        public List<string> Commands { get; set; } = new();
 
         public Event() : base() { }
         public Event(string id, EventType type, string locationId ) : base()
