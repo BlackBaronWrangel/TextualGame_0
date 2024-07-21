@@ -17,6 +17,7 @@ namespace GlobalServices
         private ILogger _logger;
         private ITagService _tagService;
         private IItemService _itemService;
+        private ILocationService _locationService;
         private ICommandHandler _commandHandler;
         private IMapper _mapper;
         public StateMachine(
@@ -25,6 +26,7 @@ namespace GlobalServices
             ITagService tagService,
             IItemService itemService,
             ICharacterService characterService,
+            ILocationService locationService,
             ICommandHandler commandHandler,
             IMapper mapper
             )
@@ -33,6 +35,7 @@ namespace GlobalServices
             _eventService = eventService;
             _tagService = tagService;
             _itemService = itemService;
+            _locationService = locationService;
             _characterService = characterService;
             _mapper = mapper;
             _commandHandler = commandHandler;
@@ -64,7 +67,6 @@ namespace GlobalServices
             RunEvent(eventId);
         }
 
-
         private void RunEvent(string eventId)
         {
             var gameEvent = _eventService.GetEvent(eventId);
@@ -76,12 +78,13 @@ namespace GlobalServices
 
             foreach (var command in gameEvent.Commands)
                 _commandHandler.ExecuteEventCommand(gameEvent, command);
+            LoadExistingCharactersInEvent(gameEvent);
 
             CurrentState = gameEvent;
             _logger.LogInfo($"Running {CurrentState}");
         }
 
-    private void RegisterScene(Scene scene)
+        private void RegisterScene(Scene scene)
         {
             if (Scenes.Any(s => s.Id == scene.Id))
             {
@@ -112,8 +115,6 @@ namespace GlobalServices
                 RegisterScene(scene);
             }
         }
-
-
         private void CleanEventTemporalCharacters(Event gameEvent)
         {
             foreach (var charId in gameEvent.CharacterIds)
@@ -146,6 +147,15 @@ namespace GlobalServices
                     _itemService.RemoveItem(item.Id);
                     gameEvent.ItemIds.Remove(itemId);
                 }
+            }
+        }
+        private void LoadExistingCharactersInEvent(Event gameEvent)
+        {
+            var relatedCharacters = _characterService.Characters.Where(c => c.Location == gameEvent.LocationId).ToList();
+            if (relatedCharacters is not null && relatedCharacters.Count != 0)
+            {
+                foreach (var character in relatedCharacters)
+                    gameEvent.CharacterIds.Add(character.Id);
             }
         }
     }

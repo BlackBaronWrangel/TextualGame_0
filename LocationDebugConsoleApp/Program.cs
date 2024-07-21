@@ -87,7 +87,6 @@ internal class Program
         foreach (var entity in _eventService.Events) // parse all events to see game behavior
             _stateMachine.NextState(entity.Id);
 
-
         _stateMachine.NextState("test_start_1");
     }
 
