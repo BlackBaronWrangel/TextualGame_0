@@ -5,8 +5,6 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocationService", "LocationService\LocationService.csproj", "{E9CCE3A0-776A-4CB4-940C-7BF4F1E61CA7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DebugConsoleApp", "LocationDebugConsoleApp\DebugConsoleApp.csproj", "{E6DB5F1C-1397-4832-A344-6C8AD9F6E4B1}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagService", "TagService\TagService.csproj", "{C81ECFF6-F413-4F86-BD29-0D3DD853ABBC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerService", "LoggerService\LoggerService.csproj", "{0BFF091F-6422-4754-B70E-44F4D9D90943}"
@@ -17,9 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ItemService", "ItemService\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventService", "EventService\EventService.csproj", "{FC36B54B-FEA5-4C0F-8C06-04371FF951C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileService", "FileService\FileService.csproj", "{06B6B8A8-1D36-4AE9-BBAF-D6ADFC862AFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileService", "FileService\FileService.csproj", "{06B6B8A8-1D36-4AE9-BBAF-D6ADFC862AFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SateMachineService", "SateMachineService\SateMachineService.csproj", "{2FB81749-C4D4-45C2-B167-6A7BD6DF3D64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SateMachineService", "SateMachineService\SateMachineService.csproj", "{2FB81749-C4D4-45C2-B167-6A7BD6DF3D64}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DebugConsoleApp", "DebugConsoleApp\DebugConsoleApp.csproj", "{19A2F648-056D-43E5-A159-C0A132AEEF42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +31,6 @@ Global
 		{E9CCE3A0-776A-4CB4-940C-7BF4F1E61CA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9CCE3A0-776A-4CB4-940C-7BF4F1E61CA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9CCE3A0-776A-4CB4-940C-7BF4F1E61CA7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E6DB5F1C-1397-4832-A344-6C8AD9F6E4B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E6DB5F1C-1397-4832-A344-6C8AD9F6E4B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E6DB5F1C-1397-4832-A344-6C8AD9F6E4B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6DB5F1C-1397-4832-A344-6C8AD9F6E4B1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C81ECFF6-F413-4F86-BD29-0D3DD853ABBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C81ECFF6-F413-4F86-BD29-0D3DD853ABBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C81ECFF6-F413-4F86-BD29-0D3DD853ABBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -63,6 +59,10 @@ Global
 		{2FB81749-C4D4-45C2-B167-6A7BD6DF3D64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FB81749-C4D4-45C2-B167-6A7BD6DF3D64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FB81749-C4D4-45C2-B167-6A7BD6DF3D64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19A2F648-056D-43E5-A159-C0A132AEEF42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19A2F648-056D-43E5-A159-C0A132AEEF42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19A2F648-056D-43E5-A159-C0A132AEEF42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19A2F648-056D-43E5-A159-C0A132AEEF42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
