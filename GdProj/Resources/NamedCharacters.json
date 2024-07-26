@@ -1,0 +1,38 @@
+[
+  {
+    "Id": "named_Npc_Biba",
+    "Name": "Biba",
+    "Type": "Other",
+    "BodyType": "Other",
+    "Species": "Other",
+    "Gender": "Other",
+    "ControlType": "PlayableNpc",
+    "Status": "Alive",
+    "Location": "loc_meadow",
+    "Hp": 100,
+    "Mental": 100,
+    "HpLimit": 100,
+    "MentalLimit": 100,
+    "Items": [],
+    "CustomAttributes": [],
+    "Tags": []
+  },
+  {
+    "Id": "named_Npc_Boba",
+    "Name": "Boba",
+    "Type": "Other",
+    "BodyType": "Other",
+    "Species": "Other",
+    "Gender": "Other",
+    "ControlType": "PlayableNpc",
+    "Status": "Alive",
+    "Location": "loc_meadow",
+    "Hp": 100,
+    "Mental": 100,
+    "HpLimit": 100,
+    "MentalLimit": 100,
+    "Items": [],
+    "CustomAttributes": [],
+    "Tags": []
+  }
+]

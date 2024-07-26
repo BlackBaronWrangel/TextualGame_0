@@ -1,0 +1,157 @@
+[gd_scene load_steps=13 format=3 uid="uid://cisos6y5uaore"]
+
+[ext_resource type="Script" path="res://UiRendering/AvatarContainer.cs" id="1_jwk4d"]
+[ext_resource type="Script" path="res://UiRendering/Avatar.cs" id="1_l6eyu"]
+[ext_resource type="Script" path="res://UiRendering/VUiSplit.cs" id="1_l8dy1"]
+[ext_resource type="Texture2D" uid="uid://cwlfcq7g3cp76" path="res://Resources/imgs/placeholder.png" id="1_xjhjw"]
+[ext_resource type="Script" path="res://UiRendering/HUiSplit.cs" id="2_ivnbu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pdl0e"]
+atlas = ExtResource("1_xjhjw")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pwcej"]
+atlas = ExtResource("1_xjhjw")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ad13f"]
+atlas = ExtResource("1_xjhjw")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1o4ck"]
+atlas = ExtResource("1_xjhjw")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1c1x5"]
+atlas = ExtResource("1_xjhjw")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ix4wi"]
+atlas = ExtResource("1_xjhjw")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p46m1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pdl0e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pwcej")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ad13f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1o4ck")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1c1x5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ix4wi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="MainUi" type="Control"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TabContainer" type="TabContainer" parent="."]
+modulate = Color(1, 1, 1, 0.592157)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+current_tab = 1
+
+[node name="Menu" type="CenterContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="TabContainer/Menu"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="TabContainer/Menu/VBox"]
+layout_mode = 2
+text = "Hello"
+
+[node name="Button2" type="Button" parent="TabContainer/Menu/VBox"]
+layout_mode = 2
+text = "World"
+
+[node name="GameScene" type="Control" parent="TabContainer"]
+layout_mode = 2
+
+[node name="Background" type="ColorRect" parent="TabContainer/GameScene"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.400505, 0.000110412, 0.400502, 1)
+
+[node name="VUiSplit" type="VSplitContainer" parent="TabContainer/GameScene"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 455
+script = ExtResource("1_l8dy1")
+
+[node name="HUiSplit" type="HSplitContainer" parent="TabContainer/GameScene/VUiSplit"]
+layout_mode = 2
+split_offset = 335
+script = ExtResource("2_ivnbu")
+
+[node name="VUiSplit" type="VSplitContainer" parent="TabContainer/GameScene/VUiSplit/HUiSplit"]
+visibility_layer = 512
+layout_mode = 2
+script = ExtResource("1_l8dy1")
+
+[node name="AvatarContainer" type="Button" parent="TabContainer/GameScene/VUiSplit/HUiSplit/VUiSplit"]
+visibility_layer = 512
+custom_minimum_size = Vector2(0, 140)
+layout_mode = 2
+script = ExtResource("1_jwk4d")
+
+[node name="Avatar" type="Node2D" parent="TabContainer/GameScene/VUiSplit/HUiSplit/VUiSplit/AvatarContainer"]
+modulate = Color(1, 1, 0, 1)
+top_level = true
+clip_children = 2
+visibility_layer = 8
+position = Vector2(167, 100)
+script = ExtResource("1_l6eyu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TabContainer/GameScene/VUiSplit/HUiSplit/VUiSplit/AvatarContainer/Avatar"]
+visibility_layer = 8
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_p46m1")
+autoplay = "default"
+frame_progress = 0.345159
+speed_scale = 0.5
+
+[node name="Placeholder1" type="Button" parent="TabContainer/GameScene/VUiSplit/HUiSplit/VUiSplit"]
+layout_mode = 2
+text = "Additional UI 2"
+
+[node name="Placeholder2" type="Button" parent="TabContainer/GameScene/VUiSplit/HUiSplit"]
+layout_mode = 2
+text = "Main Window"
+
+[node name="Placeholder3" type="Button" parent="TabContainer/GameScene/VUiSplit"]
+layout_mode = 2
+text = "Actions"
