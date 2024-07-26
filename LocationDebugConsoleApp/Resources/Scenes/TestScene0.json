@@ -32,7 +32,7 @@
       "LocationId": "loc_meadow",
       "CharacterIds": [],
       "ItemIds": [],
-      "PossibleNextEvents": [ "test_start_1", "test_start_2_alt" ],
+      "PossibleNextEvents": [ "test_start_1" ],
       "Commands": [
         "AddRandomMonsters(0,4)",
         "AddRandomItems(1,2)"

@@ -16,13 +16,4 @@
     <ProjectReference Include="..\FileService\FileService.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Resources\Scenes\TestScene0.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Scenes\TestScene1.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

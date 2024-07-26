@@ -14,19 +14,4 @@
     <ProjectReference Include="..\LoggerService\LoggerService.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Resources\ItemTags.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\EventTags.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\CharacterTags.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\LocationTags.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
