@@ -34,4 +34,17 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CharacterService\CharacterService.csproj" />
+    <ProjectReference Include="..\EventService\EventService.csproj" />
+    <ProjectReference Include="..\FileService\FileService.csproj" />
+    <ProjectReference Include="..\ItemService\ItemService.csproj" />
+    <ProjectReference Include="..\LocationService\LocationService.csproj" />
+    <ProjectReference Include="..\LoggerService\LoggerService.csproj" />
+    <ProjectReference Include="..\SateMachineService\SateMachineService.csproj" />
+    <ProjectReference Include="..\TagService\TagService.csproj" />
+  </ItemGroup>
 </Project>
