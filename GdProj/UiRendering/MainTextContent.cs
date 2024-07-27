@@ -27,8 +27,10 @@ public partial class MainTextContent : RichTextLabel
 
         var locationName = currentLocation.Name;
         var locationDescription = currentLocation.Description;
+        var sceneDescription = currentGameEvent.EventeDescription;
 
-        text = $"[b]{locationName}[/b]\n\n{locationDescription}\n";
+        text += $"[b]{locationName}[/b]\n\n{locationDescription}\n";
+        text += $"\n{sceneDescription}\n";
 
 
         var characters = sp.CharacterService.Characters.Where(c => currentGameEvent.CharacterIds.Contains(c.Id)).ToList();

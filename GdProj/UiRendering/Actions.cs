@@ -17,25 +17,29 @@ public partial class Actions : HFlowContainer
     {
         var nextEvents = sp.StateMachine.CurrentState.PossibleNextEvents;
 
-        foreach (var nextEvent in nextEvents)
+        foreach (var nextEventId in nextEvents)
         {
-            var gameEvent = sp.EventService.GetEvent(nextEvent);
-            if (gameEvent is null)
+            var nextEvent = sp.EventService.GetEvent(nextEventId);
+            if (nextEvent is null)
             {
-                sp.Logger.LogWarning("Can't read event for preparing button.");
+                sp.Logger.LogWarning("Can't read event for button.");
                 continue;
             }
-            var loc = sp.LocationService.GetLocation(gameEvent.LocationId);
+            var loc = sp.LocationService.GetLocation(nextEvent.LocationId);
             if (loc is null)
             {
-                sp.Logger.LogWarning("Can't read location for preparing button.");
+                sp.Logger.LogWarning("Can't read location for button.");
                 continue;
             }
 
             var button = new Button();
-            button.Text = $"Go to {loc.Name}";
 
-            button.Pressed += () => ButtonPressed(gameEvent.LocationId);
+            if (string.IsNullOrEmpty(nextEvent.EntryDescription))
+                button.Text = $"Generated button name"; //placeholder
+            else
+             button.Text = $"{nextEvent.EntryDescription}";
+
+            button.Pressed += () => ButtonPressed(nextEvent.Id);
             AddChild(button);
         }
     }
