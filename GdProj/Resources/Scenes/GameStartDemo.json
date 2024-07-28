@@ -1,0 +1,71 @@
+[
+  {
+    "Id": "GameStartDemo",
+    "StartEventId": "gsd_wake_up",
+    "Events": [
+      {
+        "Id": "gsd_wake_up",
+        "EventType": "Default",
+        "LocationId": "gsd_quest_loc_start_cave",
+        "EventeDescription": "You wake up in a dark place with no light. The air is cool and damp, and you feel the rough ground beneath you. As your eyes adjust, you notice a faint glow coming from a hole in the distance. You have no memory of how you got here or who you are.",
+        "CharacterIds": [],
+        "ItemIds": [],
+        "PossibleNextEvents": {
+          "Move towards the light": "gsd_find_exit_to_swamp",
+          "Call out for help.": "gsd_call_help",
+          "Feel around the ground for any objects": "gsd_search_for_anything"
+        },
+        "Commands": []
+      },
+      {
+        "Id": "gsd_call_help",
+        "EventType": "Default",
+        "LocationId": "gsd_quest_loc_start_cave",
+        "EventeDescription": "You call out for help, but your voice echoes back at you in the emptiness. It seems there's no one around to hear you.",
+        "CharacterIds": [],
+        "ItemIds": [],
+        "PossibleNextEvents": {
+          "Move towards the light": "gsd_find_exit_to_swamp",
+          "Feel around the ground for any objects": "gsd_search_for_anything",
+          "Sit and wait, hoping someone will find you": "gsd_starvation_death"
+        },
+        "Commands": []
+      },
+      {
+        "Id": "gsd_search_for_anything",
+        "EventType": "Default",
+        "LocationId": "gsd_quest_loc_start_cave",
+        "EventeDescription": "You feel around the ground, but find nothing of use. As you move, you accidentally bump your head against a sharp rock in the darkness, causing a small cut. The pain is sharp but manageable, and you can feel a trickle of blood.",
+        "CharacterIds": [],
+        "ItemIds": [],
+        "PossibleNextEvents": {
+          "Move towards the light, despite the pain": "gsd_find_exit_to_swamp",
+          "The pain is too intense to move. Sit and wait, hoping someone will find you": "gsd_starvation_death"
+        },
+        "Commands": []
+      },
+      {
+        "Id": "gsd_find_exit_to_swamp",
+        "EventType": "Default",
+        "LocationId": "loc_swamp",
+        "EventeDescription": "You move cautiously towards the faint glow, navigating the uneven ground. As you get closer, the light becomes brighter, and you find yourself at the entrance of a cave. Stepping out, you realize you are in a swamp. The air is thick with humidity, and the ground is soft and muddy under your feet. Tall trees with hanging moss surround you, and you can hear the distant sounds of wildlife.",
+        "CharacterIds": [],
+        "ItemIds": [],
+        "PossibleNextEvents": {
+          "Finally, exit": "loc_swamp"
+        },
+        "Commands": []
+      },
+      {
+        "Id": "gsd_starvation_death",
+        "EventType": "Ending",
+        "LocationId": "gsd_quest_loc_start_cave",
+        "EventeDescription": "You decide to sit and wait, hoping someone will find you. Time passes slowly, and you grow weaker with each passing hour. Eventually, exhaustion overtakes you, and you succumb to starvation. \n[b]You have died.[/b]",
+        "CharacterIds": [],
+        "ItemIds": [],
+        "PossibleNextEvents": {},
+        "Commands": []
+      }
+    ]
+  }
+]

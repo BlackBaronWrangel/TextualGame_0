@@ -28,7 +28,7 @@ public partial class GlobalStateController : Node
     }
     public void StartGame()
     {
-        GameServiceProvider.Instance.StateMachine.RunScene("TestingScene_0");
+        GameServiceProvider.Instance.StateMachine.RunScene("GameStartDemo");
         _tabMenu.SetTabDisabled(_gameplayTabIndex, false);
         _tabMenu.CurrentTab = _gameplayTabIndex;
         _startButton.Visible = false;

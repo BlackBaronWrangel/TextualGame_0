@@ -17,27 +17,30 @@ public partial class Actions : HFlowContainer
     {
         var nextEvents = sp.StateMachine.CurrentState.PossibleNextEvents;
 
-        foreach (var nextEventId in nextEvents)
+        foreach (var nextEventEntryPair in nextEvents)
         {
-            var nextEvent = sp.EventService.GetEvent(nextEventId);
+            var nextEvent = sp.EventService.GetEvent(nextEventEntryPair.Value);
             if (nextEvent is null)
             {
-                sp.Logger.LogWarning("Can't read event for button.");
+                sp.Logger.LogWarning($"Can't read event for button. Event: {nextEventEntryPair.Value}");
                 continue;
             }
             var loc = sp.LocationService.GetLocation(nextEvent.LocationId);
             if (loc is null)
             {
-                sp.Logger.LogWarning("Can't read location for button.");
+                sp.Logger.LogWarning($"Can't read location for button. Location: {nextEvent.LocationId}");
                 continue;
             }
 
             var button = new Button();
 
-            if (string.IsNullOrEmpty(nextEvent.EntryDescription))
-                button.Text = $"Generated button name"; //placeholder
+            if (string.IsNullOrEmpty(nextEventEntryPair.Key))
+            {
+                sp.Logger.LogError($"Can't assign text for button, because it is null or emnpty.");
+                button.Text = string.Empty;
+            }
             else
-             button.Text = $"{nextEvent.EntryDescription}";
+                button.Text = $"{nextEventEntryPair.Key}";
 
             button.Pressed += () => ButtonPressed(nextEvent.Id);
             AddChild(button);

@@ -80,8 +80,8 @@ internal class Program
 
         _stateMachine.RunScene("TestingScene_0");
         
-        _stateMachine.NextState(_stateMachine.CurrentState.PossibleNextEvents.ToList()[0]);
-        _stateMachine.NextState(_stateMachine.CurrentState.PossibleNextEvents.ToList()[1]);
+        _stateMachine.NextState(_stateMachine.CurrentState.PossibleNextEvents.Values.ToList()[0]);
+        _stateMachine.NextState(_stateMachine.CurrentState.PossibleNextEvents.Values.ToList()[1]);
         _stateMachine.NextState("test_start_3_0");
 
         foreach (var entity in _eventService.Events) // parse all events to see game behavior
