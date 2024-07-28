@@ -6,19 +6,19 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="Resources\CharacterTags.json">
+    <None Include="Resources\Tags\CharacterTags.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\EventTags.json">
+    <None Include="Resources\Tags\EventTags.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\ItemTags.json">
+    <None Include="Resources\Tags\ItemTags.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Resources\Locations.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\LocationTags.json">
+    <None Include="Resources\Tags\LocationTags.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Resources\NamedCharacters.json">

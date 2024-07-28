@@ -22,9 +22,10 @@ namespace GlobalServices
 
             foreach (var filePath in jsonFiles)
             {
-                var entity = ReadJsonSingleEntity<T>(filePath);
-                if (entity != null)
-                    entities.Add(entity);
+                var entries = ReadJsonAsCollection<T>(filePath);
+                if (entries is not null && entries.Count()>0)
+                    foreach (var entry in entries)
+                        entities.Add(entry);
             }
             return entities;
         }

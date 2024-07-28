@@ -1,9 +1,8 @@
 ﻿using GlobalServices.Enums;
-using GlobalServices.Interfaces;
 
 namespace GlobalServices.Entities
 {
-    public class Item : ItemBase
+    public class Item : TaggableBase
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; } = String.Empty;
@@ -16,7 +15,7 @@ namespace GlobalServices.Entities
             Name = name;
             Type= itemType;
         }
-        public Item(string name, string description, ItemType itemType, HashSet<ITag> tags) : base(tags) 
+        public Item(string name, string description, ItemType itemType, HashSet<string> tags) : base(tags) 
         {
             Name = name;
             Description = description;

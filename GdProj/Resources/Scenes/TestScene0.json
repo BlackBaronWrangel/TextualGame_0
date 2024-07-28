@@ -1,61 +1,63 @@
-{
-  "Id": "TestingScene_0",
-  "StartEventId": "test_start_1",
-  "Events": [
-    {
-      "Id": "test_start_1",
-      "EventType": "Default",
-      "LocationId": "loc_swamp",
-      "EntryDescription": "This swamp looks good.",
-      "EventeDescription": "You entered a swamp. Strange, but today air is much heavier than usual.",
-      "CharacterIds": [],
-      "ItemIds": [],
-      "PossibleNextEvents": [ "test_start_2", "test_start_2_alt", "test_start_3" ],
-      "Commands": [
-        "AddRandomCharacters(6,12)",
-        "AddRandomItems(3,8)"
-      ]
-    },
-    {
-      "Id": "test_start_2",
-      "EventType": "Default",
-      "LocationId": "loc_meadow",
-      "EntryDescription": "Jump so high to get into meadow.",
-      "EventeDescription": "You landed at the middle of the meadow.",
-      "CharacterIds": [],
-      "ItemIds": [],
-      "PossibleNextEvents": [ "test_start_1", "test_start_2_alt" ],
-      "Commands": [
-        "AddRandomMonsters(0,4)",
-        "AddRandomItems(1,2)"
-      ]
-    },
-    {
-      "Id": "test_start_2_alt",
-      "EventType": "Default",
-      "LocationId": "loc_meadow",
-      "EntryDescription": "Instead of jump, just run to the meadow.",
-      "EventeDescription": "Heavily panting, you finally arrived at the meadow.",
-      "CharacterIds": [],
-      "ItemIds": [],
-      "PossibleNextEvents": [ "test_start_1" ],
-      "Commands": [
-        "AddRandomMonsters(0,4)",
-        "AddRandomItems(1,2)"
-      ]
-    },
-    {
-      "Id": "test_start_3",
-      "EventType": "Default",
-      "LocationId": "loc_forest",
-      "EntryDescription": "Maybe better to visit forest?",
-      "EventeDescription": "You entered forest.... Seriously? Forest? Are you sure it isn't danger enough?",
-      "CharacterIds": [],
-      "ItemIds": [],
-      "PossibleNextEvents": [ "loc_swamp" ],
-      "Commands": [
-        "AddRandomItems(0,3)"
-      ]
-    }
-  ]
-}
+[
+  {
+    "Id": "TestingScene_0",
+    "StartEventId": "test_start_1",
+    "Events": [
+      {
+        "Id": "test_start_1",
+        "EventType": "Default",
+        "LocationId": "loc_swamp",
+        "EntryDescription": "This swamp looks good.",
+        "EventeDescription": "You entered a swamp. Strange, but today air is much heavier than usual.",
+        "CharacterIds": [],
+        "ItemIds": [],
+        "PossibleNextEvents": [ "test_start_2", "test_start_2_alt", "test_start_3" ],
+        "Commands": [
+          "AddRandomCharacters(6,12)",
+          "AddRandomItems(3,8)"
+        ]
+      },
+      {
+        "Id": "test_start_2",
+        "EventType": "Default",
+        "LocationId": "loc_meadow",
+        "EntryDescription": "Jump so high to get into meadow.",
+        "EventeDescription": "You landed at the middle of the meadow.",
+        "CharacterIds": [],
+        "ItemIds": [],
+        "PossibleNextEvents": [ "test_start_1", "test_start_2_alt" ],
+        "Commands": [
+          "AddRandomMonsters(0,4)",
+          "AddRandomItems(1,2)"
+        ]
+      },
+      {
+        "Id": "test_start_2_alt",
+        "EventType": "Default",
+        "LocationId": "loc_meadow",
+        "EntryDescription": "Instead of jump, just run to the meadow.",
+        "EventeDescription": "Heavily panting, you finally arrived at the meadow.",
+        "CharacterIds": [],
+        "ItemIds": [],
+        "PossibleNextEvents": [ "test_start_1" ],
+        "Commands": [
+          "AddRandomMonsters(0,4)",
+          "AddRandomItems(1,2)"
+        ]
+      },
+      {
+        "Id": "test_start_3",
+        "EventType": "Default",
+        "LocationId": "loc_forest",
+        "EntryDescription": "Maybe better to visit forest?",
+        "EventeDescription": "You entered forest.... Seriously? Forest? Are you sure it isn't danger enough?",
+        "CharacterIds": [],
+        "ItemIds": [],
+        "PossibleNextEvents": [ "loc_swamp" ],
+        "Commands": [
+          "AddRandomItems(0,3)"
+        ]
+      }
+    ]
+  }
+]

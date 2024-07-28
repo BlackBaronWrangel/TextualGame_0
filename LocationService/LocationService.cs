@@ -1,5 +1,4 @@
 ﻿using GlobalServices.Entities;
-using GlobalServices.Enums;
 using GlobalServices.Interfaces;
 
 namespace GlobalServices
@@ -65,7 +64,7 @@ namespace GlobalServices
             else
                 _logger.LogWarning($"Attempt to remove an unexisting connection between {id1} and {id2}");
         }
-        public void AddTag(string locationId, ITag tag)
+        public void AddTag(string locationId, string tag)
         {
             var location = GetLocation(locationId);
             if (location is null)
@@ -75,29 +74,13 @@ namespace GlobalServices
             }
             location.AddTag(tag);
         }
-        public void AddTag(string locationId, TagId.LocationTagId tagId)
-        {
-            var tag = _tagService.GetLocationTag(tagId);
-            if (tag != null)
-                AddTag(locationId, tag);
-            else
-                _logger.LogError($"Can't add tag {tag} to the location {locationId}");
-        }
-        public void RemoveTag(string locationId, ITag tag)
+        public void RemoveTag(string locationId, string tag)
         {
             var location = GetLocation(locationId);
             if (location is not null)
                 location.RemoveTag(tag);
             else
                 _logger.LogWarning($"Can't get location {locationId} to remove tag {tag}");
-        }
-        public void RemoveTag(string locationId, TagId.LocationTagId tagId)
-        {
-            var tag = _tagService.GetLocationTag(tagId);
-            if (tag != null)
-                RemoveTag(locationId, tag);
-            else
-                _logger.LogError($"Can't remove tag {tag} from the location {locationId}");
         }
         private void InitLocations()
         {

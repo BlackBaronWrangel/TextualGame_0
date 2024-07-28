@@ -89,6 +89,7 @@ namespace GlobalServices
                 CharacterType.Monster,
                 CharacterPersistence.Temporary
                 );
+
             return character;
         }
         public Character CreateRandomPermanentCivilian()
@@ -157,7 +158,7 @@ namespace GlobalServices
                 }                    
             }
         }
-        public void RemoveTag(string characterId, ITag tag)
+        public void RemoveTag(string characterId, string tag)
         {
             var character = GetCharacter(characterId);
             if (character is not null)
@@ -169,36 +170,12 @@ namespace GlobalServices
                 _logger.LogError($"Can't remove tag {tag} from the character {characterId}");
             }
         }
-        public void RemoveTag(string characterId, TagId.CharacterTagId tagId)
-        {
-            var tag = _tagService.GetCharacterTag(tagId);
-            if (tag is not null)
-            {
-                RemoveTag(characterId, tag);
-            }
-            else
-            {
-                _logger.LogError($"Can't remove tag {tag} from the character {characterId}");
-            }
-        }
-        public void AddTag(string characterId, ITag tag)
+        public void AddTag(string characterId, string tag)
         {
             var character = Characters.FirstOrDefault(c => c.Id == characterId);
             if (character is not null)
             {
                 character.AddTag(tag);
-            }
-            else
-            {
-                _logger.LogError($"Can't add tag {tag} to the character {characterId}");
-            }
-        }
-        public void AddTag(string characterId, TagId.CharacterTagId tagId)
-        {
-            var tag = _tagService.GetCharacterTag(tagId);
-            if (tag is not null)
-            {
-                AddTag(characterId, tag);
             }
             else
             {
