@@ -57,7 +57,7 @@ namespace GlobalServices
         {
             if (CurrentState is null)
                 _logger.LogWarning("Attempt to run the next state from state which is null.");
-            if (CurrentState is not null && !CurrentState.PossibleNextEvents.Contains(eventId))
+            if (CurrentState is not null && !CurrentState.PossibleNextEvents.Values.Contains(eventId))
                 _logger.LogWarning($"Attempt to run the next state {eventId}, which is not defined in the list of PossibleNextEvents.");
 
             if (CurrentState is not null)

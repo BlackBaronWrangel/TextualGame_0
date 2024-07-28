@@ -4,7 +4,7 @@ using System;
 public partial class HUiSplit : HSplitContainer
 {
     [Export]
-    public double SplitRatio { get; set; } = 0.5;
+    public double SplitRatio { get; set; }
 
     public override void _Ready()
     {

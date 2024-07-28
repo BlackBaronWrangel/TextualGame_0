@@ -39,5 +39,11 @@
         "Distance": 3
       }
     ]
+  },
+  {
+    "Id": "gsd_quest_loc_start_cave",
+    "Name": "Unknown cave",
+    "Description": "The location is enveloped in darkness, with only a faint glow emanating from a distant hole. The air is cool and damp, with the sound of dripping water echoing softly. The ground is uneven and covered in rough, wet rocks. The confined space and lack of light suggest it is a cave, hidden from the outside world and shrouded in mystery.",
+    "ConnectedLocations": []
   }
 ]

@@ -6,6 +6,7 @@
         Transition,
         Dialogue,
         Confrontation,
+        Ending,
         Custom
     }
 }

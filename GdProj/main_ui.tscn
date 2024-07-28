@@ -122,18 +122,21 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-split_offset = 455
+split_offset = 495
 script = ExtResource("1_l8dy1")
+SplitRatio = 0.7
 
 [node name="HUiSplit" type="HSplitContainer" parent="TabMenu/GameScene/VUiSplit"]
 layout_mode = 2
-split_offset = 335
+split_offset = 260
 script = ExtResource("2_ivnbu")
+SplitRatio = 0.2
 
 [node name="VUiSplit" type="VSplitContainer" parent="TabMenu/GameScene/VUiSplit/HUiSplit"]
 visibility_layer = 512
 layout_mode = 2
 script = ExtResource("1_l8dy1")
+SplitRatio = 0.3
 
 [node name="AvatarContainer" type="Button" parent="TabMenu/GameScene/VUiSplit/HUiSplit/VUiSplit"]
 visibility_layer = 512

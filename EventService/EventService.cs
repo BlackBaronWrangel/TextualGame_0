@@ -22,7 +22,7 @@ namespace GlobalServices
         {
             return Events.FirstOrDefault(e => e.Id == eventId);
         }
-        public Event CreateEvent(string eventId, string locationId, EventType type, HashSet<string> characterIds, HashSet<string> itemIds, HashSet<string> nextEvents)
+        public Event CreateEvent(string eventId, string locationId, EventType type, HashSet<string> characterIds, HashSet<string> itemIds, Dictionary<string, string> nextEvents)
         {
             var gameEvent = new Event(eventId, type, locationId, characterIds, itemIds, nextEvents);
             RegisterEvent(gameEvent);
@@ -79,7 +79,14 @@ namespace GlobalServices
                 var gameEvent = CreateDefaultLocationEvent(loc.Id);
                 foreach (var connection in loc.ConnectedLocations)
                 {
-                    gameEvent.PossibleNextEvents.Add(connection.LocationId);
+                    var locationToMove = _locationService.GetLocation(connection.LocationId);
+                    var locationToMoveName = string.Empty;
+                    if (locationToMove is null || string.IsNullOrEmpty(locationToMove.Name))
+                        _logger.LogError($"Can't get location name for adding to navigation button. Location: {connection.LocationId}");
+                    else
+                        locationToMoveName = locationToMove.Name;
+                    var navigationDescription = $"To {locationToMoveName}";
+                    gameEvent.PossibleNextEvents.Add(navigationDescription, connection.LocationId);
                 }
             }
         }
