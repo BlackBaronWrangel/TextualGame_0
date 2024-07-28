@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FileService\FileService.csproj" />
     <ProjectReference Include="..\LoggerService\LoggerService.csproj" />
   </ItemGroup>
 

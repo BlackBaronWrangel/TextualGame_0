@@ -19,9 +19,7 @@ namespace GlobalServices.Interfaces
         void MoveCharacter(string characterId, string locationId);
         void AssignItem(string itemid, string characterId);
         void UnAssignItem(string itemid, string characterId);
-        void AddTag(string CharacterId, ITag tag);
-        void AddTag(string CharacterId, TagId.CharacterTagId tag);
-        void RemoveTag(string CharacterId, ITag tag);
-        void RemoveTag(string CharacterId, TagId.CharacterTagId tag);
+        void AddTag(string CharacterId, string tag);
+        void RemoveTag(string CharacterId, string tag);
     }
 }

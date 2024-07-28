@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace GlobalServices.Entities
 {
-    public class Location : LocationBase
+    public class Location : TaggableBase
     {
         [JsonProperty]
         public string Id { get; protected set; } = string.Empty;
@@ -13,14 +13,14 @@ namespace GlobalServices.Entities
         public string Description { get; protected set; } = string.Empty;
         [JsonProperty]
         public HashSet<Connection> ConnectedLocations { get; protected set; } = new ();
-        public Location(string id, string name, string description, HashSet<Connection> connections, HashSet<ITag> tags) : base(tags)
+        public Location(string id, string name, string description, HashSet<Connection> connections, HashSet<string> tags) : base(tags)
         {
             Id = id;
             Name = name;
             Description = description;
             ConnectedLocations = connections;
         }
-        public Location(string id, string name, string description, HashSet<ITag> tags) : base(tags)
+        public Location(string id, string name, string description, HashSet<string> tags) : base(tags)
         {
             Id = id;
             Name = name;

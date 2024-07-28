@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 
 namespace GlobalServices.Entities
 {
-    public class Character : CharacterBase
+    public class Character : TaggableBase
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
@@ -38,7 +38,7 @@ namespace GlobalServices.Entities
             Species = species;
             Gender = gender;
         }
-        public Character(string name, CharacterType type, CharacterPersistence persistence, CharacterBodyType bodyType, CharacterSpecies species, CharacterGender gender, HashSet<ITag> tags) : base(tags)
+        public Character(string name, CharacterType type, CharacterPersistence persistence, CharacterBodyType bodyType, CharacterSpecies species, CharacterGender gender, HashSet<string> tags) : base(tags)
         {
             Name = name;
             Type = type;

@@ -1,10 +1,9 @@
-﻿using GlobalServices.Enums;
-using GlobalServices.Interfaces;
+﻿using GlobalServices.Interfaces;
 using Newtonsoft.Json;
 
-namespace GlobalServices.Tags
+namespace GlobalServices.Entities
 {
-    public class TagBase : ITag
+    public class Tag : ITag
     {
         [JsonProperty]
         public string Id { get; set; } = string.Empty;
@@ -12,7 +11,6 @@ namespace GlobalServices.Tags
         public string Name { get; set; } = string.Empty;
         [JsonProperty]
         public string Description { get; set; } = string.Empty;
-        public virtual TagType TagType { get; set; }
         public override string ToString() => Id;
     }
 }

@@ -1,9 +1,8 @@
 ﻿using GlobalServices.Enums;
-using GlobalServices.Interfaces;
 
 namespace GlobalServices.Entities
 {
-    public class Event : EventBase
+    public class Event : TaggableBase
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public EventType EventType { get; protected set; } = EventType.Default;
@@ -31,7 +30,7 @@ namespace GlobalServices.Entities
             ItemIds = items;
             PossibleNextEvents = nextEvents;
         }
-        public Event(string id, EventType type, string locationId, HashSet<string> characters, HashSet<string> items, HashSet<string> nextEvents, HashSet<ITag> tags) : base(tags)
+        public Event(string id, EventType type, string locationId, HashSet<string> characters, HashSet<string> items, HashSet<string> nextEvents, HashSet<string> tags) : base(tags)
         {
             Id = id;
             EventType = type;

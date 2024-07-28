@@ -1,10 +1,9 @@
-﻿
-namespace GlobalServices.Interfaces
+﻿namespace GlobalServices.Interfaces
 {
     public interface ITaggable
     {
-        HashSet<ITag> Tags { get; set; }
-        void AddTag(ITag tag);
-        void RemoveTag(ITag tag);
+        HashSet<string> Tags { get; set; }
+        void AddTag(string tagId);
+        void RemoveTag(string tagId);
     }
 }

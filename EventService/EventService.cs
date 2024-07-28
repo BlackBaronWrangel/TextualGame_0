@@ -53,7 +53,7 @@ namespace GlobalServices
             _logger.LogInfo($"Registered {gameEvent}");
             _tagService.RegisterITaggable(gameEvent);
         }
-        public void AddTag(string eventId, ITag tag)
+        public void AddTag(string eventId, string tag)
         {
             var gameEvent = GetEvent(eventId);
             if (gameEvent is null)
@@ -63,29 +63,13 @@ namespace GlobalServices
             }
             gameEvent.AddTag(tag);
         }
-        public void AddTag(string eventId, TagId.EventTagId tagId)
-        {
-            var tag = _tagService.GetEventTag(tagId);
-            if (tag != null)
-                AddTag(eventId, tag);
-            else
-                _logger.LogError($"Can't add tag {tag} to the {eventId}");
-        }
-        public void RemoveTag(string eventId, ITag tag)
+        public void RemoveTag(string eventId, string tag)
         {
             var gameEvent = GetEvent(eventId);
             if (gameEvent is not null)
                 gameEvent.RemoveTag(tag);
             else
                 _logger.LogWarning($"Can't get {eventId} to remove tag {tag}");
-        }
-        public void RemoveTag(string eventId, TagId.EventTagId tagId)
-        {
-            var tag = _tagService.GetEventTag(tagId);
-            if (tag != null)
-                RemoveTag(eventId, tag);
-            else
-                _logger.LogError($"Can't remove tag {tag} from the {eventId}");
         }
 
         private void UpdateNavigationEvents()

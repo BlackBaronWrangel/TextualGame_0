@@ -17,7 +17,7 @@ namespace GlobalServices
             _tagService = tagService;
             InitItems();
         }
-        public void AddTag(string itemId, ITag tag)
+        public void AddTag(string itemId, string tag)
         {
             var item = GetItem(itemId);
             if (item is not null)
@@ -25,13 +25,13 @@ namespace GlobalServices
             else
                 _logger.LogError($"Can't add tag {tag} to the item {item}");
         }
-        public void AddTag(string itemId, TagId.ItemTagId tagId)
+        public void RemoveTag(string itemId, string tag)
         {
-            var tag = _tagService.GetItemTag(tagId);
-            if (tag is not null)
-                AddTag(itemId, tag);
+            var item = GetItem(itemId);
+            if (item is not null)
+                item.AddTag(tag);
             else
-                _logger.LogError($"Can't add tag {tag} to the item {itemId}");
+                _logger.LogError($"Can't add tag {tag} to the item {item}");
         }
         public Item CreateItem(string name, ItemType itemType)
         {
@@ -58,16 +58,6 @@ namespace GlobalServices
             Items.Remove(item);
             _tagService.UnregisterITaggable(item);
             _logger.LogInfo($"Removed {item}");
-        }
-        public void RemoveTag(string itemId, ITag tag)
-        {
-            var item = GetItem(itemId);
-            item?.RemoveTag(tag);
-        }
-        public void RemoveTag(string ItemId, TagId.ItemTagId tagId)
-        {
-            var tag = _tagService.GetItemTag(tagId);
-            if (tag is not null) RemoveTag(ItemId, tag);
         }
         private void RegisterItem(Item item)
         {
