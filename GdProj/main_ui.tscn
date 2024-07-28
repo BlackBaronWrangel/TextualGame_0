@@ -1,12 +1,15 @@
-[gd_scene load_steps=16 format=3 uid="uid://cisos6y5uaore"]
+[gd_scene load_steps=19 format=3 uid="uid://cisos6y5uaore"]
 
 [ext_resource type="Script" path="res://UiRendering/AvatarContainer.cs" id="1_jwk4d"]
 [ext_resource type="Script" path="res://UiRendering/Avatar.cs" id="1_l6eyu"]
 [ext_resource type="Script" path="res://UiRendering/VUiSplit.cs" id="1_l8dy1"]
+[ext_resource type="Script" path="res://UiRendering/TabMenu.cs" id="1_ljk57"]
 [ext_resource type="Texture2D" uid="uid://cwlfcq7g3cp76" path="res://Resources/imgs/placeholder.png" id="1_xjhjw"]
+[ext_resource type="Script" path="res://UiRendering/StartButton.cs" id="2_08jto"]
 [ext_resource type="Script" path="res://UiRendering/HUiSplit.cs" id="2_ivnbu"]
 [ext_resource type="Script" path="res://UiRendering/Actions.cs" id="6_rblpu"]
 [ext_resource type="Script" path="res://UiRendering/MainTextContent.cs" id="6_ta1jm"]
+[ext_resource type="Script" path="res://UiRendering/GlobalStateController.cs" id="10_g6xgc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pdl0e"]
 atlas = ExtResource("1_xjhjw")
@@ -70,7 +73,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TabContainer" type="TabContainer" parent="."]
+[node name="TabMenu" type="TabContainer" parent="."]
+unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.592157)
 layout_mode = 1
 anchors_preset = 15
@@ -79,27 +83,30 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 current_tab = 1
+script = ExtResource("1_ljk57")
 
-[node name="Menu" type="CenterContainer" parent="TabContainer"]
+[node name="Menu" type="CenterContainer" parent="TabMenu"]
 visible = false
 layout_mode = 2
 
-[node name="VBox" type="VBoxContainer" parent="TabContainer/Menu"]
+[node name="VBox" type="VBoxContainer" parent="TabMenu/Menu"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Button" type="Button" parent="TabContainer/Menu/VBox"]
+[node name="StartButton" type="Button" parent="TabMenu/Menu/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Start"
+script = ExtResource("2_08jto")
+
+[node name="Button" type="Button" parent="TabMenu/Menu/VBox"]
 layout_mode = 2
 text = "Hello"
 
-[node name="Button2" type="Button" parent="TabContainer/Menu/VBox"]
-layout_mode = 2
-text = "World"
-
-[node name="GameScene" type="Control" parent="TabContainer"]
+[node name="GameScene" type="Control" parent="TabMenu"]
 layout_mode = 2
 
-[node name="Background" type="ColorRect" parent="TabContainer/GameScene"]
+[node name="Background" type="ColorRect" parent="TabMenu/GameScene"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -108,7 +115,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.400505, 0.000110412, 0.400502, 1)
 
-[node name="VUiSplit" type="VSplitContainer" parent="TabContainer/GameScene"]
+[node name="VUiSplit" type="VSplitContainer" parent="TabMenu/GameScene"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -118,23 +125,23 @@ grow_vertical = 2
 split_offset = 455
 script = ExtResource("1_l8dy1")
 
-[node name="HUiSplit" type="HSplitContainer" parent="TabContainer/GameScene/VUiSplit"]
+[node name="HUiSplit" type="HSplitContainer" parent="TabMenu/GameScene/VUiSplit"]
 layout_mode = 2
 split_offset = 335
 script = ExtResource("2_ivnbu")
 
-[node name="VUiSplit" type="VSplitContainer" parent="TabContainer/GameScene/VUiSplit/HUiSplit"]
+[node name="VUiSplit" type="VSplitContainer" parent="TabMenu/GameScene/VUiSplit/HUiSplit"]
 visibility_layer = 512
 layout_mode = 2
 script = ExtResource("1_l8dy1")
 
-[node name="AvatarContainer" type="Button" parent="TabContainer/GameScene/VUiSplit/HUiSplit/VUiSplit"]
+[node name="AvatarContainer" type="Button" parent="TabMenu/GameScene/VUiSplit/HUiSplit/VUiSplit"]
 visibility_layer = 512
 custom_minimum_size = Vector2(0, 140)
 layout_mode = 2
 script = ExtResource("1_jwk4d")
 
-[node name="Avatar" type="Node2D" parent="TabContainer/GameScene/VUiSplit/HUiSplit/VUiSplit/AvatarContainer"]
+[node name="Avatar" type="Node2D" parent="TabMenu/GameScene/VUiSplit/HUiSplit/VUiSplit/AvatarContainer"]
 modulate = Color(1, 1, 0, 1)
 top_level = true
 clip_children = 2
@@ -142,7 +149,7 @@ visibility_layer = 8
 position = Vector2(167, 100)
 script = ExtResource("1_l6eyu")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TabContainer/GameScene/VUiSplit/HUiSplit/VUiSplit/AvatarContainer/Avatar"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TabMenu/GameScene/VUiSplit/HUiSplit/VUiSplit/AvatarContainer/Avatar"]
 visibility_layer = 8
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_p46m1")
@@ -150,19 +157,19 @@ autoplay = "default"
 frame_progress = 0.345159
 speed_scale = 0.5
 
-[node name="Placeholder1" type="Button" parent="TabContainer/GameScene/VUiSplit/HUiSplit/VUiSplit"]
+[node name="Placeholder1" type="Button" parent="TabMenu/GameScene/VUiSplit/HUiSplit/VUiSplit"]
 layout_mode = 2
 text = "Additional UI 2"
 
-[node name="MainContent" type="VBoxContainer" parent="TabContainer/GameScene/VUiSplit/HUiSplit"]
+[node name="MainContent" type="VBoxContainer" parent="TabMenu/GameScene/VUiSplit/HUiSplit"]
 layout_mode = 2
 
-[node name="AnimationPlaceholder" type="Button" parent="TabContainer/GameScene/VUiSplit/HUiSplit/MainContent"]
+[node name="AnimationPlaceholder" type="Button" parent="TabMenu/GameScene/VUiSplit/HUiSplit/MainContent"]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 text = "AnimationPlaceholder"
 
-[node name="MainTextContent" type="RichTextLabel" parent="TabContainer/GameScene/VUiSplit/HUiSplit/MainContent"]
+[node name="MainTextContent" type="RichTextLabel" parent="TabMenu/GameScene/VUiSplit/HUiSplit/MainContent"]
 layout_mode = 2
 size_flags_vertical = 3
 auto_translate = false
@@ -181,11 +188,15 @@ threaded = true
 selection_enabled = true
 script = ExtResource("6_ta1jm")
 
-[node name="ActionsPanel" type="PanelContainer" parent="TabContainer/GameScene/VUiSplit"]
+[node name="ActionsPanel" type="PanelContainer" parent="TabMenu/GameScene/VUiSplit"]
 layout_mode = 2
 
-[node name="Actions" type="HFlowContainer" parent="TabContainer/GameScene/VUiSplit/ActionsPanel"]
+[node name="Actions" type="HFlowContainer" parent="TabMenu/GameScene/VUiSplit/ActionsPanel"]
 layout_mode = 2
 theme_override_constants/h_separation = 5
 theme_override_constants/v_separation = 5
 script = ExtResource("6_rblpu")
+
+[node name="GlobalStateController" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("10_g6xgc")
