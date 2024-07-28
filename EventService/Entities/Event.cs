@@ -5,9 +5,11 @@ namespace GlobalServices.Entities
 {
     public class Event : EventBase
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString(); //configurable. guid value by default
+        public string Id { get; set; } = Guid.NewGuid().ToString();
         public EventType EventType { get; protected set; } = EventType.Default;
         public string LocationId { get; protected set; } = string.Empty;
+        public string EntryDescription { get; set; } = string.Empty;
+        public string EventeDescription { get; set; } = string.Empty;
         public HashSet<string> CharacterIds { get; set; } = new();
         public HashSet<string> ItemIds { get; set; } = new();
         public HashSet<string> PossibleNextEvents { get; set; } = new();

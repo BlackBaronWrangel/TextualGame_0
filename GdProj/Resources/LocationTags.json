@@ -1,0 +1,27 @@
+[
+  {
+    "Id": "Indoor",
+    "Name": "Indoor",
+    "Description": "Inside buildings or structures"
+  },
+  {
+    "Id": "Outdoor",
+    "Name": "Outdoor",
+    "Description": "Open-air environments and natural settings"
+  },
+  {
+    "Id": "Neutral",
+    "Name": "Neutral",
+    "Description": "Balanced, neither positive nor negative ambiance."
+  },
+  {
+    "Id": "Peaceful",
+    "Name": "Peaceful",
+    "Description": "Serene, tranquil, and calm areas."
+  },
+  {
+    "Id": "Scary",
+    "Name": "Scary",
+    "Description": "Eerie, unsettling, or frightening areas."
+  }
+]

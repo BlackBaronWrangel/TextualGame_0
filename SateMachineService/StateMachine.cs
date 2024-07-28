@@ -18,6 +18,9 @@ namespace GlobalServices
         private ILocationService _locationService;
         private ICommandHandler _commandHandler;
         private IMapper _mapper;
+
+        public event EventHandler StateChanged = delegate { };
+
         public StateMachine(
             ILogger logger,
             IEventService eventService,
@@ -79,6 +82,7 @@ namespace GlobalServices
             LoadExistingCharactersInEvent(gameEvent);
 
             CurrentState = gameEvent;
+            OnStateChanged();
             _logger.LogInfo($"Running {CurrentState}");
         }
 
@@ -156,5 +160,8 @@ namespace GlobalServices
                     gameEvent.CharacterIds.Add(character.Id);
             }
         }
+
+        protected virtual void OnStateChanged() => StateChanged?.Invoke(this, EventArgs.Empty);
+        
     }
 }

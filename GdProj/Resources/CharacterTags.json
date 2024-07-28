@@ -1,0 +1,22 @@
+[
+  {
+    "Id": "Friendly",
+    "Name": "Friendly",
+    "Description": "This character warmly welcomes your presence and is eager to assist or engage in positive interactions with you."
+  },
+  {
+    "Id": "Unfriendly",
+    "Name": "Unfriendly",
+    "Description": "This character is wary and suspicious of you, showing little interest in assisting you and may obstruct your efforts."
+  },
+  {
+    "Id": "Hostile",
+    "Name": "Hostile",
+    "Description": "This character openly displays animosity towards you, ready to confront or harm you at any opportunity."
+  },
+  {
+    "Id": "Neutral",
+    "Name": "Neutral",
+    "Description": "This character is indifferent to your presence, neither seeking to help nor hinder you, and reacts based on your actions."
+  }
+]
