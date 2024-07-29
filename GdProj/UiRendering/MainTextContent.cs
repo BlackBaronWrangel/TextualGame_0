@@ -11,6 +11,7 @@ public partial class MainTextContent : RichTextLabel
     {
         sp = GameServiceProvider.Instance;
         sp.StateMachine.StateChanged += (sender, e) => UpdateText();
+        this.MetaClicked += (content) => LabelClicked(content.Obj.ToString());
     }
     public void UpdateText()
     {
@@ -38,5 +39,9 @@ public partial class MainTextContent : RichTextLabel
 
 
         Text = text;
+    }
+
+    public void LabelClicked(string input)
+    {
     }
 }
