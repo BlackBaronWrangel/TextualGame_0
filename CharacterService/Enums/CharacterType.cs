@@ -3,7 +3,7 @@
     public enum CharacterType
     {
         Monster,
-        Civillian,
+        Civilian,
         Other,
     }
 }

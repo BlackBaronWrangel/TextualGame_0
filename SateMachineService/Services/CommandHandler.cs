@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GlobalServices.Entities;
+using GlobalServices.Enums;
 using GlobalServices.Interfaces;
 using System.Text.RegularExpressions;
 
@@ -39,11 +40,11 @@ namespace GlobalServices
 
                 switch (commandName)
                 {
-                    case "AddRandomCharacters":
-                        AddRandomCharacters(gameEvent, args);
+                    case "AddRandomCharactersCount":
+                        AddRandomCharactersCount(gameEvent, args);
                         break;
-                    case "AddRandomMonsters":
-                        AddRandomMonsters(gameEvent, args);
+                    case "AddRandomCharacter":
+                        AddRandomCharacter(gameEvent, args);
                         break;
                     case "AddRandomItems":
                         AddRandomItems(gameEvent, args);
@@ -54,7 +55,7 @@ namespace GlobalServices
                 }
             }
         }
-        private void AddRandomCharacters(Event gameEvent, string[]? args)
+        private void AddRandomCharactersCount(Event gameEvent, string[]? args)
         {
             if (args is null)
             {
@@ -64,16 +65,15 @@ namespace GlobalServices
 
             int min = 0;
             int max = 0;
+
             try
             {
                 min = int.Parse(args[0]);
                 max = int.Parse(args[1]) + 1; //including upper limit
+
                 var charactersNum = new Random().Next(min, max);
                 for (int i = 0; i < charactersNum; i++)
-                {
-                    var character = _characterService.CreateRandomTemporalCivilian();
-                    gameEvent.CharacterIds.Add(character.Id);
-                }
+                    AddRandomCharacter(gameEvent, args.Skip(2).ToArray());
             }
             catch (Exception ex)
             {
@@ -81,7 +81,7 @@ namespace GlobalServices
             }
         }
 
-        private void AddRandomMonsters(Event gameEvent, string[]? args)
+        private void AddRandomCharacter(Event gameEvent, string[]? args)
         {
             if (args is null)
             {
@@ -89,25 +89,13 @@ namespace GlobalServices
                 return;
             }
 
-            int min = 0;
-            int max = 0;
-            try
-            {
-                min = int.Parse(args[0]);
-                max = int.Parse(args[1]) + 1; //including upper limit
-                var charactersNum = new Random().Next(min, max);
-                for (int i = 0; i < charactersNum; i++)
-                {
-                    var character = _characterService.CreateRandomMonster();
-                    gameEvent.CharacterIds.Add(character.Id);
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Event command parsing error. Wrong arguments. error: {ex.Message}");
-            }
+            CharacterType characterType = CharacterType.Other;
+            if (!Enum.TryParse(args[0], out characterType))
+                _logger.LogWarning($"Event command parsing error. Can't read character type to create. Using default instead.");
+            var character = _characterService.CreateRandomCharacter(characterType,CharacterPersistence.Temporary);
+            character.Location = gameEvent.LocationId;
+            gameEvent.CharacterIds.Add(character.Id);
         }
-
         private void AddRandomItems(Event gameEvent, string[]? args)
         {
             if (args is null)
@@ -135,4 +123,5 @@ namespace GlobalServices
             }
         }
     }
+
 }

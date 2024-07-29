@@ -77,8 +77,11 @@ namespace GlobalServices
                 return;
             }
 
+            //Execute commands
             foreach (var command in gameEvent.Commands)
                 _commandHandler.ExecuteEventCommand(gameEvent, command);
+
+            //Add characters that have a specific location
             LoadExistingCharactersInEvent(gameEvent);
 
             CurrentState = gameEvent;

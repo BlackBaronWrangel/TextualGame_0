@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FileService\FileService.csproj" />
+    <ProjectReference Include="..\HelperService\HelperService.csproj" />
     <ProjectReference Include="..\ItemService\ItemService.csproj" />
     <ProjectReference Include="..\LocationService\LocationService.csproj" />
     <ProjectReference Include="..\LoggerService\LoggerService.csproj" />
