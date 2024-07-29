@@ -56,9 +56,9 @@ namespace GlobalServices
                 name: String.Empty,
                 type: characterType,
                 persistence: characterPersistence,
-                bodyType: GetRandomEnumValue(CharacterBodyType.Other),
-                species: GetRandomEnumValue<CharacterSpecies>(),
-                gender: GetRandomEnumValue(CharacterGender.Other)
+                bodyType:  EnumsHelper.GetRandomEnumValue<CharacterBodyType>(CharacterBodyType.Other),
+                species: EnumsHelper.GetRandomEnumValue<CharacterSpecies>(CharacterSpecies.Other),
+                gender: EnumsHelper.GetRandomEnumValue<CharacterGender>(CharacterGender.Other)
                 );
             RegisterCharacter(character);
             return character;
@@ -73,7 +73,7 @@ namespace GlobalServices
         {
             Character character = new Character(
                 name,
-                CharacterType.Civillian,
+                CharacterType.Civilian,
                 CharacterPersistence.Permanent,
                 bodyType,
                 characterSpecies,
@@ -81,31 +81,6 @@ namespace GlobalServices
                 );
             character.ControlType = CharacterControlType.Player;
             RegisterCharacter(character);
-            return character;
-        }
-        public Character CreateRandomMonster()
-        {
-            var character = CreateRandomCharacter(
-                CharacterType.Monster,
-                CharacterPersistence.Temporary
-                );
-
-            return character;
-        }
-        public Character CreateRandomPermanentCivilian()
-        {
-            var character = CreateRandomCharacter(
-                CharacterType.Civillian,
-                CharacterPersistence.Permanent
-                );
-            return character;
-        }
-        public Character CreateRandomTemporalCivilian()
-        {
-            var character = CreateRandomCharacter(
-                CharacterType.Civillian,
-                CharacterPersistence.Temporary
-                );
             return character;
         }
         public void MoveCharacter(string characterId, string locationId)
@@ -200,28 +175,6 @@ namespace GlobalServices
             catch (Exception ex)
             {
                 _logger.LogError($"Can't read characters from Json. Error: {ex.Message}");
-            }
-        }
-        private T? GetRandomEnumValue<T>(params T[] excludeValues) where T : Enum
-        {
-            try
-            {
-                Random random = new Random();
-                var values = Enum.GetValues(typeof(T)).Cast<T>().ToList();
-                foreach (var value in excludeValues)
-                {
-                    values.Remove(value);
-                }
-                if (!values.Any())
-                {
-                    throw new ArgumentException("No values available for random selection after excluding specified values.");
-                }
-                return values[random.Next(values.Count)];
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.ToString());
-                return default;
             }
         }
         private void RegisterCharacter(Character character)

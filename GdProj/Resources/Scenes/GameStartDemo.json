@@ -12,7 +12,7 @@
         "ItemIds": [],
         "PossibleNextEvents": {
           "Move towards the light": "gsd_find_exit_to_swamp",
-          "Call out for help.": "gsd_call_help",
+          "Call out for help": "gsd_call_help",
           "Feel around the ground for any objects": "gsd_search_for_anything"
         },
         "Commands": []
@@ -29,7 +29,10 @@
           "Feel around the ground for any objects": "gsd_search_for_anything",
           "Sit and wait, hoping someone will find you": "gsd_starvation_death"
         },
-        "Commands": []
+        "Commands": [
+          "AddRandomCharactersCount(0,4,Monster)",
+          "AddRandomItems(1,2)"
+        ]
       },
       {
         "Id": "gsd_search_for_anything",
