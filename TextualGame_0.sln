@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DebugConsoleApp", "DebugCon
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GdProj", "GdProj\GdProj.csproj", "{F04E2A9F-7D4D-4A0C-803D-4F7867F44D69}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelperService", "HelperService\HelperService.csproj", "{91D13A27-2C42-4740-A3A4-B69987F92DF2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,14 @@ Global
 		{F04E2A9F-7D4D-4A0C-803D-4F7867F44D69}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
 		{F04E2A9F-7D4D-4A0C-803D-4F7867F44D69}.Release|Any CPU.ActiveCfg = ExportRelease|Any CPU
 		{F04E2A9F-7D4D-4A0C-803D-4F7867F44D69}.Release|Any CPU.Build.0 = ExportRelease|Any CPU
+		{91D13A27-2C42-4740-A3A4-B69987F92DF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91D13A27-2C42-4740-A3A4-B69987F92DF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91D13A27-2C42-4740-A3A4-B69987F92DF2}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91D13A27-2C42-4740-A3A4-B69987F92DF2}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{91D13A27-2C42-4740-A3A4-B69987F92DF2}.ExportRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{91D13A27-2C42-4740-A3A4-B69987F92DF2}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
+		{91D13A27-2C42-4740-A3A4-B69987F92DF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91D13A27-2C42-4740-A3A4-B69987F92DF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

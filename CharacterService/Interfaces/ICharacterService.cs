@@ -12,9 +12,6 @@ namespace GlobalServices.Interfaces
         Character CreateRandomCharacter(CharacterType characterType, CharacterPersistence characterPersistence);
         Character CreateDefaultCharacter();
         Character CreateMainCharacter(string name, CharacterBodyType bodyType, CharacterGender characterGender, CharacterSpecies characterSpecies );
-        Character CreateRandomMonster();
-        Character CreateRandomPermanentCivilian();
-        Character CreateRandomTemporalCivilian();
         void RemoveCharacter(string CharacterId);
         void MoveCharacter(string characterId, string locationId);
         void AssignItem(string itemid, string characterId);
