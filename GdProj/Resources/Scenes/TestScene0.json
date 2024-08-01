@@ -16,8 +16,8 @@
           "Maybe better to visit forest?": "test_start_3"
         },
         "Commands": [
-          "AddRandomCharactersCount(0,4,Civilian)",
-          "AddRandomItems(3,8)"
+          "@AddRandomCharactersCount(0,4,Civilian)",
+          "@AddRandomItems(3,8)"
         ]
       },
       {
@@ -32,8 +32,8 @@
           "Meadow? Sure!": "test_start_2_alt"
         },
         "Commands": [
-          "AddRandomCharactersCount(0,4,Monster)",
-          "AddRandomItems(1,2)"
+          "@AddRandomCharactersCount(0,4,Monster)",
+          "@AddRandomItems(1,2)"
         ]
       },
       {
@@ -47,8 +47,8 @@
           "Return to swamp.": "test_start_1"
         },
         "Commands": [
-          "AddRandomCharactersCount(0,4,Monster)",
-          "AddRandomItems(1,2)"
+          "@AddRandomCharactersCount(0,4,Monster)",
+          "@AddRandomItems(1,2)"
         ]
       },
       {
@@ -62,7 +62,7 @@
           "To open world": "loc_swamp"
         },
         "Commands": [
-          "AddRandomItems(0,3)"
+          "@AddRandomItems(0,3)"
         ]
       }
     ]

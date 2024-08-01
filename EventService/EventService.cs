@@ -16,12 +16,8 @@ namespace GlobalServices
             _logger = logger;
             _tagService = tagService;
             _locationService = locationService;
-            UpdateNavigationEvents();
         }
-        public Event? GetEvent(string eventId)
-        {
-            return Events.FirstOrDefault(e => e.Id == eventId);
-        }
+        public Event? GetEvent(string eventId) => Events.FirstOrDefault(e => e.Id == eventId);
         public Event CreateEvent(string eventId, string locationId, EventType type, HashSet<string> characterIds, HashSet<string> itemIds, Dictionary<string, string> nextEvents)
         {
             var gameEvent = new Event(eventId, type, locationId, characterIds, itemIds, nextEvents);
@@ -32,13 +28,6 @@ namespace GlobalServices
         {
             var gameEvent = new Event(locationId, EventType.Transition, locationId);
             RegisterEvent(gameEvent);
-            return gameEvent;
-        }
-
-        public Event? GetNavigationEvent(string locationId)
-        {
-            UpdateNavigationEvents();
-            var gameEvent = Events.Where(e => e.LocationId == locationId).FirstOrDefault();
             return gameEvent;
         }
 
@@ -70,25 +59,6 @@ namespace GlobalServices
                 gameEvent.RemoveTag(tag);
             else
                 _logger.LogWarning($"Can't get {eventId} to remove tag {tag}");
-        }
-
-        private void UpdateNavigationEvents()
-        {
-            foreach (var loc in _locationService.Locations)
-            {
-                var gameEvent = CreateDefaultLocationEvent(loc.Id);
-                foreach (var connection in loc.ConnectedLocations)
-                {
-                    var locationToMove = _locationService.GetLocation(connection.LocationId);
-                    var locationToMoveName = string.Empty;
-                    if (locationToMove is null || string.IsNullOrEmpty(locationToMove.Name))
-                        _logger.LogError($"Can't get location name for adding to navigation button. Location: {connection.LocationId}");
-                    else
-                        locationToMoveName = locationToMove.Name;
-                    var navigationDescription = $"To {locationToMoveName}";
-                    gameEvent.PossibleNextEvents.Add(navigationDescription, connection.LocationId);
-                }
-            }
         }
     }
 }

@@ -41,6 +41,7 @@ namespace GlobalServices
             _mapper = mapper;
             _commandHandler = commandHandler;
             InitPreDefinedScenes();
+            UpdateNavigationEvents();
         }
         public void RunScene(string sceneId)
         {
@@ -77,9 +78,16 @@ namespace GlobalServices
                 return;
             }
 
-            //Execute commands
+            //Update navigation events
+            UpdateNavigationEvents(); 
+
+            //Execute next event set commands
+            foreach (var entry in gameEvent.PossibleNextEvents)
+                _commandHandler.TryExecuteEventContextCommand(gameEvent, entry, entry.Value);
+
+            //Execute additional commands
             foreach (var command in gameEvent.Commands)
-                _commandHandler.ExecuteEventCommand(gameEvent, command);
+                _commandHandler.TryExecuteEventCommand(gameEvent, command);
 
             //Add characters that have a specific location
             LoadExistingCharactersInEvent(gameEvent);
@@ -162,6 +170,35 @@ namespace GlobalServices
                 foreach (var character in relatedCharacters)
                     gameEvent.CharacterIds.Add(character.Id);
             }
+        }
+        private void UpdateNavigationEvents()
+        {
+            foreach (var loc in _locationService.Locations.Where(l => l.LocationType is Enums.LocationType.OpenWorld).Where(l => l.ConnectedLocations.Any()))
+            {
+                Event gameEvent;
+                if (_eventService.Events.Any(e => e.Id == loc.Id))
+                    gameEvent = _eventService.Events.FirstOrDefault(e => e.LocationId == loc.Id)!;
+                else
+                    gameEvent = _eventService.CreateDefaultLocationEvent(loc.Id);
+
+                gameEvent.PossibleNextEvents.Clear();
+                foreach (var connection in loc.ConnectedLocations)
+                {
+                    var locationToMove = _locationService.GetLocation(connection.LocationId);
+                    var locationToMoveName = string.Empty;
+                    if (locationToMove is null || string.IsNullOrEmpty(locationToMove.Name))
+                        _logger.LogError($"Can't get location name for adding to navigation button. Location: {connection.LocationId}");
+                    else
+                        locationToMoveName = locationToMove.Name;
+                    var navigationDescription = $"To {locationToMoveName}";
+                    gameEvent.PossibleNextEvents.Add(navigationDescription, connection.LocationId);
+                }
+                ProcesNavigationEventEntities(gameEvent);
+            }
+        }
+        private void ProcesNavigationEventEntities(Event currentEvent) //Add random characters, monsters, etc.
+        { 
+            throw new NotImplementedException();
         }
 
         protected virtual void OnStateChanged() => StateChanged?.Invoke(this, EventArgs.Empty);

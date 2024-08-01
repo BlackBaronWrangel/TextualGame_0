@@ -16,4 +16,10 @@
     <ProjectReference Include="..\FileService\FileService.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Services\CommandsHandler\Readme_CommandsExamples.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

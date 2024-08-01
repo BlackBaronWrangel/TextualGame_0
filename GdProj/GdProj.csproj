@@ -6,7 +6,9 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="resources\scenes\GameStartDemo.json" />
+    <None Include="resources\scenes\GameStartDemo.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Tags\CharacterTags.json">
