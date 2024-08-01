@@ -147,7 +147,7 @@ namespace GlobalServices
         }
         private void AddRandomItems(Event gameEvent, string[]? args)
         {
-            var expectedArgsCount = 2;
+            var expectedArgsCount = 3;
             string methodName = MethodBase.GetCurrentMethod()?.Name ?? "UnknownMethod";
             if (args == null || args.Length == 0 || args.Length != expectedArgsCount)
             {
@@ -157,14 +157,18 @@ namespace GlobalServices
 
             int min = 0;
             int max = 0;
+            ItemType itemType = ItemType.Other;
+
             try
             {
                 min = int.Parse(args[0]);
                 max = int.Parse(args[1]) + 1; //including upper limit
+                itemType = (ItemType)Enum.Parse(typeof(ItemType), args[2], true);
+
                 var charactersNum = new Random().Next(min, max);
                 for (int i = 0; i < charactersNum; i++)
                 {
-                    var item = _itemService.CreateDefaultItem(); //ToDo: create and replace with CreateRandomItem(ItemType type)
+                    var item = _itemService.CreateRandomItem(itemType); //ToDo: create and replace with CreateRandomItem(ItemType type)
                     gameEvent.ItemIds.Add(item.Id);
                 }
             }

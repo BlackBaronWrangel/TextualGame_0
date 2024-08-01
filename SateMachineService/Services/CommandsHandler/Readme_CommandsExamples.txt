@@ -4,6 +4,6 @@
 
 //  Commands
       "@AddRandomCharactersCount(0, 4, Monster)"          //Add Random count of characters into the current event (from, to, CharacterType)
-      "@AddRandomItems(1,2)"                              //Add Random count of items into the current event (from, to)
+      "@AddRandomItems(1, 2, Food)"                              //Add Random count of items into the current event (from, to, ItemType)
 
 

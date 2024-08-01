@@ -193,7 +193,7 @@ namespace GlobalServices
                     var navigationDescription = $"To {locationToMoveName}";
                     gameEvent.PossibleNextEvents.Add(navigationDescription, connection.LocationId);
                 }
-                ProcesNavigationEventEntities(gameEvent);
+                //ProcesNavigationEventEntities(gameEvent);
             }
         }
         private void ProcesNavigationEventEntities(Event currentEvent) //Add random characters, monsters, etc.

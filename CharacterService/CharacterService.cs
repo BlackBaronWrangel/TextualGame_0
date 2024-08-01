@@ -29,10 +29,8 @@ namespace GlobalServices
             var character = Characters.FirstOrDefault(c => c.Id == characterId);
             return character;
         }
-        public Character? GetPlayer()
-        {
-            return Characters.Where(c => c.ControlType == CharacterControlType.Player).FirstOrDefault();
-        }
+        public Character? GetPlayer() => Characters.Where(c => c.ControlType == CharacterControlType.Player).FirstOrDefault();
+        
         public Character? GetCharacterByName(string characterName)
         {
             return Characters.Where(c => c.Name == characterName).FirstOrDefault();

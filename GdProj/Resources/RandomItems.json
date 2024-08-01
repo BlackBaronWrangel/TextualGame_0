@@ -1,0 +1,42 @@
+{
+  "Food": [
+    {
+      "Name": "Apple",
+      "Description": "mmmm, tasty"
+    },
+    {
+      "Name": "Banana",
+      "Description": "mmmm, tasty"
+    },
+    {
+      "Name": "Cherry",
+      "Description": "mmmm, tasty"
+    }
+  ],
+  "Trinket": [
+    {
+      "Name": "Coin",
+      "Description": "A coin"
+    },
+    {
+      "Name": "Glowing crystal",
+      "Description": "Wow! A crystal!"
+    }
+  ],
+  "Clothes": [
+    {
+      "Name": "Boots",
+      "Description": "Heh... Boots."
+    },
+    {
+      "Name": "Hood",
+      "Description": "A hood."
+    }
+  ],
+  "Artifact": [
+    {
+      "Name": "Plumbus",
+      "Description": "What is that?"
+    }
+  ]
+}
