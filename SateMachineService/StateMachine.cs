@@ -219,7 +219,7 @@ namespace GlobalServices
                         }
                     }
                     if (allConditionsResult == true)
-                        gameEvent.PossibleNextEvents.Add("Starting new scene", possibleScene.StartEventId);
+                        gameEvent.PossibleNextEvents.Add(possibleScene.EntryText, possibleScene.StartEventId);
                 }
             }
         }

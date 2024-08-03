@@ -3,6 +3,7 @@
     "Id": "TestingScene_0",
     "StartEventId": "test_start_1",
     "StartLocationId": "loc_meadow",
+    "EntryText": "Take a tour around these lands",
     "StartConditions": [
       "@IfPlayerHasItem(quest_item_strange_key)"
     ],
@@ -48,7 +49,7 @@
         "CharacterIds": [],
         "ItemIds": [],
         "PossibleNextEvents": {
-          "This swamp looks good": "test_start_1",
+          "This swamp looks good": "test_start_1"
         },
         "Commands": [
           "@AddRandomCharactersCount(0,4,Monster)",
