@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GlobalServices.Entities;
 using GlobalServices.Interfaces;
+using GlobalServices.Enums;
 
 namespace GlobalServices
 {
@@ -79,7 +80,7 @@ namespace GlobalServices
             }
 
             //Update navigation events
-            UpdateNavigationEvents(); 
+            UpdateNavigationEvents();
 
             //Execute next event set commands
             foreach (var entry in gameEvent.PossibleNextEvents)
@@ -91,6 +92,9 @@ namespace GlobalServices
 
             //Add characters that have a specific location
             LoadExistingCharactersInEvent(gameEvent);
+
+            if (gameEvent.EventType is EventType.Transition)
+                AddScenesStartingConditions(gameEvent);
 
             CurrentState = gameEvent;
             OnStateChanged();
@@ -173,11 +177,11 @@ namespace GlobalServices
         }
         private void UpdateNavigationEvents()
         {
-            foreach (var loc in _locationService.Locations.Where(l => l.LocationType is Enums.LocationType.OpenWorld).Where(l => l.ConnectedLocations.Any()))
+            foreach (var loc in _locationService.Locations.Where(l => l.LocationType is LocationType.OpenWorld).Where(l => l.ConnectedLocations.Any()))
             {
                 Event gameEvent;
-                if (_eventService.Events.Any(e => e.Id == loc.Id))
-                    gameEvent = _eventService.Events.FirstOrDefault(e => e.LocationId == loc.Id)!;
+                if (_eventService.Events.Any(e => e.Id == loc.Id && e.EventType == EventType.Transition))
+                    gameEvent = _eventService.Events.FirstOrDefault(e => e.Id == loc.Id && e.EventType == EventType.Transition)!;
                 else
                     gameEvent = _eventService.CreateDefaultLocationEvent(loc.Id);
 
@@ -193,15 +197,38 @@ namespace GlobalServices
                     var navigationDescription = $"To {locationToMoveName}";
                     gameEvent.PossibleNextEvents.Add(navigationDescription, connection.LocationId);
                 }
+
                 //ProcesNavigationEventEntities(gameEvent);
             }
         }
+        private void AddScenesStartingConditions(Event gameEvent)
+        {
+            //Check conditions for possible scenes starts
+            if (gameEvent is not null)
+            {
+                var possibleScenes = Scenes.Where(s => s.StartLocationId == gameEvent.LocationId);
+                foreach (var possibleScene in possibleScenes)
+                {
+                    bool allConditionsResult = true;
+                    foreach (var cond in possibleScene.StartConditions)
+                    {
+                        if (!_commandHandler.TryExecuteSceneConditionCommand(cond))
+                        {
+                            allConditionsResult = false;
+                            break;
+                        }
+                    }
+                    if (allConditionsResult == true)
+                        gameEvent.PossibleNextEvents.Add("Starting new scene", possibleScene.StartEventId);
+                }
+            }
+        }
         private void ProcesNavigationEventEntities(Event currentEvent) //Add random characters, monsters, etc.
-        { 
+        {
             throw new NotImplementedException();
         }
 
         protected virtual void OnStateChanged() => StateChanged?.Invoke(this, EventArgs.Empty);
-        
+
     }
 }

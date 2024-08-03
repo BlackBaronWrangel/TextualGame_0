@@ -12,5 +12,12 @@
     "Type": "Artifact",
     "Description": "Oh god!, it is a diamond of power. Oh no!",
     "Tags": []
+  },
+  {
+    "Id": "quest_item_strange_key",
+    "Name": "Strange key",
+    "Type": "Trinket",
+    "Description": "A strange key... strange...",
+    "Tags": [ "quest_item" ]
   }
 ]

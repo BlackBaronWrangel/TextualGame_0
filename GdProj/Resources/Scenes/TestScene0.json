@@ -2,6 +2,10 @@
   {
     "Id": "TestingScene_0",
     "StartEventId": "test_start_1",
+    "StartLocationId": "loc_meadow",
+    "StartConditions": [
+      "@IfPlayerHasItem(quest_item_strange_key)"
+    ],
     "Events": [
       {
         "Id": "test_start_1",
@@ -11,13 +15,13 @@
         "CharacterIds": [],
         "ItemIds": [],
         "PossibleNextEvents": {
-          "Jump so high to get into meadow.": "test_start_2",
-          "Instead of jump, just run to the meadow.": "test_start_2_alt",
+          "Jump so high to get into meadow": "test_start_2",
+          "Instead of jump, just run to the meadow": "test_start_2_alt",
           "Maybe better to visit forest?": "test_start_3"
         },
         "Commands": [
           "@AddRandomCharactersCount(0,4,Civilian)",
-          "@AddRandomItems(3,8)"
+          "@AddRandomItems(1,4,Trinket)"
         ]
       },
       {
@@ -28,12 +32,12 @@
         "CharacterIds": [],
         "ItemIds": [],
         "PossibleNextEvents": {
-          "This swamp looks good.": "test_start_1",
+          "This swamp looks good": "test_start_1",
           "Meadow? Sure!": "test_start_2_alt"
         },
         "Commands": [
           "@AddRandomCharactersCount(0,4,Monster)",
-          "@AddRandomItems(1,2)"
+          "@AddRandomItems(1,4,Trinket)"
         ]
       },
       {
@@ -44,11 +48,11 @@
         "CharacterIds": [],
         "ItemIds": [],
         "PossibleNextEvents": {
-          "Return to swamp.": "test_start_1"
+          "This swamp looks good": "test_start_1",
         },
         "Commands": [
           "@AddRandomCharactersCount(0,4,Monster)",
-          "@AddRandomItems(1,2)"
+          "@AddRandomItems(1,4,Trinket)"
         ]
       },
       {
@@ -62,7 +66,7 @@
           "To open world": "loc_swamp"
         },
         "Commands": [
-          "@AddRandomItems(0,3)"
+          "@AddRandomItems(1,4,trinket)"
         ]
       }
     ]

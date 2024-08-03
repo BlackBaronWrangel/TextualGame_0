@@ -1,17 +1,32 @@
 ﻿using GlobalServices.Entities;
 using GlobalServices.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using GlobalServices.Interfaces;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace GlobalServices
 {
-    public partial class CommandHandler
+    public partial class CommandHandler : ICommandHandler
     {
+        public bool TryExecuteSceneConditionCommand(string command)
+        {
+            var match = Match(command);
+            if (match.Success)
+            {
+                var commandName = match.Groups[1].Value;
+                var args = match.Groups[2].Value.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                switch (commandName)
+                {
+                    case "IfPlayerHasItem":
+                        return IfPlayerHasItem(args);
+                    default:
+                        _logger.LogError($"Unknown command {command}");
+                        return false;
+                }
+            }
+            return false;
+        }
         public void TryExecuteEventCommand(Event gameEvent, string command)
         {
             var match = Match(command);
@@ -59,6 +74,43 @@ namespace GlobalServices
 
         private Match Match(string command) => Regex.Match(command.Trim(), @"@(\w+)\(([^)]*)\)");
 
+
+        private bool IfPlayerHasItem(string[]? args)
+        {
+            var expectedArgsCount = 1;
+            string methodName = MethodBase.GetCurrentMethod()?.Name ?? "UnknownMethod";
+            if (args == null || args.Length == 0 || args.Length != expectedArgsCount)
+            {
+                _logger.LogWarning($"Invalid arguments for {methodName}. Ignoring command.");
+                return false;
+            }
+
+            try
+            {
+                var itemId = args[0];
+                var player = _characterService.GetPlayer();
+                if (string.IsNullOrEmpty(itemId))
+                {
+                    _logger.LogWarning($"Invalid arguments for {methodName}. ItemId is null or empty.");
+                    return false;
+                }
+                if (player is null)
+                {
+                    _logger.LogError($"Error in {methodName}. can't get player.");
+                    return false;
+                }
+                if (player.Items.Any(i => i.Id == itemId))
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Event command parsing error for method {methodName}. Wrong arguments. error: {ex.Message}");
+                return false;
+            }
+        }
         private void AddRandomNextEvent2(Event gameEvent, object context, string[]? args)
         {
             var expectedArgsCount = 3;

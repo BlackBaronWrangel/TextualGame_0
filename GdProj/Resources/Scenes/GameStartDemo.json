@@ -1,6 +1,8 @@
 [
   {
     "Id": "GameStartDemo",
+    "StartLocationId": null,
+    "StartConditions": [],
     "StartEventId": "gsd_wake_up",
     "Events": [
       {
@@ -39,9 +41,9 @@
         "LocationId": "gsd_quest_loc_start_cave",
         "EventeDescription": "You feel around the ground. As you move, you accidentally bump your head against a sharp rock in the darkness, causing a painful cut. The pain is sharp but manageable, and you can feel a trickle of blood.",
         "CharacterIds": [],
-        "ItemIds": [],
+        "ItemIds": [ "quest_item_strange_key" ],
         "PossibleNextEvents": {
-          "Move towards the light, despite the pain": "@SelectRandomNextEvent2(gsd_find_exit_to_swamp, gsd_injury_death, 0.5)",
+          "Move towards the light, despite the pain": "@SelectRandomNextEvent2(gsd_find_exit_to_swamp, gsd_injury_death, 0.9)",
           "The pain is too intense to move. Sit and wait, hoping someone will find you": "@SelectRandomNextEvent2(gsd_accidental_exit, gsd_starvation_death, 0.5)"
         },
         "Commands": [
