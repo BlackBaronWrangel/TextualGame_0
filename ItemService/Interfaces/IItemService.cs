@@ -9,7 +9,8 @@ namespace GlobalServices.Interfaces
         Item? GetItem(string itemId);
         Item? GetItemByName(string itemName);
         Item CreateDefaultItem();
-        Item CreateItem(string name, ItemType itemType);
+        Item CreateRandomItem(ItemType itemType);
+        Item CreateItem(string name, string description, ItemType itemType);
         void RemoveItem(string itemId);
         void AddTag(string itemId, string tagId);
         void RemoveTag(string itemId, string tagId);

@@ -1,21 +1,27 @@
 ﻿using GlobalServices.Entities;
 using GlobalServices.Enums;
 using GlobalServices.Interfaces;
+using Microsoft.VisualBasic;
 
 namespace GlobalServices
 {
     public class ItemService : IItemService
     {
         private const string _itemsJsonPath = "Resources/NamedItems.json";
+        private const string _ItemNamesJsonPath = "Resources/RandomItems.json";
+
+        private Dictionary<ItemType, List<ItemDetail>> _randomItemNames = new();
 
         ILogger _logger;
         ITagService _tagService;
+        
         public HashSet<Item> Items { get; set; } = new();
         public ItemService(ILogger logger, ITagService tagService)
         {
             _logger = logger;
             _tagService = tagService;
             InitItems();
+            LoadRandomItemNames();
         }
         public void AddTag(string itemId, string tag)
         {
@@ -33,15 +39,36 @@ namespace GlobalServices
             else
                 _logger.LogError($"Can't add tag {tag} to the item {item}");
         }
-        public Item CreateItem(string name, ItemType itemType)
+        public Item CreateItem(string name, string description, ItemType itemType)
         {
-            Item item = new Item(name, itemType);
+            Item item = new Item(name, description, itemType);
             RegisterItem(item);
             return item;
         }
         public Item CreateDefaultItem()
         {
             Item item = new();
+            RegisterItem(item);
+            return item;
+        }
+        public Item CreateRandomItem(ItemType itemType)
+        {
+            var possibleItems = _randomItemNames[itemType];
+            var itemName = string.Empty;
+            var itemDescription = string.Empty;
+
+            if (possibleItems is not null)
+            {        
+                Random random = new Random();
+                int index = random.Next(possibleItems.Count);
+                var itemPair = possibleItems[index];
+                itemName = itemPair.Name;
+                itemDescription = itemPair.Description;
+            }
+            else
+                _logger.LogWarning($"Can't load random item name for item type {itemType}");
+
+            var item = new Item(itemName, itemDescription, itemType);
             RegisterItem(item);
             return item;
         }
@@ -84,6 +111,12 @@ namespace GlobalServices
             {
                 _logger.LogError($"Can't read items from Json. Error: {ex.Message}");
             }
+        }
+        private void LoadRandomItemNames()
+        {
+            var itms = GameEntitiesJsonLoader.ReadJsonSingleEntity<Dictionary<ItemType, List<ItemDetail>>>(_ItemNamesJsonPath);
+            if (itms is not null)
+                _randomItemNames = itms;
         }
     }
 }

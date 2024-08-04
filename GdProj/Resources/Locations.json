@@ -2,6 +2,7 @@
   {
     "Id": "loc_swamp",
     "Name": "Swamp",
+    "LocationType": "OpenWorld",
     "Description": "In the heart of a somber forest, lies the Gloomfen Swamp, a sprawling wetland shrouded in perpetual mist. Twisted trees and dense, dark undergrowth make the terrain treacherous and unnavigable. The air hangs thick with the scent of decay, and the ground beneath is a deceptive patchwork of solid earth and treacherous mud. Flickering will-o’-the-wisps dance in the distance, luring unwary travelers deeper into its grasp. Sounds are muffled here, except for the occasional distant splash or the mournful croak of hidden creatures. Legends whisper of ancient ruins hidden beneath the murky waters and creatures that guard secrets forgotten by time.",
     "ConnectedLocations": [
       {
@@ -17,6 +18,7 @@
   {
     "Id": "loc_forest",
     "Name": "Forest",
+    "LocationType": "OpenWorld",
     "Description": "In the shadow of towering mountains lies the Somberwood, a dense and ancient forest cloaked in eternal twilight. Thick canopies of gnarled trees filter out most sunlight, casting the ground into perpetual dusk. Moss and lichen cover every surface, and the air is heavy with the scent of damp earth and decay. Muted sounds of distant creatures occasionally pierce the silence, adding to the eerie stillness. Paths are scarce and misleading, often leading travelers astray. It's said that spirits of the forest roam freely, and ancient magic lingers in the cool, dark air, protecting mysterious relics and secrets long buried under the forest floor.",
     "ConnectedLocations": [
       {
@@ -32,6 +34,7 @@
   {
     "Id": "loc_meadow",
     "Name": "Meadow",
+    "LocationType": "OpenWorld",
     "Description": "Nestled between rolling hills and a sparkling stream, the Sunlit Meadow is a serene expanse of vibrant greens and wildflowers that dance in the gentle breeze. The air is sweet with the scent of honeysuckle and fresh grass, and the sky above is a clear blue, unmarred by clouds. The sound of the nearby stream is a soothing melody, complementing the cheerful chirps of birds and the distant buzz of bees. During the day, the meadow is bathed in warm sunlight, making it a perfect spot for picnics and peaceful strolls. At night, it transforms under a blanket of stars, the glow of fireflies mingling with the moonlight, casting a magical glow across the tranquil landscape.",
     "ConnectedLocations": [
       {
@@ -43,7 +46,7 @@
   {
     "Id": "gsd_quest_loc_start_cave",
     "Name": "Unknown cave",
-    "Description": "The location is enveloped in darkness, with only a faint glow emanating from a distant hole. The air is cool and damp, with the sound of dripping water echoing softly. The ground is uneven and covered in rough, wet rocks. The confined space and lack of light suggest it is a cave, hidden from the outside world and shrouded in mystery.",
+    "Description": "The [url=hello, hello]location[/url] is enveloped in darkness, with only a faint glow emanating from a distant hole. The air is cool and damp, with the sound of dripping water echoing softly. The ground is uneven and covered in rough, wet rocks. The confined space and lack of light suggest it is a cave, hidden from the outside world and shrouded in mystery.",
     "ConnectedLocations": []
   }
 ]

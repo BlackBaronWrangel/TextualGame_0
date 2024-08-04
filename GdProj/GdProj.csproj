@@ -6,7 +6,12 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="resources\scenes\GameStartDemo.json" />
+    <Content Include="resources\RandomItems.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\Scenes\GameStartDemo.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Tags\CharacterTags.json">
@@ -30,7 +35,7 @@
     <None Include="Resources\NamedItems.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\Scenes\TestScene0.json">
+    <None Include="resources\Scenes\TestScene0.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

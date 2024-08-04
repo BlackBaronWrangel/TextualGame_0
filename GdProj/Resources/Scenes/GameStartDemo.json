@@ -1,6 +1,9 @@
 [
   {
     "Id": "GameStartDemo",
+    "StartLocationId": null,
+    "EntryText": null,
+    "StartConditions": [],
     "StartEventId": "gsd_wake_up",
     "Events": [
       {
@@ -27,25 +30,26 @@
         "PossibleNextEvents": {
           "Move towards the light": "gsd_find_exit_to_swamp",
           "Feel around the ground for any objects": "gsd_search_for_anything",
-          "Sit and wait, hoping someone will find you": "gsd_starvation_death"
+          "Sit and wait, hoping someone will find you": "@SelectRandomNextEvent2(gsd_accidental_exit, gsd_starvation_death, 0.5)"
         },
         "Commands": [
-          "AddRandomCharactersCount(0,4,Monster)",
-          "AddRandomItems(1,2)"
+          "@AddRandomCharactersCount(0,4,Monster)"
         ]
       },
       {
         "Id": "gsd_search_for_anything",
         "EventType": "Default",
         "LocationId": "gsd_quest_loc_start_cave",
-        "EventeDescription": "You feel around the ground, but find nothing of use. As you move, you accidentally bump your head against a sharp rock in the darkness, causing a small cut. The pain is sharp but manageable, and you can feel a trickle of blood.",
+        "EventeDescription": "You feel around the ground. As you move, you accidentally bump your head against a sharp rock in the darkness, causing a painful cut. The pain is sharp but manageable, and you can feel a trickle of blood.",
         "CharacterIds": [],
-        "ItemIds": [],
+        "ItemIds": [ "quest_item_strange_key" ],
         "PossibleNextEvents": {
-          "Move towards the light, despite the pain": "gsd_find_exit_to_swamp",
-          "The pain is too intense to move. Sit and wait, hoping someone will find you": "gsd_starvation_death"
+          "Move towards the light, despite the pain": "@SelectRandomNextEvent2(gsd_find_exit_to_swamp, gsd_injury_death, 0.9)",
+          "The pain is too intense to move. Sit and wait, hoping someone will find you": "@SelectRandomNextEvent2(gsd_accidental_exit, gsd_starvation_death, 0.5)"
         },
-        "Commands": []
+        "Commands": [
+          "@AddRandomItems(1,4,food)"
+        ]
       },
       {
         "Id": "gsd_find_exit_to_swamp",
@@ -67,6 +71,28 @@
         "CharacterIds": [],
         "ItemIds": [],
         "PossibleNextEvents": {},
+        "Commands": []
+      },
+      {
+        "Id": "gsd_injury_death",
+        "EventType": "Ending",
+        "LocationId": "gsd_quest_loc_start_cave",
+        "EventeDescription": "As you struggle through the dark cave, the pain from your head wound intensifies. Feeling increasingly dizzy, you stumble and collapse, overwhelmed by blood loss and exhaustion. Unable to find your way out, you succumb to your injuries alone in the darkness. \n[b]You have died.[/b]",
+        "CharacterIds": [],
+        "ItemIds": [],
+        "PossibleNextEvents": {},
+        "Commands": []
+      },
+      {
+        "Id": "gsd_accidental_exit",
+        "EventType": "Default",
+        "LocationId": "loc_swamp",
+        "EventeDescription": "You decide to sit and wait, hoping someone will find you. As you wait, you hear the distant rumble of thunder outside, which grows increasingly loud. Suddenly, the ground shakes violently, and rocks from the ceiling start to fall, crashing around you. When the dust settles, you see that the rocks have opened up a new path. Light streams in from the outside, illuminating a route that leads towards a murky swamp.",
+        "CharacterIds": [],
+        "ItemIds": [],
+        "PossibleNextEvents": {
+          "Finally, exit": "loc_swamp"
+        },
         "Commands": []
       }
     ]

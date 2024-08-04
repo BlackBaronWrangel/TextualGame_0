@@ -28,6 +28,7 @@ public partial class GlobalStateController : Node
     }
     public void StartGame()
     {
+        GameServiceProvider.Instance.CharacterService.CreateMainCharacter("Biba", GlobalServices.Enums.CharacterBodyType.Medium, GlobalServices.Enums.CharacterGender.Female, GlobalServices.Enums.CharacterSpecies.Horse);
         GameServiceProvider.Instance.StateMachine.RunScene("GameStartDemo");
         _tabMenu.SetTabDisabled(_gameplayTabIndex, false);
         _tabMenu.CurrentTab = _gameplayTabIndex;

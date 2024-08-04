@@ -1,4 +1,5 @@
-﻿using GlobalServices.Interfaces;
+﻿using GlobalServices.Enums;
+using GlobalServices.Interfaces;
 using Newtonsoft.Json;
 
 namespace GlobalServices.Entities
@@ -12,18 +13,23 @@ namespace GlobalServices.Entities
         [JsonProperty]
         public string Description { get; protected set; } = string.Empty;
         [JsonProperty]
+        public LocationType LocationType { get; protected set; } = default(LocationType);
+
+        [JsonProperty]
         public HashSet<Connection> ConnectedLocations { get; protected set; } = new ();
-        public Location(string id, string name, string description, HashSet<Connection> connections, HashSet<string> tags) : base(tags)
+        public Location(string id, string name, string description, LocationType locationType, HashSet<Connection> connections, HashSet<string> tags) : base(tags)
         {
             Id = id;
             Name = name;
+            LocationType = locationType;
             Description = description;
             ConnectedLocations = connections;
         }
-        public Location(string id, string name, string description, HashSet<string> tags) : base(tags)
+        public Location(string id, string name, string description, LocationType locationType, HashSet<string> tags) : base(tags)
         {
             Id = id;
             Name = name;
+            LocationType = locationType;
             Description = description;
         }
 

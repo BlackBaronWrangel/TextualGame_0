@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GlobalServices.Entities;
 using GlobalServices.Interfaces;
+using GlobalServices.Enums;
 
 namespace GlobalServices
 {
@@ -41,6 +42,7 @@ namespace GlobalServices
             _mapper = mapper;
             _commandHandler = commandHandler;
             InitPreDefinedScenes();
+            UpdateNavigationEvents();
         }
         public void RunScene(string sceneId)
         {
@@ -77,12 +79,22 @@ namespace GlobalServices
                 return;
             }
 
-            //Execute commands
+            //Update navigation events
+            UpdateNavigationEvents();
+
+            //Execute next event set commands
+            foreach (var entry in gameEvent.PossibleNextEvents)
+                _commandHandler.TryExecuteEventContextCommand(gameEvent, entry, entry.Value);
+
+            //Execute additional commands
             foreach (var command in gameEvent.Commands)
-                _commandHandler.ExecuteEventCommand(gameEvent, command);
+                _commandHandler.TryExecuteEventCommand(gameEvent, command);
 
             //Add characters that have a specific location
             LoadExistingCharactersInEvent(gameEvent);
+
+            if (gameEvent.EventType is EventType.Transition)
+                AddScenesWithStartingConditions(gameEvent);
 
             CurrentState = gameEvent;
             OnStateChanged();
@@ -163,8 +175,60 @@ namespace GlobalServices
                     gameEvent.CharacterIds.Add(character.Id);
             }
         }
+        private void UpdateNavigationEvents()
+        {
+            foreach (var loc in _locationService.Locations.Where(l => l.LocationType is LocationType.OpenWorld).Where(l => l.ConnectedLocations.Any()))
+            {
+                Event gameEvent;
+                if (_eventService.Events.Any(e => e.Id == loc.Id && e.EventType == EventType.Transition))
+                    gameEvent = _eventService.Events.FirstOrDefault(e => e.Id == loc.Id && e.EventType == EventType.Transition)!;
+                else
+                    gameEvent = _eventService.CreateDefaultLocationEvent(loc.Id);
+
+                gameEvent.PossibleNextEvents.Clear();
+                foreach (var connection in loc.ConnectedLocations)
+                {
+                    var locationToMove = _locationService.GetLocation(connection.LocationId);
+                    var locationToMoveName = string.Empty;
+                    if (locationToMove is null || string.IsNullOrEmpty(locationToMove.Name))
+                        _logger.LogError($"Can't get location name for adding to navigation button. Location: {connection.LocationId}");
+                    else
+                        locationToMoveName = locationToMove.Name;
+                    var navigationDescription = $"To {locationToMoveName}";
+                    gameEvent.PossibleNextEvents.Add(navigationDescription, connection.LocationId);
+                }
+
+                //ProcesNavigationEventEntities(gameEvent);
+            }
+        }
+        private void AddScenesWithStartingConditions(Event gameEvent)
+        {
+            //Check conditions for possible scenes starts
+            if (gameEvent is not null)
+            {
+                var possibleScenes = Scenes.Where(s => s.StartLocationId == gameEvent.LocationId);
+                foreach (var possibleScene in possibleScenes)
+                {
+                    bool allConditionsResult = true;
+                    foreach (var cond in possibleScene.StartConditions)
+                    {
+                        if (!_commandHandler.TryExecuteSceneConditionCommand(cond))
+                        {
+                            allConditionsResult = false;
+                            break;
+                        }
+                    }
+                    if (allConditionsResult == true)
+                        gameEvent.PossibleNextEvents.Add(possibleScene.EntryText, possibleScene.StartEventId);
+                }
+            }
+        }
+        private void ProcesNavigationEventEntities(Event currentEvent) //Add random characters, monsters, etc.
+        {
+            throw new NotImplementedException();
+        }
 
         protected virtual void OnStateChanged() => StateChanged?.Invoke(this, EventArgs.Empty);
-        
+
     }
 }

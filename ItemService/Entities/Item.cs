@@ -10,9 +10,10 @@ namespace GlobalServices.Entities
         public ItemPersistence Persistence { get; set; } = ItemPersistence.Temporary;
         public string Description { get; set; } = String.Empty;
         public Item() : base() { }
-        public Item(string name, ItemType itemType) : base() 
+        public Item(string name, string description, ItemType itemType) : base() 
         {
             Name = name;
+            Description = description;
             Type= itemType;
         }
         public Item(string name, string description, ItemType itemType, HashSet<string> tags) : base(tags) 
