@@ -94,7 +94,7 @@ namespace GlobalServices
             LoadExistingCharactersInEvent(gameEvent);
 
             if (gameEvent.EventType is EventType.Transition)
-                AddScenesStartingConditions(gameEvent);
+                AddScenesWithStartingConditions(gameEvent);
 
             CurrentState = gameEvent;
             OnStateChanged();
@@ -201,7 +201,7 @@ namespace GlobalServices
                 //ProcesNavigationEventEntities(gameEvent);
             }
         }
-        private void AddScenesStartingConditions(Event gameEvent)
+        private void AddScenesWithStartingConditions(Event gameEvent)
         {
             //Check conditions for possible scenes starts
             if (gameEvent is not null)
