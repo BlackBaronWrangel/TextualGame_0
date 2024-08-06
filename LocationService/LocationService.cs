@@ -5,7 +5,7 @@ namespace GlobalServices
 {
     public class LocationService : ILocationService
     {
-        private const string _locationsJsonPath = "Resources/Locations.json";
+        private const string _locationsJsonPath = "Resources/Locations";
 
         private ILogger _logger;
         private ITagService _tagService;
@@ -86,7 +86,7 @@ namespace GlobalServices
         {
             try
             {
-                var locations = GameEntitiesJsonLoader.ReadJsonAsCollection<Location>(_locationsJsonPath);
+                var locations = GameEntitiesJsonLoader.ReadFolderAsCollection<Location>(_locationsJsonPath);
                 if (locations is null)
                 {
                     throw new("Locations are empty.");
