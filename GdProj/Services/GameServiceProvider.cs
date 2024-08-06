@@ -20,6 +20,7 @@ namespace GdProj.Services
         public IEventService EventService;
         public ILogger Logger;
         public IStateMachine StateMachine;
+        public IEventBuilder EventBuilder;
         public ICommandHandler CommandHandler;
         public IMapper Mapper;
         private GameServiceProvider()
@@ -32,6 +33,7 @@ namespace GdProj.Services
             ItemService = _serviceProvider!.GetRequiredService<IItemService>();
             EventService = _serviceProvider!.GetRequiredService<IEventService>();
             StateMachine = _serviceProvider!.GetRequiredService<IStateMachine>();
+            EventBuilder = _serviceProvider!.GetRequiredService<IEventBuilder>();
             CommandHandler = _serviceProvider!.GetRequiredService<ICommandHandler>();
             Mapper = _serviceProvider!.GetRequiredService<IMapper>();
         }
@@ -47,6 +49,7 @@ namespace GdProj.Services
             _serviceCollection.AddSingleton<IEventService, EventService>();
             _serviceCollection.AddSingleton<ILogger, Logger>();
             _serviceCollection.AddSingleton<IItemService, ItemService>();
+            _serviceCollection.AddSingleton<IEventBuilder, EventBuilder>();
             _serviceCollection.AddSingleton<IStateMachine, StateMachine>();
             _serviceCollection.AddSingleton<ICommandHandler, CommandHandler>();
             _serviceCollection.AddAutoMapper(typeof(MappingProfile));

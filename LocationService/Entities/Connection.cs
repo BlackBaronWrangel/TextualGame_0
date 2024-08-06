@@ -8,7 +8,7 @@ namespace GlobalServices.Entities
         public string LocationId { get; protected set; } = string.Empty;
         [JsonProperty]
         public double Distance { get; protected set; } = 0; //Distance in hours spent to move. Like 0.5 means 30 minutes. 
-        [Newtonsoft.Json.JsonConstructor]
+        [JsonConstructor]
         public Connection() { }
         public Connection(string locationId, double distance) 
         {

@@ -73,8 +73,6 @@ namespace GlobalServices
         }
 
         private Match Match(string command) => Regex.Match(command.Trim(), @"@(\w+)\(([^)]*)\)");
-
-
         private bool IfPlayerHasItem(string[]? args)
         {
             var expectedArgsCount = 1;

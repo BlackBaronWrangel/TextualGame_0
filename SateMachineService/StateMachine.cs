@@ -2,6 +2,7 @@
 using GlobalServices.Entities;
 using GlobalServices.Interfaces;
 using GlobalServices.Enums;
+using System;
 
 namespace GlobalServices
 {
@@ -17,10 +18,9 @@ namespace GlobalServices
         private ITagService _tagService;
         private IItemService _itemService;
         private ILocationService _locationService;
+        private IEventBuilder _eventBuilder;
         private ICommandHandler _commandHandler;
         private IMapper _mapper;
-
-        public event EventHandler StateChanged = delegate { };
 
         public StateMachine(
             ILogger logger,
@@ -29,6 +29,7 @@ namespace GlobalServices
             IItemService itemService,
             ICharacterService characterService,
             ILocationService locationService,
+            IEventBuilder eventBuilder,
             ICommandHandler commandHandler,
             IMapper mapper
             )
@@ -37,6 +38,7 @@ namespace GlobalServices
             _eventService = eventService;
             _tagService = tagService;
             _itemService = itemService;
+            _eventBuilder = eventBuilder;
             _locationService = locationService;
             _characterService = characterService;
             _mapper = mapper;
@@ -44,6 +46,8 @@ namespace GlobalServices
             InitPreDefinedScenes();
             UpdateNavigationEvents();
         }
+
+        public event EventHandler StateChanged = delegate { };
         public void RunScene(string sceneId)
         {
             var scene = Scenes.Where(s => s.Id == sceneId).FirstOrDefault();
@@ -77,10 +81,6 @@ namespace GlobalServices
                 _logger.LogError($"Can't get event {eventId} to set it as a new state.");
                 return;
             }
-
-            //Update navigation events
-            UpdateNavigationEvents();
-
             //Execute next event set commands
             foreach (var entry in gameEvent.PossibleNextEvents)
                 _commandHandler.TryExecuteEventContextCommand(gameEvent, entry, entry.Value);
@@ -92,8 +92,22 @@ namespace GlobalServices
             //Add characters that have a specific location
             LoadExistingCharactersInEvent(gameEvent);
 
-            if (gameEvent.EventType is EventType.Transition)
-                AddScenesWithStartingConditions(gameEvent);
+            if (new[] {EventType.Transition, EventType.Default}.Contains(gameEvent.EventType))
+            {
+                var currentEventCharacters = gameEvent.CharacterIds.Select(id => _characterService.GetCharacter(id)).ToList();
+
+                if (Dice.Roll(19, 20) 
+                    && currentEventCharacters.Count>0
+                    && currentEventCharacters.Any(c => c?.Type == CharacterType.Monster))
+                {
+                    SetOccasionalEvent(gameEvent); //Event that forces player to participate in it. E.g. Confrontation
+                }
+                else
+                {
+                    UpdateNavigationEvents();
+                    AddScenesWithStartingConditions(gameEvent);
+                }
+            }
 
             CurrentState = gameEvent;
             OnStateChanged();
@@ -220,6 +234,12 @@ namespace GlobalServices
                         gameEvent.PossibleNextEvents.Add(possibleScene.EntryText, possibleScene.StartEventId);
                 }
             }
+        }
+        private void SetOccasionalEvent(Event gameEvent)
+        {
+            gameEvent.PossibleNextEvents.Clear();
+            var newEvent = _eventBuilder.BuildConfrontationEvent(gameEvent);
+            gameEvent.PossibleNextEvents.Add(newEvent.Key, newEvent.Value);
         }
         private void ProcesNavigationEventEntities(Event currentEvent) //Add random characters, monsters, etc.
         {

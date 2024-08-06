@@ -33,7 +33,7 @@ public partial class MainTextContent : RichTextLabel
 
         var characters = sp.CharacterService.Characters.Where(c => currentGameEvent.CharacterIds.Contains(c.Id)).ToList();
         foreach ( var character in characters ) 
-            text += $"\nYou see a {character.Gender} {character.BodyType} {character.Species} that looks like [i]{character.Type}[/i]";
+            text += $"\nYou see a [url={character.Id}]{character.Gender} {character.BodyType} {character.Species}[/url] that looks like [i]{character.Type}[/i]";
 
         var itemIds = sp.StateMachine.CurrentState.ItemIds;
         foreach (var itemid in itemIds)

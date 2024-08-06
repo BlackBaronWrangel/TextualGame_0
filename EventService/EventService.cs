@@ -24,6 +24,12 @@ namespace GlobalServices
             RegisterEvent(gameEvent);
             return gameEvent;
         }
+        public Event CreateDefaultEvent()
+        {
+            var gameEvent = new Event();
+            RegisterEvent(gameEvent);
+            return gameEvent;
+        }
         public Event CreateDefaultLocationEvent(string locationId)
         {
             var gameEvent = new Event(locationId, EventType.Transition, locationId);

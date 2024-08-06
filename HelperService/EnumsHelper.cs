@@ -2,7 +2,6 @@
 {
     public class EnumsHelper
     {
-
         public static T? GetRandomEnumValue<T>(params T[] excludeValues) where T : Enum
         {
             Random random = new Random();

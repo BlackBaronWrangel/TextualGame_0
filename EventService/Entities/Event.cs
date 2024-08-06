@@ -5,8 +5,8 @@ namespace GlobalServices.Entities
     public class Event : TaggableBase
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
-        public EventType EventType { get; protected set; } = EventType.Default;
-        public string LocationId { get; protected set; } = string.Empty;
+        public EventType EventType { get; set; } = EventType.Default;
+        public string LocationId { get; set; } = string.Empty;
         public string EventeDescription { get; set; } = string.Empty; 
         public HashSet<string> CharacterIds { get; set; } = new();
         public HashSet<string> ItemIds { get; set; } = new();
