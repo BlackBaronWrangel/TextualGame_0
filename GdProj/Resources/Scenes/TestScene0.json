@@ -22,7 +22,7 @@
         },
         "Commands": [
           "@AddRandomCharactersCount(0,4,Civilian)",
-          "@AddRandomItems(1,4,Trinket)"
+          "@AddRandomItemsCount(1,4,Trinket)"
         ]
       },
       {
@@ -38,7 +38,7 @@
         },
         "Commands": [
           "@AddRandomCharactersCount(0,4,Monster)",
-          "@AddRandomItems(1,4,Trinket)"
+          "@AddRandomItemsCount(1,4,Trinket)"
         ]
       },
       {
@@ -53,7 +53,7 @@
         },
         "Commands": [
           "@AddRandomCharactersCount(0,4,Monster)",
-          "@AddRandomItems(1,4,Trinket)"
+          "@AddRandomItemsCount(1,4,Trinket)"
         ]
       },
       {
@@ -67,7 +67,7 @@
           "To open world": "loc_swamp"
         },
         "Commands": [
-          "@AddRandomItems(1,4,trinket)"
+          "@AddRandomItemsCount(1,4,trinket)"
         ]
       }
     ]

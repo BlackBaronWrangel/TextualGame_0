@@ -43,8 +43,8 @@ namespace GlobalServices
                     case "AddRandomCharacter":
                         AddRandomCharacter(gameEvent, args);
                         break;
-                    case "AddRandomItems":
-                        AddRandomItems(gameEvent, args);
+                    case "AddRandomItemsCount":
+                        AddRandomItemsCount(gameEvent, args);
                         break;
                     default:
                         _logger.LogError($"Unknown command {command}");
@@ -197,7 +197,7 @@ namespace GlobalServices
             character.Location = gameEvent.LocationId;
             gameEvent.CharacterIds.Add(character.Id);
         }
-        private void AddRandomItems(Event gameEvent, string[]? args)
+        private void AddRandomItemsCount(Event gameEvent, string[]? args)
         {
             var expectedArgsCount = 3;
             string methodName = MethodBase.GetCurrentMethod()?.Name ?? "UnknownMethod";
@@ -217,8 +217,8 @@ namespace GlobalServices
                 max = int.Parse(args[1]) + 1; //including upper limit
                 itemType = (ItemType)Enum.Parse(typeof(ItemType), args[2], true);
 
-                var charactersNum = new Random().Next(min, max);
-                for (int i = 0; i < charactersNum; i++)
+                var itemsNum = new Random().Next(min, max);
+                for (int i = 0; i < itemsNum; i++)
                 {
                     var item = _itemService.CreateRandomItem(itemType); //ToDo: create and replace with CreateRandomItem(ItemType type)
                     gameEvent.ItemIds.Add(item.Id);

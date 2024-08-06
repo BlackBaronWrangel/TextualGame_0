@@ -54,7 +54,6 @@ namespace GlobalServices
             }
             RunEvent(scene.StartEventId);
         }
-
         public void NextState(string eventId)
         {
             if (CurrentState is null)
@@ -100,7 +99,6 @@ namespace GlobalServices
             OnStateChanged();
             _logger.LogInfo($"Running {CurrentState}");
         }
-
         private void RegisterScene(Scene scene)
         {
             if (Scenes.Any(s => s.Id == scene.Id))
