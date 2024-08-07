@@ -37,7 +37,7 @@
           "Meadow? Sure!": "test_start_2_alt"
         },
         "Commands": [
-          "@AddRandomCharactersCount(0,4,Monster)",
+          "@AddRandomCharactersCount(0,4,Enemy)",
           "@AddRandomItemsCount(1,4,Trinket)"
         ]
       },
@@ -52,7 +52,7 @@
           "This swamp looks good": "test_start_1"
         },
         "Commands": [
-          "@AddRandomCharactersCount(0,4,Monster)",
+          "@AddRandomCharactersCount(0,4,Enemy)",
           "@AddRandomItemsCount(1,4,Trinket)"
         ]
       },

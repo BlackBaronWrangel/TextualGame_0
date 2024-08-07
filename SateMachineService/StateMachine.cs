@@ -89,16 +89,18 @@ namespace GlobalServices
             foreach (var command in gameEvent.Commands)
                 _commandHandler.TryExecuteEventCommand(gameEvent, command);
 
-            //Add characters that have a same location
-            LoadExistingCharactersInEvent(gameEvent);
+
 
             if (new[] {EventType.Transition, EventType.Default}.Contains(gameEvent.EventType))
             {
+                //Add characters that have a same location
+                LoadExistingCharactersInEvent(gameEvent);
+
                 var currentEventCharacters = gameEvent.CharacterIds.Select(id => _characterService.GetCharacter(id)).ToList();
 
                 if (Dice.Roll(19, 20) 
                     && currentEventCharacters.Count>0
-                    && currentEventCharacters.Any(c => c?.Type == CharacterType.Monster))
+                    && currentEventCharacters.Any(c => c?.Type == CharacterType.Enemy))
                 {
                     SetOccasionalEvent(gameEvent); //Event that forces player to participate in it. E.g. Confrontation
                 }
@@ -154,7 +156,7 @@ namespace GlobalServices
                     _logger.LogWarning($"Attempt to delete unexisting character {charId} during cleaning event entities.");
                     continue;
                 }
-                if (character.Persistence == Enums.CharacterPersistence.Temporary)
+                if (character.Persistence == CharacterPersistence.Temporary)
                 {
                     _characterService.RemoveCharacter(charId);
                     gameEvent.CharacterIds.Remove(charId);

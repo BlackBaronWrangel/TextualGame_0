@@ -2,7 +2,7 @@
 {
     public enum CharacterType
     {
-        Monster,
+        Enemy,
         Civilian,
         Other,
     }

@@ -33,7 +33,7 @@
           "Sit and wait, hoping someone will find you": "@SelectRandomNextEvent2(gsd_accidental_exit, gsd_starvation_death, 0.5)"
         },
         "Commands": [
-          "@AddRandomCharactersCount(1,4,Monster)",
+          "@AddRandomCharactersCount(1,4,Enemy)",
           "@AddRandomCharactersCount(1,4,Civilian)",
           "@AddRandomItemsCount(1,4,food)"
         ]

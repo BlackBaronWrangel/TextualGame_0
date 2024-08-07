@@ -3,6 +3,7 @@
     public enum CharacterPersistence
     {
         Temporary,
+        Scene,
         Permanent
     }
 }

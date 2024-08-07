@@ -44,7 +44,12 @@ namespace GlobalServices
             newEvent.LocationId = currentEvent.LocationId;
             newEvent.EventType = EventType.Confrontation;
             newEvent.CharacterIds = new(currentEvent.CharacterIds);
-            newEvent.ItemIds = new(currentEvent.ItemIds);
+            newEvent.ItemIds = currentEvent.ItemIds;
+
+            foreach (var tempChar in newEvent.CharacterIds.Select(c => _characterService.GetCharacter(c)).Where(ch => ch is not null).Where(ch => ch?.Persistence == CharacterPersistence.Temporary))
+                tempChar!.Persistence = CharacterPersistence.Scene; //Set temp characters as scene characters
+            foreach (var tempItem in newEvent.ItemIds.Select(i => _itemService.GetItem(i)).Where(it => it is not null).Where(it => it?.Persistence == ItemPersistence.Temporary))
+                tempItem!.Persistence = ItemPersistence.Scene; //Set temp items as scene characters
 
             var description = string.Empty;
 
@@ -73,7 +78,7 @@ namespace GlobalServices
             foreach (var character in characters.Where(c => c is not null && c.Type == CharacterType.Civilian))
             {
                 description += $"[url={character!.Id}]{character!.BodyType} {character!.Gender} {character!.Species}[/url] scattered in terror horrified at what was about to happen.\n";
-                if (character.Persistence is not CharacterPersistence.Temporary)
+                if (character.Persistence is not CharacterPersistence.Scene)
                 {
                     var possibleLocations = _locationService.GetConnections(newEvent.LocationId)?.Select(c => c.LocationId);
                     if (possibleLocations is not null && possibleLocations.Any())
@@ -89,7 +94,7 @@ namespace GlobalServices
             var description = string.Empty;
 
             var characters = newEvent.CharacterIds.Select(id => _characterService.GetCharacter(id)).ToList();
-            foreach (var character in characters.Where(c => c is not null && c.Type == CharacterType.Monster))
+            foreach (var character in characters.Where(c => c is not null && c.Type == CharacterType.Enemy))
             {
                 description += $"[url={character!.Id}]{character!.BodyType} {character!.Gender} {character!.Species}[/url] approaches you with grim intentions.\n";
             }

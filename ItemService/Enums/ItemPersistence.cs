@@ -3,6 +3,7 @@
     public enum ItemPersistence
     {
         Temporary,
+        Scene,
         Permanent
     }
 }
