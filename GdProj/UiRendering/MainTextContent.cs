@@ -41,7 +41,7 @@ public partial class MainTextContent : RichTextLabel
             var item = sp.ItemService.GetItem(itemid);
             if (item is not null)
             {
-                text += $"\nYou see somethingthat looks like {item.Type}. It is [i]{item.Name}[/i]";
+                text += $"\nYou see something that looks like {item.Type}. It is [i]{item.Name}[/i]";
             }
         }
 

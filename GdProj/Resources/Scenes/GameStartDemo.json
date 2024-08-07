@@ -34,7 +34,8 @@
         },
         "Commands": [
           "@AddRandomCharactersCount(1,4,Monster)",
-          "@AddRandomCharactersCount(1,4,Civilian)"
+          "@AddRandomCharactersCount(1,4,Civilian)",
+          "@AddRandomItemsCount(1,4,food)"
         ]
       },
       {

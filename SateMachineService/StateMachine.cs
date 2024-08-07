@@ -89,7 +89,7 @@ namespace GlobalServices
             foreach (var command in gameEvent.Commands)
                 _commandHandler.TryExecuteEventCommand(gameEvent, command);
 
-            //Add characters that have a specific location
+            //Add characters that have a same location
             LoadExistingCharactersInEvent(gameEvent);
 
             if (new[] {EventType.Transition, EventType.Default}.Contains(gameEvent.EventType))
