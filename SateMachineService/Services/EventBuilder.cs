@@ -49,7 +49,7 @@ namespace GlobalServices
             foreach (var tempChar in newEvent.CharacterIds.Select(c => _characterService.GetCharacter(c)).Where(ch => ch is not null).Where(ch => ch?.Persistence == CharacterPersistence.Temporary))
                 tempChar!.Persistence = CharacterPersistence.Scene; //Set temp characters as scene characters
             foreach (var tempItem in newEvent.ItemIds.Select(i => _itemService.GetItem(i)).Where(it => it is not null).Where(it => it?.Persistence == ItemPersistence.Temporary))
-                tempItem!.Persistence = ItemPersistence.Scene; //Set temp items as scene characters
+                tempItem!.Persistence = ItemPersistence.Scene; //Set temp items as scene item
 
             var description = string.Empty;
 
@@ -69,7 +69,6 @@ namespace GlobalServices
             description += ProcessMonstersBehaviors(newEvent);
             return description;
         }
-
         private string ProcessCiviliansBehaviors(Event newEvent)
         {
             var description = string.Empty;

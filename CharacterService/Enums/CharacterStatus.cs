@@ -5,6 +5,6 @@
         Dead,
         Missing,
         Ascended,
-        Alive
+        Alive,
     }
 }

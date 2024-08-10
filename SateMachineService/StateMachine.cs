@@ -81,35 +81,15 @@ namespace GlobalServices
                 _logger.LogError($"Can't get event {eventId} to set it as a new state.");
                 return;
             }
-            //Execute next event set commands
-            foreach (var entry in gameEvent.PossibleNextEvents)
-                _commandHandler.TryExecuteEventContextCommand(gameEvent, entry, entry.Value);
 
-            //Execute additional commands
-            foreach (var command in gameEvent.Commands)
-                _commandHandler.TryExecuteEventCommand(gameEvent, command);
+            AddNextDefaultEvent(gameEvent);
 
+            //if (new[] { EventType.Transition, EventType.Default }.Contains(gameEvent.EventType)) //Process next events for Default and Transition
+            //    AddNextDefaultEvent(gameEvent);
+            //if (new[] {EventType.Confrontation}.Contains(gameEvent.EventType)) //Process next events for Confrontation
+            //{
+            //} 
 
-
-            if (new[] {EventType.Transition, EventType.Default}.Contains(gameEvent.EventType))
-            {
-                //Add characters that have a same location
-                LoadExistingCharactersInEvent(gameEvent);
-
-                var currentEventCharacters = gameEvent.CharacterIds.Select(id => _characterService.GetCharacter(id)).ToList();
-
-                if (Dice.Roll(19, 20) 
-                    && currentEventCharacters.Count>0
-                    && currentEventCharacters.Any(c => c?.Type == CharacterType.Enemy))
-                {
-                    SetOccasionalEvent(gameEvent); //Event that forces player to participate in it. E.g. Confrontation
-                }
-                else
-                {
-                    UpdateNavigationEvents();
-                    AddScenesWithStartingConditions(gameEvent);
-                }
-            }
 
             CurrentState = gameEvent;
             OnStateChanged();
@@ -237,15 +217,38 @@ namespace GlobalServices
                 }
             }
         }
-        private void SetOccasionalEvent(Event gameEvent)
+        private void AddNextDefaultEvent(Event gameEvent) //Pre-defined events, Navigation events
+        {
+            //Execute next event set commands
+            foreach (var entry in gameEvent.PossibleNextEvents)
+                _commandHandler.TryExecuteEventContextCommand(gameEvent, entry, entry.Value);
+
+            //Execute additional commands
+            foreach (var command in gameEvent.Commands)
+                _commandHandler.TryExecuteEventCommand(gameEvent, command);
+
+            //Add characters that have a same location
+            LoadExistingCharactersInEvent(gameEvent);
+
+            var currentEventCharacters = gameEvent.CharacterIds.Select(id => _characterService.GetCharacter(id)).ToList();
+
+            if (Dice.Roll(19, 20)
+                && currentEventCharacters.Count > 0
+                && currentEventCharacters.Where(c => c?.Status == CharacterStatus.Alive).Any(c => c?.Type == CharacterType.Enemy))
+            {
+                ForceAddNextOccasionalEvent(gameEvent); //Event that forces player to participate in it. E.g. Confrontation.
+            }
+            else
+            {
+                UpdateNavigationEvents();
+                AddScenesWithStartingConditions(gameEvent);
+            }
+        }
+        private void ForceAddNextOccasionalEvent(Event gameEvent)
         {
             gameEvent.PossibleNextEvents.Clear();
             var newEvent = _eventBuilder.BuildConfrontationEvent(gameEvent);
             gameEvent.PossibleNextEvents.Add(newEvent.Key, newEvent.Value);
-        }
-        private void ProcesNavigationEventEntities(Event currentEvent) //Add random characters, monsters, etc.
-        {
-            throw new NotImplementedException();
         }
 
         protected virtual void OnStateChanged() => StateChanged?.Invoke(this, EventArgs.Empty);
