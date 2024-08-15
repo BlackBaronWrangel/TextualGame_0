@@ -10,7 +10,7 @@ namespace GlobalServices
     {
         private const string _defaultJsonScenesPath = "Resources/Scenes";
         public HashSet<Scene> Scenes { get; set; } = new HashSet<Scene>();
-        public Event? CurrentState { get; protected set; } = null;
+        public EventWrapper? CurrentState { get; protected set; } = null;
 
         private IEventService _eventService;
         private ICharacterService _characterService;
@@ -62,13 +62,13 @@ namespace GlobalServices
         {
             if (CurrentState is null)
                 _logger.LogWarning("Attempt to run the next state from state which is null.");
-            if (CurrentState is not null && !CurrentState.PossibleNextEvents.Values.Contains(eventId))
+            if (CurrentState is not null && !CurrentState.BaseEvent.PossibleNextEvents.Values.Contains(eventId))
                 _logger.LogWarning($"Attempt to run the next state {eventId}, which is not defined in the list of PossibleNextEvents.");
 
             if (CurrentState is not null)
             {
-                CleanEventTemporalItems(CurrentState);
-                CleanEventTemporalCharacters(CurrentState);
+                CleanEventTemporalItems(CurrentState.BaseEvent);
+                CleanEventTemporalCharacters(CurrentState.BaseEvent);
             }
             RunEvent(eventId);
         }
@@ -82,18 +82,28 @@ namespace GlobalServices
                 return;
             }
 
-            AddNextDefaultEvent(gameEvent);
+            if (new[] { EventType.Ending}.Contains(gameEvent.EventType))
+            {
+                CurrentState = new EventWrapper(gameEvent);
+            }
+            if (new[] { EventType.Transition, EventType.Default }.Contains(gameEvent.EventType))
+            {
+                ProcessDefaultEvent(gameEvent); 
+                CurrentState = new EventWrapper(gameEvent);
+            }
+            if (new[] { EventType.Confrontation }.Contains(gameEvent.EventType)) 
+            {
+                var ssm = ProcessConfrontationEvent(gameEvent);
+                if (ssm is null)
+                {
+                    _logger.LogError($"Can't create Sub State Machine");
+                    return;
+                }
+                CurrentState = new EventWrapper(gameEvent, ssm);
+            }
 
-            //if (new[] { EventType.Transition, EventType.Default }.Contains(gameEvent.EventType)) //Process next events for Default and Transition
-            //    AddNextDefaultEvent(gameEvent);
-            //if (new[] {EventType.Confrontation}.Contains(gameEvent.EventType)) //Process next events for Confrontation
-            //{
-            //} 
-
-
-            CurrentState = gameEvent;
             OnStateChanged();
-            _logger.LogInfo($"Running {CurrentState}");
+            _logger.LogInfo($"Running {CurrentState?.BaseEvent}");
         }
         private void RegisterScene(Scene scene)
         {
@@ -217,7 +227,7 @@ namespace GlobalServices
                 }
             }
         }
-        private void AddNextDefaultEvent(Event gameEvent) //Pre-defined events, Navigation events
+        private void ProcessDefaultEvent(Event gameEvent)
         {
             //Execute next event set commands
             foreach (var entry in gameEvent.PossibleNextEvents)
@@ -244,9 +254,23 @@ namespace GlobalServices
                 AddScenesWithStartingConditions(gameEvent);
             }
         }
+        private ConfrontationSM? ProcessConfrontationEvent(Event gameEvent)
+        {
+            if (CurrentState is not null && CurrentState.SubStateMachine is null)
+            {
+                var ssm = new ConfrontationSM(gameEvent, _characterService, _logger);
+                ssm.StateChanged += (sender, e) => OnStateChanged();
+
+                UpdateNavigationEvents();
+                AddScenesWithStartingConditions(gameEvent);
+
+                return ssm;
+            }
+            return null;
+        }
         private void ForceAddNextOccasionalEvent(Event gameEvent)
         {
-            gameEvent.PossibleNextEvents.Clear();
+            //gameEvent.PossibleNextEvents.Clear();
             var newEvent = _eventBuilder.BuildConfrontationEvent(gameEvent);
             gameEvent.PossibleNextEvents.Add(newEvent.Key, newEvent.Value);
         }

@@ -24,8 +24,9 @@ namespace GlobalServices
             InitCharacters();
         }
 
-        public Character? GetCharacter(string characterId)
+        public Character? GetCharacter(string? characterId)
         {
+            if (characterId is null) return null;
             var character = Characters.FirstOrDefault(c => c.Id == characterId);
             return character;
         }
@@ -181,5 +182,6 @@ namespace GlobalServices
             _tagService.RegisterITaggable(character);
             _logger.LogInfo($"Registered {character}");
         }
+
     }
 }

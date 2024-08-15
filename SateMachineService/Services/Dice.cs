@@ -9,8 +9,10 @@
             if (chances < 1 || max < 1 || chances > max)
                 return false;
 
-            int rollResult = random.Next(1, max + 1);
+            int rollResult = RollValue(max);
             return rollResult <= chances;
         }
+
+        public static int RollValue(int max) => random.Next(1, max + 1);
     }
 }

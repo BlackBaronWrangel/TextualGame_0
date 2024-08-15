@@ -1,6 +1,10 @@
 using GdProj.Services;
+using GlobalServices.Entities;
+using GlobalServices.Enums;
 using Godot;
+using System;
 using System.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 public partial class MainTextContent : RichTextLabel
 {
@@ -14,9 +18,9 @@ public partial class MainTextContent : RichTextLabel
     public void UpdateText()
     {
         var text = string.Empty;
-        var currentGameEvent = sp.StateMachine.CurrentState;
+        var currentGameEvent = sp.StateMachine.CurrentState.BaseEvent;
 
-        var locId = sp.StateMachine.CurrentState.LocationId;
+        var locId = currentGameEvent.LocationId;
         var currentLocation = sp.LocationService.GetLocation(locId);
         if (currentLocation is null)
         {
@@ -26,16 +30,36 @@ public partial class MainTextContent : RichTextLabel
 
         var locationName = currentLocation.Name;
         var locationDescription = currentLocation.Description;
-        var sceneDescription = currentGameEvent.EventeDescription;
 
         text += $"[b]{locationName}[/b]\n\n{locationDescription}\n";
+
+        Func<string> currentEventType = currentGameEvent.EventType switch
+        {
+            EventType.Default => ProcessDefaultEventsText,
+            EventType.Custom => ProcessDefaultEventsText,
+            EventType.Transition => ProcessDefaultEventsText,
+            EventType.Confrontation => ProcessConfrontationEventsText,
+            EventType.Ending => ProcessDefaultEventsText,
+            EventType.Dialogue => ProcessDefaultEventsText,
+            _ => ProcessDefaultEventsText
+        };
+
+        var sceneDescription = currentEventType?.Invoke();
         text += $"\n{sceneDescription}\n";
 
+        Text = text;
+    }
+
+    private string ProcessDefaultEventsText()
+    {
+        var currentGameEvent = sp.StateMachine.CurrentState.BaseEvent;
+        var text = currentGameEvent.EventeDescription;
+
         var characters = sp.CharacterService.Characters.Where(c => currentGameEvent.CharacterIds.Contains(c.Id)).ToList();
-        foreach ( var character in characters ) 
+        foreach (var character in characters)
             text += $"\nYou see a [url={character.Id}]{character.Gender} {character.BodyType} {character.Species}[/url] that looks like [i]{character.Type}[/i]";
 
-        var itemIds = sp.StateMachine.CurrentState.ItemIds;
+        var itemIds = sp.StateMachine.CurrentState.BaseEvent.ItemIds;
         foreach (var itemid in itemIds)
         {
             var item = sp.ItemService.GetItem(itemid);
@@ -44,11 +68,35 @@ public partial class MainTextContent : RichTextLabel
                 text += $"\nYou see something that looks like {item.Type}. It is [i]{item.Name}[/i]";
             }
         }
+        return text;
+    }
+    private string ProcessConfrontationEventsText()
+    {
+        var currentGameEvent = sp.StateMachine.CurrentState.BaseEvent;
 
-        Text = text;
+        var text = "Confrontation in progress";
+        var characters = sp.StateMachine.CurrentState.SubStateMachine.Characters;
+        foreach (var character in characters)
+        {
+            if (character.BaseCharacter.ControlType == CharacterControlType.Player)
+            { 
+                text += $"\n[url={character.BaseCharacter.Id}]You[/url] are under attack"; 
+            }
+            else
+            {
+                if (character.Intent is null) 
+                    text += $"\n[url={character.BaseCharacter.Id}]{character.BaseCharacter.Gender} {character.BaseCharacter.BodyType} {character.BaseCharacter.Species}[/url] prepares for battle";
+                else 
+                    text += $"\n[url={character.BaseCharacter.Id}]{character.BaseCharacter.Gender} {character.BaseCharacter.BodyType} {character.BaseCharacter.Species}[/url] is going to [i]{character.Intent}[/i]";
+            }
+        }
+        foreach (var log in sp.StateMachine.CurrentState.SubStateMachine.SsmLogs) { text += log; }
+        return text;
     }
 
-    public void LabelClicked(string input)
+    private void LabelClicked(string input)
     {
     }
+
+
 }

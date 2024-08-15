@@ -1,12 +1,12 @@
-﻿
-using GlobalServices.Enums;
+﻿using GlobalServices.Enums;
+using GlobalServices.Interfaces;
 
 namespace GlobalServices.Entities
 {
-    public class ConfrontationCharacter
+    public class ConfrontationCharacter : ICharacterWrapper
     {
         public Character BaseCharacter { get; private set; }
-        public CharacterConfrontationStatus Status { get; private set; }
+        public CharacterConfrontationStatus Status { get; set; }
 
         public Intent? Intent { get; set; }
 

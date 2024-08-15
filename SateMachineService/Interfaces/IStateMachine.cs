@@ -4,8 +4,8 @@ namespace GlobalServices.Interfaces
 {
     public interface IStateMachine
     {
-        public event EventHandler StateChanged;
-        Event? CurrentState {get;}
+        event EventHandler StateChanged; 
+        EventWrapper? CurrentState {get;}
         void RunScene(string sceneId);
         void NextState(string eventId);
     }

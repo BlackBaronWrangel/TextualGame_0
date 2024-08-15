@@ -2,6 +2,7 @@
 using GlobalServices.Entities;
 using GlobalServices.Enums;
 using GlobalServices.Interfaces;
+using System.Collections.Generic;
 
 namespace GlobalServices
 {
@@ -45,6 +46,7 @@ namespace GlobalServices
             newEvent.EventType = EventType.Confrontation;
             newEvent.CharacterIds = new(currentEvent.CharacterIds);
             newEvent.ItemIds = currentEvent.ItemIds;
+            newEvent.PossibleNextEvents = new Dictionary<string, string>(currentEvent.PossibleNextEvents);
 
             foreach (var tempChar in newEvent.CharacterIds.Select(c => _characterService.GetCharacter(c)).Where(ch => ch is not null).Where(ch => ch?.Persistence == CharacterPersistence.Temporary))
                 tempChar!.Persistence = CharacterPersistence.Scene; //Set temp characters as scene characters
